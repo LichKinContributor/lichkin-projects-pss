@@ -1,0 +1,9 @@
+/**/.project
+/**/.classpath
+/**/.settings/
+/**/bin/
+/**/target/
+/**/gen/
+/**/.DS_Store
+/**/.factorypath
+/**/application-localhost*.properties
