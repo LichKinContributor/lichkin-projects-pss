@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'pssProductCategoryMgmt' : 'stream',
+});

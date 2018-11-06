@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'pssSupplierMgmt' : 'truck-moving',
+});

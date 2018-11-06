@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'pssProductMgmt' : 'wine-glass',
+});

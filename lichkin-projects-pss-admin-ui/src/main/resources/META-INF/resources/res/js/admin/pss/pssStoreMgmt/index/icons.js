@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'pssStoreMgmt' : 'store-alt',
+});

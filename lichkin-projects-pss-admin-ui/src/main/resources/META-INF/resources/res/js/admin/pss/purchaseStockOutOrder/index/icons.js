@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'purchaseStockOutOrder' : 'arrow-left',
+});

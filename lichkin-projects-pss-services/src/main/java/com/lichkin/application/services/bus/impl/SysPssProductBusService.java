@@ -1,0 +1,95 @@
+package com.lichkin.application.services.bus.impl;
+
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.lichkin.framework.db.beans.Condition;
+import com.lichkin.framework.db.beans.QuerySQL;
+import com.lichkin.framework.db.beans.SysPssProductR;
+import com.lichkin.framework.db.beans.eq;
+import com.lichkin.framework.utils.LKUrlUtils;
+import com.lichkin.springframework.entities.impl.SysPssProductEntity;
+import com.lichkin.springframework.services.LKDBService;
+
+@Service
+public class SysPssProductBusService extends LKDBService {
+
+	public List<SysPssProductEntity> findExist(String id, String compId, String busCompId, String productCode, String productName, String barcode) {
+		QuerySQL sql = new QuerySQL(false, SysPssProductEntity.class);
+
+		if (StringUtils.isNotBlank(id)) {
+			sql.neq(SysPssProductR.id, id);
+		}
+
+		addConditionCompId(true, sql, SysPssProductR.compId, compId, busCompId);
+
+		if (StringUtils.isBlank(barcode)) {
+			if (StringUtils.isBlank(productCode)) {
+				sql.eq(SysPssProductR.productName, productName);
+			} else {
+				sql.where(
+
+						new Condition(true,
+
+								new Condition(null, new eq(SysPssProductR.productCode, productCode)),
+
+								new Condition(false, new eq(SysPssProductR.productName, productName))
+
+						)
+
+				);
+			}
+		} else {
+			if (StringUtils.isBlank(productCode)) {
+				sql.where(
+
+						new Condition(true,
+
+								new Condition(null, new eq(SysPssProductR.barcode, barcode)),
+
+								new Condition(false, new eq(SysPssProductR.productName, productName))
+
+						)
+
+				);
+			} else {
+				sql.where(
+
+						new Condition(true,
+
+								new Condition(null, new eq(SysPssProductR.barcode, barcode)),
+
+								new Condition(false, new eq(SysPssProductR.productCode, productCode)),
+
+								new Condition(false, new eq(SysPssProductR.productName, productName))
+
+						)
+
+				);
+			}
+		}
+
+		return dao.getList(sql, SysPssProductEntity.class);
+	}
+
+
+	/** 文件服务器URL根路径 */
+	@Value("${com.lichkin.files.server.rootUrl}")
+	private String fileServerRootUrl;
+
+	/** 文件服务器保存根路径 */
+	@Value("${com.lichkin.files.save.path:/opt/files}")
+	private String fileSaveRootPath;
+
+	/** 图片保存子路径 */
+	private static final String IMAGES_PATH = "/images/pssProduct";
+
+
+	public String analysisImageUrl(String url) {
+		return LKUrlUtils.analysisBase64ImageUrl(true, url, fileServerRootUrl, fileSaveRootPath, IMAGES_PATH);
+	}
+
+}

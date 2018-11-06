@@ -1,0 +1,4 @@
+copy /b ..\..\lichkin-projects-activiti\lichkin-projects-activiti-employee-launcher\src\main\resources\META-INF\resources\res\js\i18n\zh_CN.js+..\lichkin-projects-pss-employee-ui\src\main\resources\META-INF\resources\res\js\employee\pss\index\i18n\zh_CN.js zh_CN.js
+move zh_CN.js src\main\resources\META-INF\resources\res\js\i18n
+copy /b ..\..\lichkin-projects-activiti\lichkin-projects-activiti-employee-launcher\src\main\resources\META-INF\resources\res\js\icons.js+..\lichkin-projects-pss-employee-ui\src\main\resources\META-INF\resources\res\js\employee\pss\index\icons.js icons.js
+move icons.js src\main\resources\META-INF\resources\res\js

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+
+  <groupId>com.lichkin.projects</groupId>
+  <artifactId>lichkin-projects-pss</artifactId>
+  <version>1.0.0.RELEASE</version>
+
+  <parent>
+    <groupId>com.lichkin.projects</groupId>
+    <artifactId>lichkin-projects-core</artifactId>
+    <version>1.0.0.RELEASE</version>
+  </parent>
+
+  <properties>
+    <com.lichkin.projects.activiti.version>1.0.0.RELEASE</com.lichkin.projects.activiti.version>
+    <com.lichkin.projects.pss.version>1.0.0.RELEASE</com.lichkin.projects.pss.version>
+  </properties>
+
+  <modules>
+    <module>lichkin-projects-pss-common</module>
+    <module>lichkin-projects-pss-entities</module>
+    <module>lichkin-projects-pss-services</module>
+    <module>lichkin-projects-pss-apis-generator</module>
+    <module>lichkin-projects-pss-apis-common</module>
+    <module>lichkin-projects-pss-admin</module>
+    <module>lichkin-projects-pss-admin-ui</module>
+    <module>lichkin-projects-pss-admin-launcher</module>
+    <module>lichkin-projects-pss-user</module>
+    <module>lichkin-projects-pss-user-ui</module>
+    <module>lichkin-projects-pss-user-launcher</module>
+    <module>lichkin-projects-pss-employee</module>
+    <module>lichkin-projects-pss-employee-ui</module>
+    <module>lichkin-projects-pss-employee-launcher</module>
+    <module>lichkin-projects-pss-quartz</module>
+  </modules>
+
+</project>

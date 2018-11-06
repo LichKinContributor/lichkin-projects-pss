@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'stockDetail' : 'clipboard-list',
+});

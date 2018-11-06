@@ -1,0 +1,63 @@
+[
+	{
+		"plugin": "hidden",
+		"businessField": 1,
+		"options": {
+			"name": "id"
+		}
+	},
+	{
+		"plugin": "hidden",
+		"businessField": 2,
+		"options": {
+			"name": "supplierId"
+		}
+	},
+	{
+		"plugin": "hidden",
+		"businessField": 3,
+		"options": {
+			"name": "purchaserId"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"businessField": 4,
+		"options": {
+			"name": "billDate"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"businessField": 5,
+		"options": {
+			"name": "orderNo"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"businessField": 6,
+		"options": {
+			"name": "orderAmount"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
+			"name": "supplierName"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
+			"name": "purchaserName"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
+			"name": "remarks",
+			"rows": 2
+		}
+	}
+]

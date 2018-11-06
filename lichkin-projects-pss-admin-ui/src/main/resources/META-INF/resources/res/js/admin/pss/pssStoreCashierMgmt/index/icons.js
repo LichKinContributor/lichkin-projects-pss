@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'pssStoreCashierMgmt' : 'user-tag',
+});

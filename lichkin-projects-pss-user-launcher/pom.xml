@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>jar</packaging>
+
+  <artifactId>lichkin-projects-pss-user-launcher</artifactId>
+
+  <parent>
+    <groupId>com.lichkin.projects</groupId>
+    <artifactId>lichkin-projects-pss</artifactId>
+    <version>1.0.0.RELEASE</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <dependencies>
+    <!-- lichkin projects core -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-core-user</artifactId>
+      <version>${com.lichkin.projects.core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-core-user-ui</artifactId>
+      <version>${com.lichkin.projects.core.version}</version>
+    </dependency>
+    <!-- lichkin projects activiti -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-activiti-user</artifactId>
+      <version>${com.lichkin.projects.activiti.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-activiti-user-ui</artifactId>
+      <version>${com.lichkin.projects.activiti.version}</version>
+    </dependency>
+    <!-- lichkin projects pss -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-pss-user</artifactId>
+      <version>${com.lichkin.projects.pss.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-pss-user-ui</artifactId>
+      <version>${com.lichkin.projects.pss.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.11</version>
+    </dependency>
+    <!-- devtools -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- https://mvnrepository.com/artifact/net.alchim31.maven/yuicompressor-maven-plugin -->
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>yuicompressor-maven-plugin</artifactId>
+        <version>1.5.1</version>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>compress</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <includes>
+            <include>**/*.js</include>
+            <include>**/*.css</include>
+          </includes>
+          <encoding>UTF-8</encoding>
+          <jswarn>false</jswarn>
+          <suffix>.min</suffix>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

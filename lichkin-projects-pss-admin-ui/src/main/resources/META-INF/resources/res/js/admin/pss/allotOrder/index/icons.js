@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'allotOrder' : 'exchange-alt',
+});
