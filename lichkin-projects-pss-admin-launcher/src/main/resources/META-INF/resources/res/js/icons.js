@@ -125,3 +125,15 @@ $.LKExtendICON({
 $.LKExtendICON({
   'stockDetail' : 'clipboard-list',
 });
+$.LKExtendICON({
+  'purchaseDetail' : 'cart-arrow-down',
+});
+$.LKExtendICON({
+  'sellDetail' : 'shopping-cart',
+});
+$.LKExtendICON({
+  'stockInDetail' : 'caret-square-left',
+});
+$.LKExtendICON({
+  'stockOutDetail' : 'caret-square-right',
+});

@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'sellDetail' : 'shopping-cart',
+});
