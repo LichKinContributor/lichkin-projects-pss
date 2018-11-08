@@ -83,26 +83,6 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50006002", "SysPssStockEntity", "storageId");
 		LKDBResource.addColumn("50006003", "SysPssStockEntity", "productId");
 		LKDBResource.addColumn("50006004", "SysPssStockEntity", "quantity");
-		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity", "T_SYS_PSS_STOCK_CHECK_ORDER", "SysPssStockCheckOrderEntity");
-		LKDBResource.addColumn("50015000", "SysPssStockCheckOrderEntity", "id");
-		LKDBResource.addColumn("50015001", "SysPssStockCheckOrderEntity", "usingStatus");
-		LKDBResource.addColumn("50015002", "SysPssStockCheckOrderEntity", "insertTime");
-		LKDBResource.addColumn("50015003", "SysPssStockCheckOrderEntity", "compId");
-		LKDBResource.addColumn("50015004", "SysPssStockCheckOrderEntity", "approvalStatus");
-		LKDBResource.addColumn("50015005", "SysPssStockCheckOrderEntity", "approvalTime");
-		LKDBResource.addColumn("50015006", "SysPssStockCheckOrderEntity", "orderNo");
-		LKDBResource.addColumn("50015007", "SysPssStockCheckOrderEntity", "billDate");
-		LKDBResource.addColumn("50015008", "SysPssStockCheckOrderEntity", "remarks");
-		LKDBResource.addColumn("50015009", "SysPssStockCheckOrderEntity", "storageId");
-		LKDBResource.addColumn("50015010", "SysPssStockCheckOrderEntity", "stockCheckCount");
-		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity", "T_SYS_PSS_STOCK_CHECK_ORDER_PRODUCT", "SysPssStockCheckOrderProductEntity");
-		LKDBResource.addColumn("50016000", "SysPssStockCheckOrderProductEntity", "id");
-		LKDBResource.addColumn("50016001", "SysPssStockCheckOrderProductEntity", "orderId");
-		LKDBResource.addColumn("50016002", "SysPssStockCheckOrderProductEntity", "productId");
-		LKDBResource.addColumn("50016003", "SysPssStockCheckOrderProductEntity", "quantity");
-		LKDBResource.addColumn("50016004", "SysPssStockCheckOrderProductEntity", "sortId");
-		LKDBResource.addColumn("50016005", "SysPssStockCheckOrderProductEntity", "checkQuantity");
-		LKDBResource.addColumn("50016006", "SysPssStockCheckOrderProductEntity", "differenceQuantity");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity", "T_SYS_PSS_PURCHASE_ORDER", "SysPssPurchaseOrderEntity");
 		LKDBResource.addColumn("50100000", "SysPssPurchaseOrderEntity", "id");
 		LKDBResource.addColumn("50100001", "SysPssPurchaseOrderEntity", "usingStatus");
@@ -223,6 +203,26 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50401002", "SysPssAllotOrderProductEntity", "productId");
 		LKDBResource.addColumn("50401003", "SysPssAllotOrderProductEntity", "quantity");
 		LKDBResource.addColumn("50401004", "SysPssAllotOrderProductEntity", "sortId");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity", "T_SYS_PSS_STOCK_CHECK_ORDER", "SysPssStockCheckOrderEntity");
+		LKDBResource.addColumn("50500000", "SysPssStockCheckOrderEntity", "id");
+		LKDBResource.addColumn("50500001", "SysPssStockCheckOrderEntity", "usingStatus");
+		LKDBResource.addColumn("50500002", "SysPssStockCheckOrderEntity", "insertTime");
+		LKDBResource.addColumn("50500003", "SysPssStockCheckOrderEntity", "compId");
+		LKDBResource.addColumn("50500004", "SysPssStockCheckOrderEntity", "approvalStatus");
+		LKDBResource.addColumn("50500005", "SysPssStockCheckOrderEntity", "approvalTime");
+		LKDBResource.addColumn("50500006", "SysPssStockCheckOrderEntity", "orderNo");
+		LKDBResource.addColumn("50500007", "SysPssStockCheckOrderEntity", "billDate");
+		LKDBResource.addColumn("50500008", "SysPssStockCheckOrderEntity", "remarks");
+		LKDBResource.addColumn("50500009", "SysPssStockCheckOrderEntity", "storageId");
+		LKDBResource.addColumn("50500010", "SysPssStockCheckOrderEntity", "stockCheckCount");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity", "T_SYS_PSS_STOCK_CHECK_ORDER_PRODUCT", "SysPssStockCheckOrderProductEntity");
+		LKDBResource.addColumn("50501000", "SysPssStockCheckOrderProductEntity", "id");
+		LKDBResource.addColumn("50501001", "SysPssStockCheckOrderProductEntity", "orderId");
+		LKDBResource.addColumn("50501002", "SysPssStockCheckOrderProductEntity", "productId");
+		LKDBResource.addColumn("50501003", "SysPssStockCheckOrderProductEntity", "quantity");
+		LKDBResource.addColumn("50501004", "SysPssStockCheckOrderProductEntity", "sortId");
+		LKDBResource.addColumn("50501005", "SysPssStockCheckOrderProductEntity", "stockQuantity");
+		LKDBResource.addColumn("50501006", "SysPssStockCheckOrderProductEntity", "differenceQuantity");
 	}
 
 }

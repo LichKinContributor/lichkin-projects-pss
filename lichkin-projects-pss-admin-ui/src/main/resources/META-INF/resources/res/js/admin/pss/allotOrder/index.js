@@ -35,7 +35,7 @@ var allotOrderFormPlugins = [
 
           var storageId = $plugin.LKGetSiblingPlugin('outStorageId').LKGetValue();
           if (!storageId) {
-            LK.alert('allotOrder.grid.Please choose the storage');
+            LK.alert('allotOrder.grid.please choose the storage');
             return;
           }
 

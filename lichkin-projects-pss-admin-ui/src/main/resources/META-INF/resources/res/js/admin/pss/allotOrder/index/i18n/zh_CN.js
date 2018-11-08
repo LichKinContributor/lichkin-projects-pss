@@ -29,7 +29,7 @@ $.LKExtendI18N({
         'submit' : '数据提交后将不能修改，确认提交么？',
       },
 
-      'Please choose the storage' : '请选择调出仓库。',
+      'please choose the storage' : '请选择调出仓库。',
       'product not exists' : '产品不存在，请先录入产品。',
       'only PENDING status can be edit' : '只有草稿状态才可编辑。',
       'only PENDING status can be remove' : '只有草稿状态才可删除。',
@@ -53,11 +53,5 @@ $.LKExtendI18N({
       'remove' : '删除产品',
     },
 
-    'editRemindMsg' : '当前选择的数据不可编辑',
-    'delRemindMsg' : '当前选择的数据不可删除',
-    'submitRemindMsg' : '当前选择的数据不可提交',
-    'submit' : '提交',
-    'confirmSubmit' : '提交后数据不可修改，确认提交?',
-    'productNotExist' : '商品不存在'
   }
 });
