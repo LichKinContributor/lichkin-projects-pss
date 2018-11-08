@@ -22,12 +22,12 @@ public abstract class PssStockOrderEntity extends PssOrderEntity {
 	private static final long serialVersionUID = 1L;
 
 	/** 仓库ID（SysPssStorageEntity.id） */
-	@FieldGenerator(resultColumn = true, queryCondition = true, queryConditionLike = false, insertType = InsertType.COPY_COPY, updateable = false)
+	@FieldGenerator(resultColumn = false, queryCondition = true, queryConditionLike = false, insertType = InsertType.COPY_COPY, updateable = false)
 	@Column(length = 64, nullable = false)
 	private String storageId;
 
 	/** 订单类型。true:入库单;false:出库单; */
-	@FieldGenerator(resultColumn = false, insertType = InsertType.DEFAULT_RETAIN, updateable = false, queryCondition = true, queryConditionLike = false)
+	@FieldGenerator(resultColumn = false, insertType = InsertType.COPY_RETAIN, updateable = false, queryCondition = true, queryConditionLike = false)
 	@Column(nullable = false)
 	private Boolean orderType;
 

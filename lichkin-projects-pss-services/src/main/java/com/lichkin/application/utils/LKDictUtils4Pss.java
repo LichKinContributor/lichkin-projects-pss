@@ -45,4 +45,28 @@ public class LKDictUtils4Pss extends LKDictUtils {
 		leftJoinDictionary(sql, "inventoryStatus", LKFrameworkStatics.LichKin, "PSS_INVENTORY_STATUS", columnResId, tableIdx);
 	}
 
+
+	/**
+	 * 连接字典表（其他入库单类型）
+	 * @param sql SQL语句对象
+	 * @param compId 公司ID
+	 * @param columnResId 列资源ID
+	 * @param tableIdx 字典表序号（从0开始）
+	 */
+	public static void storageTypeIn(QuerySQL sql, String compId, int columnResId, int tableIdx) {
+		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STORAGE_IN", columnResId, tableIdx);
+	}
+
+
+	/**
+	 * 连接字典表（其他出库单类型）
+	 * @param sql SQL语句对象
+	 * @param compId 公司ID
+	 * @param columnResId 列资源ID
+	 * @param tableIdx 字典表序号（从0开始）
+	 */
+	public static void storageTypeOut(QuerySQL sql, String compId, int columnResId, int tableIdx) {
+		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STORAGE_OUT", columnResId, tableIdx);
+	}
+
 }

@@ -30,6 +30,11 @@ $.LKExtendI18N({
         'remove' : '数据删除后将不能恢复，确认删除么？',
         'submit' : '数据提交后将不能修改，确认提交么？',
       },
+
+      'product not exists' : '产品不存在，请先录入产品。',
+      'only PENDING status can be edit' : '只有草稿状态才可编辑。',
+      'only PENDING status can be remove' : '只有草稿状态才可删除。',
+      'only PENDING status can be submit' : '只有草稿状态才可提交。',
     },
 
     'product-grid' : {
@@ -50,6 +55,5 @@ $.LKExtendI18N({
       'remove' : '删除产品',
     },
 
-    'product not exists' : '产品不存在，请先录入产品。',
   }
 });

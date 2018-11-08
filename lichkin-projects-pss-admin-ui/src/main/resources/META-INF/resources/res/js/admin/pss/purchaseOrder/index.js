@@ -42,7 +42,7 @@ var purchaseOrderFormPlugins = [
                 $productList.LKInvokeAddDatas(responseDatas);
                 purchaseOrderCalcTotal($productList);
               } else {
-                LK.alert('purchaseOrder.product not exists');
+                LK.alert('purchaseOrder.grid.product not exists');
               }
             }
           });

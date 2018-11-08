@@ -2,6 +2,8 @@ package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.lichkin.framework.db.beans.DeleteSQL;
 import com.lichkin.framework.db.beans.SysPssPurchaseStockOrderProductR;
 import com.lichkin.framework.json.LKJsonUtils;
@@ -10,6 +12,7 @@ import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
+@Service
 public class SysPssPurchaseStockOrderBusService extends LKDBService {
 
 	public String analysisOrderNo() {
