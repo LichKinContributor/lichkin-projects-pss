@@ -27,6 +27,7 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreEntity", index, errorCode, Type.Insert, "新增数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreCashierEntity", index, errorCode, Type.Insert, "新增数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
 	}
 
 
@@ -39,6 +40,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreEntity", index, errorCode, Type.Update, "编辑数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.Update, "编辑数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index + 1, errorCode, Type.Update, "提交数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.Update, "编辑数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index + 1, errorCode, Type.Update, "提交数据接口");
 	}
 
 
@@ -46,6 +49,7 @@ public class LKApiGeneratorRunner {
 	public void generateDelete() {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreCashierEntity", index, errorCode, Type.Delete, "删除数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
 	}
 
 
@@ -57,12 +61,15 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreCashierEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 	}
 
 
 	@Test
 	public void generateList() {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 	}
 
 
@@ -74,6 +81,7 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssProductEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
 	}
 
 
@@ -85,6 +93,7 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssProductEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
 	}
 
 }

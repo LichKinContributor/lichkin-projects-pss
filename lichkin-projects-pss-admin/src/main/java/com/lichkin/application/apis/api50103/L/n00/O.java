@@ -1,4 +1,4 @@
-package com.lichkin.application.apis.api50101.L.n00;
+package com.lichkin.application.apis.api50103.L.n00;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,12 +10,6 @@ public class O {
 //	private String id;
 
 	private int quantity;
-
-	private int inventoryQuantity;
-
-	private String unitPrice;
-
-	private String subTotalPrice;
 
 	/** 产品ID */
 	private String id;

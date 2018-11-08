@@ -1,10 +1,8 @@
 package com.lichkin.springframework.entities.impl;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.lichkin.framework.defines.annotations.ClassGenerator;
-import com.lichkin.framework.defines.annotations.FieldGenerator;
 import com.lichkin.framework.defines.annotations.InsertCheckType;
 import com.lichkin.framework.defines.annotations.UpdateCheckType;
 import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
@@ -13,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 采购订单商品表实体类
+ * 采购库存单商品表实体类
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
@@ -42,24 +40,9 @@ import lombok.Setter;
 		}
 
 )
-public class SysPssPurchaseOrderProductEntity extends PssOrderProductEntity {
+public class SysPssPurchaseStockOrderProductEntity extends PssOrderProductEntity {
 
 	/** serialVersionUID */
-	private static final long serialVersionUID = 50101L;
-
-	/** 已入库数量 */
-	@FieldGenerator(resultColumn = true)
-	@Column(nullable = false)
-	private int inventoryQuantity;
-
-	/** 单价 */
-	@FieldGenerator(resultColumn = true)
-	@Column(length = 10, nullable = false)
-	private String unitPrice;
-
-	/** 小计（unitPrice*quantity） */
-	@FieldGenerator(resultColumn = true)
-	@Column(length = 10, nullable = false)
-	private String subTotalPrice;
+	private static final long serialVersionUID = 50103L;
 
 }

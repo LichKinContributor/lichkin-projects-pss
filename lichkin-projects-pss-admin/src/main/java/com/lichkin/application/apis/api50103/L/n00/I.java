@@ -1,4 +1,4 @@
-package com.lichkin.application.apis.api50101.L.n00;
+package com.lichkin.application.apis.api50103.L.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestBean;
 

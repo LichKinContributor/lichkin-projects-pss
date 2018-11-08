@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 采购订单商品表实体类
+ * 销售订单商品表实体类
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter
@@ -42,12 +42,12 @@ import lombok.Setter;
 		}
 
 )
-public class SysPssPurchaseOrderProductEntity extends PssOrderProductEntity {
+public class SysPssSellOrderProductEntity extends PssOrderProductEntity {
 
 	/** serialVersionUID */
-	private static final long serialVersionUID = 50101L;
+	private static final long serialVersionUID = 50201L;
 
-	/** 已入库数量 */
+	/** 已出库数量 */
 	@FieldGenerator(resultColumn = true)
 	@Column(nullable = false)
 	private int inventoryQuantity;
