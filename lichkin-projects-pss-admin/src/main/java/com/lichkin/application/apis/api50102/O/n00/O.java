@@ -27,7 +27,7 @@ public class O {
 
 	private String remarks;
 
-	private String orderId;
+	private String storageId;
 
 	private Boolean orderType;
 
