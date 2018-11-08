@@ -31,6 +31,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseStockOrderEnti
 		sql.select(SysPssPurchaseStockOrderR.approvalTime);
 		sql.select(SysPssPurchaseStockOrderR.orderNo);
 		sql.select(SysPssPurchaseStockOrderR.billDate);
+		sql.select(SysPssPurchaseStockOrderR.storageId);
 
 		// 关联表
 		sql.innerJoin(SysPssPurchaseOrderEntity.class, new Condition(SysPssPurchaseStockOrderR.orderId, SysPssPurchaseOrderR.id));
@@ -62,6 +63,11 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseStockOrderEnti
 		String orderNo = sin.getOrderNo();
 		if (StringUtils.isNotBlank(orderNo)) {
 			sql.like(SysPssPurchaseStockOrderR.orderNo, LikeType.ALL, orderNo);
+		}
+
+		String storageId = sin.getStorageId();
+		if (StringUtils.isNotBlank(storageId)) {
+			sql.eq(SysPssPurchaseStockOrderR.storageId, storageId);
 		}
 
 		Boolean orderType = sin.getOrderType();

@@ -15,6 +15,8 @@ public class I extends LKRequestBean {
 
 	private String remarks;
 
+	private String storageId;
+
 	private String orderId;
 
 	/** 产品列表 */

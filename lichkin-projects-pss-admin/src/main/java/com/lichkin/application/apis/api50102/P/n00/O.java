@@ -25,6 +25,8 @@ public class O {
 
 	private String billDate;
 
+	private String storageId;
+
 	/** 采购订单号 */
 	private String purchaseOrderNo;
 

@@ -31,4 +31,6 @@ public class O {
 
 	private Boolean orderType;
 
+	private String orderId;
+
 }

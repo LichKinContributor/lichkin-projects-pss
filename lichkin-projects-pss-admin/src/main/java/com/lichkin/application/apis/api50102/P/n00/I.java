@@ -19,6 +19,8 @@ public class I extends LKRequestPageBean {
 
 	private String orderNo;
 
+	private String storageId;
+
 	private Boolean orderType;
 
 	/** 采购订单号 */
