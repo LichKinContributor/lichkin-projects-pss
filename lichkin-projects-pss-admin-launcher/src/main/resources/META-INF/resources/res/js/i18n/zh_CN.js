@@ -68,7 +68,7 @@ $.LKExtendI18N({
       'edit' : '编辑菜单',
     },
   },
-  
+
   'up' : '向上移动',
   'down' : '向下移动',
 
@@ -154,6 +154,8 @@ $.LKExtendI18N({
         'dictName' : '字典名称',
         'dictCode' : '字典编码'
       },
+
+      'set' : '设置',
     },
 
     'comp-grid' : {
@@ -249,6 +251,9 @@ $.LKExtendI18N({
         'startDate' : '起始注册日期',
         'endDate' : '截止注册日期',
         'gender' : '性别',
+        'userCard' : '身份证号',
+        'token' : '令牌',
+        'pwd' : '密码',
       }
     }
   }
