@@ -362,7 +362,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         plugin : 'droplist',
         options : {
           name : 'inventoryStatus',
-          url : '/SysDictionary/LD',
           param : {
             categoryCode : 'PSS_INVENTORY_STATUS'
           }
@@ -371,7 +370,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         plugin : 'droplist',
         options : {
           name : 'approvalStatus',
-          url : '/SysDictionary/LD',
           param : {
             categoryCode : 'ACTIVITI_APPROVAL_STATUS'
           }
