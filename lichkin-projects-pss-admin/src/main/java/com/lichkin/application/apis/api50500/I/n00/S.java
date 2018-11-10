@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lichkin.application.services.bus.impl.SysPssStockCheckOrderBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity;
@@ -45,6 +46,7 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssStockCheckOr
 	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity) {
 		List<SysPssStockCheckOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssStockCheckOrderProductEntity.class);
 		entity.setStockCheckCount(listProduct.size());
+		entity.setUsingStatus(LKUsingStatusEnum.STAND_BY);
 		entity.setApprovalStatus(ApprovalStatusEnum.PENDING);
 	}
 

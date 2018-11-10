@@ -11,4 +11,7 @@ public class I extends LKRequestBean {
 
 	private String orderId;
 
+	/** 订单类型。true:入库单;false:出库单; */
+	private Boolean orderType;
+
 }

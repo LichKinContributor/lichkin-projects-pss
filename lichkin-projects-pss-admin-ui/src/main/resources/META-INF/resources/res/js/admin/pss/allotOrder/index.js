@@ -39,18 +39,29 @@ var allotOrderFormPlugins = [
             return;
           }
 
+          var id = $plugin.parents('form').find('input[name=id]').val();
+          var orderId;
+          if (id) {
+            orderId = $allotOrderDatagrid.LKGetValue();
+          }
+
           LK.ajax({
-            url : '/SysPssStockProduct/L',
+            url : '/SysPssStock/L',
             data : {
               storageId : storageId,
-              barcode : val
+              barcode : val,
+              orderId : orderId
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
+                if(responseDatas[0].stockQuantity == 0) {
+                  LK.alert('allotOrder.grid.the number of products currently available is zero');
+                  return;
+                }
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
                 $productList.LKInvokeAddDatas(responseDatas);
               } else {
-                LK.alert('allotOrder.grid.product not exists');
+                LK.alert('allotOrder.grid.this product does not exist in the storage');
               }
             }
           });
@@ -93,7 +104,7 @@ var allotOrderFormPlugins = [
               name : 'unit'
             }, {
               text : 'stockQuantity',
-              width : 60,
+              width : 80,
               name : 'stockQuantity'
             }, {
               text : 'quantity',
@@ -104,7 +115,7 @@ var allotOrderFormPlugins = [
                   options : {
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 1,
-                    min : 1,
+                    min : 0,
                     max : rowData.stockQuantity
                   }
                 }
@@ -112,6 +123,14 @@ var allotOrderFormPlugins = [
             }
         ],
         toolsAddData : {
+          beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
+            var storageId = $datagrid.LKGetSiblingPlugin('outStorageId').LKGetValue();
+            if (!storageId) {
+              LK.alert('allotOrder.grid.please choose the storage');
+              return false;
+            }
+            return true;
+          },
           form : {
             plugins : [
               {
@@ -129,7 +148,48 @@ var allotOrderFormPlugins = [
             }
           },
           handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            return $form.LKGetSubPlugin('product').LKGetValueDatas();
+            var id = $datagrid.parents('form').find('input[name=id]').val();
+            var orderId;
+            if (id) {
+              orderId = $allotOrderDatagrid.LKGetValue();
+            }
+            
+            var storageId = $datagrid.LKGetSiblingPlugin('outStorageId').LKGetValue();
+            var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
+            var notExist = false;
+            var qtyIsZero = false;
+            for (var i = 0; i < productDatas.length; i++) {
+              var prod = productDatas[i];
+              LK.ajax({
+                url : '/SysPssStock/L',
+                async : false,
+                data : {
+                  storageId : storageId,
+                  productId : prod.id,
+                  orderId : orderId
+                },
+                success : function(responseDatas) {
+                  if (responseDatas && responseDatas.length == 1) {
+                    if (responseDatas[0].stockQuantity == 0) {
+                      qtyIsZero = true;
+                      return;
+                    }
+                    productDatas[i].stockQuantity = responseDatas[0].stockQuantity;
+                  } else {
+                    notExist = true;
+                  }
+                }
+              });
+              if (qtyIsZero) {
+                LK.alert('allotOrder.grid.the number of products currently available is zero');
+                return [];
+              }
+              if (notExist) {
+                LK.alert('allotOrder.grid.this product does not exist in the storage');
+                return [];
+              }
+            }
+            return productDatas;
           },
         },
         toolsRemoveData : {},
@@ -145,7 +205,7 @@ var allotOrderFormPlugins = [
     }
 ];
 
-LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
+var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
   icon : 'allotOrder',
 } : {}), {

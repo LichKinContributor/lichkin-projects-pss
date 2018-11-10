@@ -30,7 +30,8 @@ $.LKExtendI18N({
       },
 
       'please select the storage first' : '请先选择仓库。',
-      'product not exists' : '产品不存在，请先录入产品。',
+      'the number of products currently available is zero' : '当前产品可出库的数量为0。',
+      'this product does not exist in the current storage' : '当前仓库不存在此产品。',
       'only PENDING status can be edit' : '只有草稿状态才可编辑。',
       'only PENDING status can be remove' : '只有草稿状态才可删除。',
       'only PENDING status can be submit' : '只有草稿状态才可提交。',
@@ -47,7 +48,10 @@ $.LKExtendI18N({
         'stockQuantity' : '库存数量',
         'quantity' : '数量',
         'product' : '选择产品',
-      }
+      },
+
+      'add' : '录入产品',
+      'remove' : '删除产品',
     },
 
   }

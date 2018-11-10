@@ -7,12 +7,14 @@ import lombok.Setter;
 @Setter
 public class O {
 
-	// private String id;
-
-	private int quantity;
-
 	/** 产品ID */
 	private String id;
+
+	/** 产品数量 */
+	private int quantity;
+
+	/** 产品库存数量 */
+	private int stockQuantity;
 
 	/** 产品编码 */
 	private String productCode;
@@ -25,5 +27,8 @@ public class O {
 
 	/** 单位 */
 	private String unit;
+
+	/** 仓库Id */
+	private String storageId;
 
 }

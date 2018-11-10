@@ -8,10 +8,14 @@ $.LKExtendI18N({
       'columns' : {
         'orderNo' : '订单编号',
         'billDate' : '盘点日期',
-        'storageName' : '仓库',
-        'scanCode' : '扫码',
+        'storageName' : '盘点仓库',
         'stockCheckCount' : '盘点产品数',
-        'approvalStatus' : '盘点状态',
+        'usingStatus' : '在用状态',
+        'USING_STATUS' : {
+          'STAND_BY' : '待用',
+          'USING' : '在用'
+        },
+        'approvalStatus' : '审批状态',
         'approvalTime' : '审批时间',
         'startDate' : '订单开始日期',
         'endDate' : '订单结束日期',
@@ -21,18 +25,21 @@ $.LKExtendI18N({
 
       'add' : '录入订单',
       'edit' : '编辑订单',
+      'hold' : '暂存订单',
       'remove' : '删除订单',
       'submit' : '提交订单',
       'view' : '查看订单',
 
       'confirm' : {
         'remove' : '数据删除后将不能恢复，确认删除么？',
-        'submit' : '数据提交后将不能修改，确认提交么？',
+        'hold' : '数据暂存后将不能修改，确认暂存么？',
+        'submit' : '数据提交后将会根据盘点数据修正库存，确认提交么？',
       },
 
       'please choose the storage' : '请选择盘点仓库。',
-      'product not exists' : '产品不存在，请先录入产品。',
-      'only PENDING status can be edit' : '只有草稿状态才可编辑。',
+      'this product does not exist in the current storage' : '当前仓库不存在此产品。',
+      'only STAND_BY status can be edit' : '只有待用状态才可编辑。',
+      'only STAND_BY status can be hold' : '只有待用状态才可暂存。',
       'only PENDING status can be remove' : '只有草稿状态才可删除。',
       'only PENDING status can be submit' : '只有草稿状态才可提交。',
     },
@@ -54,7 +61,6 @@ $.LKExtendI18N({
       'add' : '录入产品',
       'remove' : '删除产品',
     },
-    
-    
+
   }
 });

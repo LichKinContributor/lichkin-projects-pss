@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lichkin.application.mappers.impl.PssStockQtyMapper">
+  <resultMap id="PssStockOutQtyOutResultMap" type="com.lichkin.application.mappers.impl.out.PssStockOutQtyOut"> 
+    <result column="STORAGE_ID" property="storageId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="findStockOutQty" parameterType="com.lichkin.application.mappers.impl.in.PssStockOutQtyIn" resultMap="PssStockOutQtyOutResultMap">
+      select
+    	STORAGE_ID,
+    	PRODUCT_ID,
+    	sum( QUANTITY ) as QUANTITY
+    from
+    	(
+    		select
+    			*
+    		from
+    			(
+    				/** 其他出库 计算已出库的数量 */
+    				select
+    					o.STORAGE_ID,
+    					p.PRODUCT_ID,
+    					sum( p.QUANTITY ) as QUANTITY
+    				from
+    					t_sys_pss_other_stock_order_product p
+    				inner join t_sys_pss_other_stock_order o on
+    					o.id = p.ORDER_ID
+    				where
+    					o.ORDER_TYPE = false
+                        and o.APPROVAL_STATUS != 'APPROVED'
+    					and o.APPROVAL_STATUS != 'REJECT'
+    					and o.USING_STATUS != 'DEPRECATED'
+    					and o.STORAGE_ID in (${storageIds})
+    					and p.PRODUCT_ID in (${productIds})
+                        and o.id <![CDATA[ != ]]> '${orderId}'
+    				group by
+    					o.STORAGE_ID,
+    					p.PRODUCT_ID
+    			) other
+    	union all(
+    			/** 调拨出库 计算已出库的数量 */
+    			select
+    				o.OUT_STORAGE_ID as STORAGE_ID,
+    				p.PRODUCT_ID,
+    				sum( p.QUANTITY ) as QUANTITY
+    			from
+    				t_sys_pss_allot_order_product p
+    			inner join t_sys_pss_allot_order o on
+    				o.id = p.ORDER_ID
+    			where
+                    o.APPROVAL_STATUS != 'APPROVED'
+    				and o.APPROVAL_STATUS != 'REJECT'
+    				and o.USING_STATUS != 'DEPRECATED'
+    				and o.OUT_STORAGE_ID in (${storageIds})
+    				and p.PRODUCT_ID in (${productIds})
+                    and o.id <![CDATA[ != ]]> '${orderId}'
+    			group by
+    				o.OUT_STORAGE_ID,
+    				p.PRODUCT_ID
+    		)
+    union all(
+    		/** 采购出库 计算已出库的数量 */
+    		select
+    			o.STORAGE_ID,
+    			p.PRODUCT_ID,
+    			sum( p.QUANTITY ) as QUANTITY
+    		from
+    			t_sys_pss_purchase_stock_order_product p
+    		inner join t_sys_pss_purchase_stock_order o on
+    			o.id = p.ORDER_ID
+    		where
+    			o.ORDER_TYPE = false
+                and o.APPROVAL_STATUS != 'APPROVED'
+    			and o.APPROVAL_STATUS != 'REJECT'
+    			and o.USING_STATUS != 'DEPRECATED'
+    			and o.STORAGE_ID in (${storageIds})
+    			and p.PRODUCT_ID in (${productIds})
+                and o.id <![CDATA[ != ]]> '${orderId}'
+    		group by
+    			o.STORAGE_ID,
+    			p.PRODUCT_ID
+    	)
+    union all(
+    	/** 销售出库 计算已出库的数量 */
+    	select
+    		o.STORAGE_ID,
+    		p.PRODUCT_ID,
+    		sum( p.QUANTITY ) as QUANTITY
+    	from
+    		t_sys_pss_sell_stock_order_product p
+    	inner join t_sys_pss_sell_stock_order o on
+    		o.id = p.ORDER_ID
+    	where
+    		o.ORDER_TYPE = false
+            and o.APPROVAL_STATUS != 'APPROVED'
+    		and o.APPROVAL_STATUS != 'REJECT'
+    		and o.USING_STATUS != 'DEPRECATED'
+    		and o.STORAGE_ID in (${storageIds})
+    		and p.PRODUCT_ID in (${productIds})
+            and o.id <![CDATA[ != ]]> '${orderId}'
+    	group by
+    		o.STORAGE_ID,
+    		p.PRODUCT_ID
+    )
+    	) prod
+    group by
+    	STORAGE_ID,
+    	PRODUCT_ID
+  </select>
+  
+  <resultMap id="PssPurchaseStockInQtyOutResultMap" type="com.lichkin.application.mappers.impl.out.PssPurchaseStockInQtyOut"> 
+    <result column="STORAGE_ID" property="storageId" jdbcType="VARCHAR" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="findPurchaseStockInQty" parameterType="com.lichkin.application.mappers.impl.in.PssPurchaseStockInQtyIn" resultMap="PssPurchaseStockInQtyOutResultMap">
+    /** 采购入库 已入库的数量 */
+    select
+      o.STORAGE_ID,
+      p.PRODUCT_ID,
+      sum( p.QUANTITY ) as QUANTITY
+    from
+      t_sys_pss_purchase_stock_order_product p
+    inner join t_sys_pss_purchase_stock_order o on
+      o.id = p.ORDER_ID
+    where
+      o.ORDER_TYPE = true
+      and o.APPROVAL_STATUS = 'APPROVED'
+      and o.USING_STATUS = 'USING'
+      and o.STORAGE_ID in (${storageIds})
+      and p.PRODUCT_ID in (${productIds})
+      and o.ORDER_ID <![CDATA[ = ]]> '${orderId}'
+    group by
+      o.STORAGE_ID,
+      p.PRODUCT_ID
+  </select>
+</mapper>

@@ -59,7 +59,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssAllotOrderEn
 		sql.eq(SysPssAllotOrderProductR.orderId, entity.getId());
 		List<PssOrderProductEntity> orderProductList = dao.getList(sql, PssOrderProductEntity.class);
 		// 校验仓库中产品
-		int errorCode = stockBusService.checkProductStockOut(entity.getOutStorageId(), orderProductList);
+		int errorCode = stockBusService.checkProductStockOut(entity.getOutStorageId(), orderProductList, entity.getId());
 		switch (errorCode) {
 			case 1:
 				throw new LKRuntimeException(ErrorCodes.PSS_PRODUCT_NOT_IN_STORAGE);
@@ -77,13 +77,13 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssAllotOrderEn
 		datas.put("billDate", entity.getBillDate());
 		datas.put("remarks", entity.getRemarks());
 		// 关联表参数转换
-		setPurchaseOrderDatas(datas, entity.getId(), compId);
+		setOrderDatas(datas, entity.getId(), compId);
 		// 发起流程
 		activitiStartProcessService.startByAdmin(entity, compId, "PSS_ALLOT_ORDER", loginId, sin.getDatas().getUser().getUserName(), LKJsonUtils.toJson(datas));
 	}
 
 
-	private void setPurchaseOrderDatas(Map<String, Object> datas, String id, String compId) {
+	private void setOrderDatas(Map<String, Object> datas, String id, String compId) {
 		QuerySQL sql = new QuerySQL(SysPssAllotOrderEntity.class);
 
 		// P接口逻辑简化

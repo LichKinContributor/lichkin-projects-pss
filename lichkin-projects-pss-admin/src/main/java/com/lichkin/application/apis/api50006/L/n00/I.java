@@ -15,4 +15,10 @@ public class I extends LKRequestBean {
 	/** 条形码 */
 	private String barcode;
 
+	/** 产品Id */
+	private String productId;
+
+	/** 当前订单ID */
+	private String orderId;
+
 }

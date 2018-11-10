@@ -30,7 +30,8 @@ $.LKExtendI18N({
       },
 
       'please choose the storage' : '请选择调出仓库。',
-      'product not exists' : '产品不存在，请先录入产品。',
+      'the number of products currently available is zero' : '当前产品可出库的数量为0。',
+      'this product does not exist in the storage' : '调出仓库中不存在此产品。',
       'only PENDING status can be edit' : '只有草稿状态才可编辑。',
       'only PENDING status can be remove' : '只有草稿状态才可删除。',
       'only PENDING status can be submit' : '只有草稿状态才可提交。',

@@ -1,14 +1,23 @@
 package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lichkin.application.mappers.impl.PssStockQtyMapper;
+import com.lichkin.application.mappers.impl.in.PssStockOutQtyIn;
+import com.lichkin.application.mappers.impl.out.PssStockOutQtyOut;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssStockR;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
+import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockEntity;
 import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
 import com.lichkin.springframework.entities.suppers.PssStockOrderEntity;
@@ -16,6 +25,10 @@ import com.lichkin.springframework.services.LKDBService;
 
 @Service
 public class SysPssStockBusService extends LKDBService {
+
+	@Autowired
+	private PssStockQtyMapper pssStockOutQtyMapper;
+
 
 	public void changeStockQuantity(PssStockOrderEntity stockOrder, List<PssOrderProductEntity> orderProductList) {
 		if (stockOrder.getOrderType()) {// 入库单业务处理
@@ -30,20 +43,29 @@ public class SysPssStockBusService extends LKDBService {
 	}
 
 
-	public int checkProductStockOut(String storageId, List<PssOrderProductEntity> orderProductList) {
+	public int checkProductStockOut(String storageId, List<PssOrderProductEntity> orderProductList, String orderId) {
+		// 将相同产品合并计算数量
+		Map<String, Integer> prodQtyMap = orderProductList.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+
 		int errorCode = 0;
-		for (PssOrderProductEntity entity : orderProductList) {
+		for (Map.Entry<String, Integer> entry : prodQtyMap.entrySet()) {
 			QuerySQL sql = new QuerySQL(SysPssStockEntity.class);
 			sql.eq(SysPssStockR.storageId, storageId);
-			sql.eq(SysPssStockR.productId, entity.getProductId());
+			sql.eq(SysPssStockR.productId, entry.getKey());
 			SysPssStockEntity stockEntity = dao.getOne(sql, SysPssStockEntity.class);
 			if (stockEntity == null) {
 				errorCode = 1;
 				break;
 			} else {
-				// TODO 用mybatis 查询所有审核中的出库单的产品总和，计算可提交的出库数量
+				// 用mybatis 查询所有类型出库单的已填写的产品出库总和，计算可提交的出库数量
+				List<PssStockOutQtyOut> list = pssStockOutQtyMapper.findStockOutQty(new PssStockOutQtyIn("'" + storageId + "'", "'" + entry.getKey() + "'", orderId));
+				int stockQty = stockEntity.getQuantity();
+				if (CollectionUtils.isNotEmpty(list)) {
+					PssStockOutQtyOut out = list.get(0);
+					stockQty = stockQty - out.getQuantity();
+				}
 
-				if (entity.getQuantity() > stockEntity.getQuantity()) {
+				if (entry.getValue() > stockQty) {
 					errorCode = 2;
 					break;
 				}
@@ -57,6 +79,21 @@ public class SysPssStockBusService extends LKDBService {
 		for (PssOrderProductEntity productEntity : orderProductList) {
 			reduceStock(allotOrder.getOutStorageId(), productEntity);
 			increaseStock(allotOrder.getCompId(), allotOrder.getInStorageId(), productEntity);
+		}
+	}
+
+
+	public void changeStockQuantityByCheckOrder(SysPssStockCheckOrderEntity checkOrder, List<SysPssStockCheckOrderProductEntity> orderProductList) {
+		for (SysPssStockCheckOrderProductEntity productEntity : orderProductList) {
+			// 查询库存中商品
+			QuerySQL sql = new QuerySQL(SysPssStockEntity.class);
+			sql.eq(SysPssStockR.storageId, checkOrder.getStorageId());
+			sql.eq(SysPssStockR.productId, productEntity.getProductId());
+			SysPssStockEntity stockEntity = dao.getOne(sql, SysPssStockEntity.class);
+			if (stockEntity != null) {
+				stockEntity.setQuantity(stockEntity.getQuantity() + productEntity.getDifferenceQuantity());
+				dao.mergeOne(stockEntity);
+			}
 		}
 	}
 

@@ -32,7 +32,7 @@ var checkOrderFormPlugins = [
           }
 
           LK.ajax({
-            url : '/SysPssStockProduct/L',
+            url : '/SysPssStock/L',
             data : {
               storageId : storageId,
               barcode : val
@@ -42,7 +42,7 @@ var checkOrderFormPlugins = [
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
                 $productList.LKInvokeAddDatas(responseDatas);
               } else {
-                LK.alert('checkOrder.grid.product not exists');
+                LK.alert('checkOrder.grid.this product does not exist in the current storage');
               }
             }
           });
@@ -69,7 +69,7 @@ var checkOrderFormPlugins = [
         columns : [
             {
               text : 'productCode',
-              width : 200,
+              width : 180,
               name : 'productCode'
             }, {
               text : 'productName',
@@ -85,34 +85,34 @@ var checkOrderFormPlugins = [
               name : 'unit'
             }, {
               text : 'stockQuantity',
-              width : 60,
+              width : 80,
               name : 'stockQuantity'
             }, {
               text : 'quantity',
-              width : 100,
+              width : 80,
               formatter : function(rowData) {
                 return {
                   plugin : 'numberspinner',
                   options : {
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 0,
+                    min : 0,
                     onChange : function($plugin, values, value, val) { // 产品数量值改变
                       // 系统数量
                       var stockQuantity = rowData.stockQuantity;
-                      var currentCount = 0;
-                      if (val >= 0) {
-                        currentCount = parseInt(stockQuantity) - parseInt(val);
+                      if (stockQuantity) {
+                        var currentCount = parseInt(val) - parseInt(stockQuantity);
+                        $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(currentCount, true);
                       } else {
-                        currentCount = parseInt(stockQuantity) + parseInt(val);
+                        $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(0, true);
                       }
-                      $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(currentCount, true);
                     }
                   }
                 }
               }
             }, {
               text : 'differenceQuantity',
-              width : 100,
+              width : 80,
               formatter : function(rowData) {
                 return {
                   plugin : 'textbox',
@@ -126,6 +126,14 @@ var checkOrderFormPlugins = [
             }
         ],
         toolsAddData : {
+          beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
+            var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();
+            if (!storageId) {
+              LK.alert('checkOrder.grid.please choose the storage');
+              return false;
+            }
+            return true;
+          },
           form : {
             plugins : [
               {
@@ -143,7 +151,32 @@ var checkOrderFormPlugins = [
             }
           },
           handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            return $form.LKGetSubPlugin('product').LKGetValueDatas();
+            var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();
+            var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
+            var notExist = false;
+            for (var i = 0; i < productDatas.length; i++) {
+              var prod = productDatas[i];
+              LK.ajax({
+                url : '/SysPssStock/L',
+                async : false,
+                data : {
+                  storageId : storageId,
+                  productId : prod.id
+                },
+                success : function(responseDatas) {
+                  if (responseDatas && responseDatas.length == 1) {
+                    productDatas[i].stockQuantity = responseDatas[0].stockQuantity;
+                  } else {
+                    notExist = true;
+                  }
+                }
+              });
+              if (notExist) {
+                LK.alert('checkOrder.grid.this product does not exist in the current storage');
+                return [];
+              }
+            }
+            return productDatas;
           },
         },
         toolsRemoveData : {},
@@ -159,13 +192,13 @@ var checkOrderFormPlugins = [
     }
 ];
 
-LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
+var $checkOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
   icon : 'checkOrder',
 } : {}), {
   i18nKey : 'checkOrder',
   $appendTo : true,
-  cols : 3,
+  cols : 4,
   url : '/SysPssStockCheckOrder/P',
   columns : [
       {
@@ -180,14 +213,18 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         text : 'storageName',
         name : 'storageName',
-        width : 180
+        width : 200
       }, {
         text : 'stockCheckCount',
         name : 'stockCheckCount',
-        width : 80
+        width : 100
+      }, {
+        text : 'usingStatus',
+        width : 120,
+        name : 'usingStatus'
       }, {
         text : 'approvalStatus',
-        width : 80,
+        width : 120,
         name : 'approvalStatus'
       }, {
         text : 'approvalTime',
@@ -232,8 +269,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       };
     },
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
-      if (selectedDatas.approvalStatusDictCode != 'PENDING') {
-        LK.alert(i18nKey + 'only PENDING status can be edit');
+      if (selectedDatas.usingStatusDictCode != 'STAND_BY') {
+        LK.alert(i18nKey + 'only STAND_BY status can be edit');
         return false;
       }
       return true;
@@ -298,6 +335,21 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       return true;
     }
   },
+  toolsUS : {
+    icon : 'save',
+    text : 'hold',
+    saveUrl : '/SysPssStockCheckOrder/US',
+    beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
+      for (var i = 0; i < selectedDatas.length; i++) {
+        if (selectedDatas[i].usingStatusDictCode != 'STAND_BY') {
+          LK.alert(i18nKey + 'only STAND_BY status can be hold');
+          return false;
+        }
+      }
+      return true;
+    },
+    usingStatus : 'USING'
+  },
   searchForm : [
       {
         plugin : 'textbox',
@@ -321,6 +373,20 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         plugin : 'datepicker',
         options : {
           name : 'endDate'
+        }
+      }, {
+        plugin : 'droplist',
+        options : {
+          name : 'usingStatus',
+          data : [
+              {
+                value : 'STAND_BY',
+                text : $.LKGetI18N('checkOrder.grid.columns.USING_STATUS.STAND_BY')
+              }, {
+                value : 'USING',
+                text : $.LKGetI18N('checkOrder.grid.columns.USING_STATUS.USING')
+              }
+          ]
         }
       }, {
         plugin : 'droplist',

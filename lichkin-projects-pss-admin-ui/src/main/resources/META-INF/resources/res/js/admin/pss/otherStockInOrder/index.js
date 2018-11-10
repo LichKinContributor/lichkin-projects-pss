@@ -226,7 +226,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       LK.UI.formUtils.changeOptions(formOptions.plugins, 'productList', false, {
         lazy : false,
         param : {
-          orderId : value
+          orderId : value,
+          orderType : true
         }
       });
     }
@@ -247,7 +248,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       LK.UI.formUtils.changeOptions(formOptions.plugins, 'productList', false, {
         lazy : false,
         param : {
-          orderId : value
+          orderId : value,
+          orderType : true
         },
         tools : []
       });

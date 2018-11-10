@@ -45,18 +45,29 @@ var otherStockOutOrderFormPlugins = [
             return;
           }
 
+          var id = $plugin.parents('form').find('input[name=id]').val();
+          var orderId;
+          if (id) {
+            orderId = $otherStockOutOrderDatagrid.LKGetValue();
+          }
+
           LK.ajax({
-            url : '/SysPssStockProduct/L',
+            url : '/SysPssStock/L',
             data : {
               storageId : storageId,
-              barcode : val
+              barcode : val,
+              orderId : orderId
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
+                if (responseDatas[0].stockQuantity == 0) {
+                  LK.alert('otherStockOutOrder.grid.the number of products currently available is zero');
+                  return;
+                }
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
                 $productList.LKInvokeAddDatas(responseDatas);
               } else {
-                LK.alert('otherStockOutOrder.grid.product not exists');
+                LK.alert('otherStockOutOrder.grid.this product does not exist in the current storage');
               }
             }
           });
@@ -97,6 +108,10 @@ var otherStockOutOrderFormPlugins = [
               width : 60,
               name : 'unit'
             }, {
+              text : 'stockQuantity',
+              width : 80,
+              name : 'stockQuantity'
+            }, {
               text : 'quantity',
               width : 100,
               formatter : function(rowData) {
@@ -105,13 +120,22 @@ var otherStockOutOrderFormPlugins = [
                   options : {
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 1,
-                    min : 1
+                    min : 0,
+                    max : rowData.stockQuantity
                   }
                 }
               }
             }
         ],
         toolsAddData : {
+          beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
+            var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();
+            if (!storageId) {
+              LK.alert('otherStockOutOrder.grid.please select the storage first');
+              return false;
+            }
+            return true;
+          },
           form : {
             plugins : [
               {
@@ -129,7 +153,48 @@ var otherStockOutOrderFormPlugins = [
             }
           },
           handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            return $form.LKGetSubPlugin('product').LKGetValueDatas();
+            var id = $datagrid.parents('form').find('input[name=id]').val();
+            var orderId;
+            if (id) {
+              orderId = $otherStockOutOrderDatagrid.LKGetValue();
+            }
+
+            var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();
+            var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
+            var notExist = false;
+            var qtyIsZero = false;
+            for (var i = 0; i < productDatas.length; i++) {
+              var prod = productDatas[i];
+              LK.ajax({
+                url : '/SysPssStock/L',
+                async : false,
+                data : {
+                  storageId : storageId,
+                  productId : prod.id,
+                  orderId : orderId
+                },
+                success : function(responseDatas) {
+                  if (responseDatas && responseDatas.length == 1) {
+                    if (responseDatas[0].stockQuantity == 0) {
+                      qtyIsZero = true;
+                      return;
+                    }
+                    productDatas[i].stockQuantity = responseDatas[0].stockQuantity;
+                  } else {
+                    notExist = true;
+                  }
+                }
+              });
+              if (qtyIsZero) {
+                LK.alert('otherStockOutOrder.grid.the number of products currently available is zero');
+                return [];
+              }
+              if (notExist) {
+                LK.alert('otherStockOutOrder.grid.this product does not exist in the current storage');
+                return [];
+              }
+            }
+            return productDatas;
           },
         },
         toolsRemoveData : {},
@@ -145,7 +210,7 @@ var otherStockOutOrderFormPlugins = [
     }
 ];
 
-LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
+var $otherStockOutOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
   icon : 'otherStockOutOrder',
 } : {}), {
@@ -233,7 +298,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       LK.UI.formUtils.changeOptions(formOptions.plugins, 'productList', false, {
         lazy : false,
         param : {
-          orderId : value
+          orderId : value,
+          orderType : false
         }
       });
     }
@@ -254,7 +320,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       LK.UI.formUtils.changeOptions(formOptions.plugins, 'productList', false, {
         lazy : false,
         param : {
-          orderId : value
+          orderId : value,
+          orderType : false
         },
         tools : []
       });

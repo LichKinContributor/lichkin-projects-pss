@@ -27,4 +27,7 @@ public class O {
 	/** 单位 */
 	private String unit;
 
+	/** 仓库Id */
+	private String storageId;
+
 }

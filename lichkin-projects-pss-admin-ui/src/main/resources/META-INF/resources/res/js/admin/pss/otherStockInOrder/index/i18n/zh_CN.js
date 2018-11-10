@@ -45,7 +45,10 @@ $.LKExtendI18N({
         'unit' : '单位',
         'quantity' : '数量',
         'product' : '选择产品',
-      }
+      },
+
+      'add' : '录入产品',
+      'remove' : '删除产品',
     },
 
   }

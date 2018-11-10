@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.SysPssStockCheckOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -42,7 +43,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockCheckOrderEntity>
 		// 公司ID
 		addConditionCompId(false, sql, SysPssStockCheckOrderR.compId, compId, sin.getCompId());
 		// 在用状态
-		addConditionUsingStatus(sql, SysPssStockCheckOrderR.usingStatus, compId, sin.getUsingStatus());
+		addConditionUsingStatus(sql, SysPssStockCheckOrderR.usingStatus, compId, sin.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		ApprovalStatusEnum approvalStatus = sin.getApprovalStatus();
