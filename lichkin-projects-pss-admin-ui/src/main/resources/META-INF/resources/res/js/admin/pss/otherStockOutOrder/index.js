@@ -45,10 +45,9 @@ var otherStockOutOrderFormPlugins = [
             return;
           }
 
-          var id = $plugin.parents('form').find('input[name=id]').val();
-          var orderId;
-          if (id) {
-            orderId = $otherStockOutOrderDatagrid.LKGetValue();
+          var orderId = $plugin.parents('form').find('input[name=id]').val();
+          if (!orderId) {
+            orderId = '';
           }
 
           LK.ajax({
@@ -153,10 +152,9 @@ var otherStockOutOrderFormPlugins = [
             }
           },
           handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            var id = $datagrid.parents('form').find('input[name=id]').val();
-            var orderId;
-            if (id) {
-              orderId = $otherStockOutOrderDatagrid.LKGetValue();
+            var orderId = $datagrid.parents('form').find('input[name=id]').val();
+            if (!orderId) {
+              orderId = '';
             }
 
             var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();

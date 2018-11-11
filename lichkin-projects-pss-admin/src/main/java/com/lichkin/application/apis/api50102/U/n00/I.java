@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestIDBean {
 
-	private String billDate;
-
 	private String remarks;
 
 	/** 产品列表 */

@@ -39,10 +39,9 @@ var allotOrderFormPlugins = [
             return;
           }
 
-          var id = $plugin.parents('form').find('input[name=id]').val();
-          var orderId;
-          if (id) {
-            orderId = $allotOrderDatagrid.LKGetValue();
+          var orderId = $plugin.parents('form').find('input[name=id]').val();
+          if (!orderId) {
+            orderId = '';
           }
 
           LK.ajax({
@@ -54,7 +53,7 @@ var allotOrderFormPlugins = [
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
-                if(responseDatas[0].stockQuantity == 0) {
+                if (responseDatas[0].stockQuantity == 0) {
                   LK.alert('allotOrder.grid.the number of products currently available is zero');
                   return;
                 }
@@ -148,12 +147,11 @@ var allotOrderFormPlugins = [
             }
           },
           handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            var id = $datagrid.parents('form').find('input[name=id]').val();
-            var orderId;
-            if (id) {
-              orderId = $allotOrderDatagrid.LKGetValue();
+            var orderId = $datagrid.parents('form').find('input[name=id]').val();
+            if (!orderId) {
+              orderId = '';
             }
-            
+
             var storageId = $datagrid.LKGetSiblingPlugin('outStorageId').LKGetValue();
             var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
             var notExist = false;

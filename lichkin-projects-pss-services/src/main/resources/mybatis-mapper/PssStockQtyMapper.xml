@@ -6,7 +6,8 @@
     <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
     <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
   </resultMap>
-
+  
+  <!-- 查询所有类型已填写的出库数量 -->
   <select id="findStockOutQty" parameterType="com.lichkin.application.mappers.impl.in.PssStockOutQtyIn" resultMap="PssStockOutQtyOutResultMap">
       select
     	STORAGE_ID,
@@ -115,9 +116,9 @@
     <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
     <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
   </resultMap>
-  
+   
+  <!-- 查询单个采购单实际已经入库的数量（订单审核通过） -->
   <select id="findPurchaseStockInQty" parameterType="com.lichkin.application.mappers.impl.in.PssPurchaseStockInQtyIn" resultMap="PssPurchaseStockInQtyOutResultMap">
-    /** 采购入库 已入库的数量 */
     select
       o.STORAGE_ID,
       p.PRODUCT_ID,
@@ -136,5 +137,30 @@
     group by
       o.STORAGE_ID,
       p.PRODUCT_ID
+  </select>
+  
+  <resultMap id="PurchaseProdStockInQtyOutResultMap" type="com.lichkin.application.mappers.impl.out.PurchaseProdStockInQtyOut"> 
+    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
+  </resultMap>
+   
+  <!-- 查询单个采购入库单已经填写的入库数据（订单非驳回 非删除状态） -->
+  <select id="findPurchaseProdStockInQty" parameterType="com.lichkin.application.mappers.impl.in.PurchaseProdStockInQtyIn" resultMap="PurchaseProdStockInQtyOutResultMap">
+    select
+    	p.PRODUCT_ID,
+    	sum( p.QUANTITY ) as QUANTITY
+    from
+    	t_sys_pss_purchase_stock_order_product p
+    inner join t_sys_pss_purchase_stock_order o on
+    	o.id = p.ORDER_ID
+    where
+    	o.ORDER_TYPE = true
+    	and o.APPROVAL_STATUS != 'REJECT'
+    	and o.USING_STATUS != 'DEPRECATED'
+    	and p.PRODUCT_ID in (${productIds})
+    	and o.ORDER_ID <![CDATA[ = ]]> '${purchaseOrderId}'
+    	and o.id <![CDATA[ != ]]> '${orderId}'
+    group by
+    	p.PRODUCT_ID
   </select>
 </mapper>

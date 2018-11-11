@@ -14,18 +14,13 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssAllotOrderProductR;
 import com.lichkin.framework.db.beans.SysPssAllotOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
-import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
-import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
-
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Service("SysPssAllotOrderU01Service")
 public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssAllotOrderEntity> {
@@ -37,38 +32,8 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssAllotOrderEn
 	private SysPssStockBusService stockBusService;
 
 
-	@Getter
-	@RequiredArgsConstructor
-	enum ErrorCodes implements LKCodeEnum {
-
-		PSS_PRODUCT_NOT_IN_STORAGE(60000),
-
-		PSS_PRODUCT_STOCKOUT_QUANTITY_OUT_OF_STOCK_QUANTITY(60000),
-
-		;
-
-		private final Integer code;
-
-	}
-
-
 	@Override
 	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity) {
-		// 校验处理
-		QuerySQL sql = new QuerySQL(false, SysPssAllotOrderProductEntity.class);
-		sql.eq(SysPssAllotOrderProductR.orderId, entity.getId());
-		List<PssOrderProductEntity> orderProductList = dao.getList(sql, PssOrderProductEntity.class);
-		// 校验仓库中产品
-		int errorCode = stockBusService.checkProductStockOut(entity.getOutStorageId(), orderProductList, entity.getId());
-		switch (errorCode) {
-			case 1:
-				throw new LKRuntimeException(ErrorCodes.PSS_PRODUCT_NOT_IN_STORAGE);
-			case 2:
-				throw new LKRuntimeException(ErrorCodes.PSS_PRODUCT_STOCKOUT_QUANTITY_OUT_OF_STOCK_QUANTITY);
-			default:
-			break;
-		}
-
 		Map<String, Object> datas = new HashMap<>();
 		// 必填
 		datas.put("id", entity.getId());

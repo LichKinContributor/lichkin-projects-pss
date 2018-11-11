@@ -84,11 +84,13 @@ public class LKApiGeneratorRunner {
 	public void generateList() {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderProductEntity", index + 1, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 	}
 
 

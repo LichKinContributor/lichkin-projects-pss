@@ -11,12 +11,14 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderR;
 import com.lichkin.framework.db.beans.SysPssPurchaseStockOrderR;
+import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
+import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
 
@@ -31,9 +33,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseStockOrderEnti
 		sql.select(SysPssPurchaseStockOrderR.approvalTime);
 		sql.select(SysPssPurchaseStockOrderR.orderNo);
 		sql.select(SysPssPurchaseStockOrderR.billDate);
-		sql.select(SysPssPurchaseStockOrderR.storageId);
 
 		// 关联表
+		sql.innerJoin(SysPssStorageEntity.class, new Condition(SysPssPurchaseStockOrderR.storageId, SysPssStorageR.id));
+		sql.select(SysPssStorageR.storageName);
 		sql.innerJoin(SysPssPurchaseOrderEntity.class, new Condition(SysPssPurchaseStockOrderR.orderId, SysPssPurchaseOrderR.id));
 		sql.select(SysPssPurchaseOrderR.orderNo, "purchaseOrderNo");
 		sql.select(SysPssPurchaseOrderR.billDate, "purchaserBillDate");
@@ -77,7 +80,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseStockOrderEnti
 
 		String purchaseOrderNo = sin.getPurchaseOrderNo();
 		if (StringUtils.isNotBlank(purchaseOrderNo)) {
-			sql.eq(SysPssPurchaseOrderR.orderNo, purchaseOrderNo);
+			sql.like(SysPssPurchaseOrderR.orderNo, LikeType.ALL, purchaseOrderNo);
 		}
 
 		String supplierName = sin.getSupplierName();
@@ -92,12 +95,12 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseStockOrderEnti
 
 		String startDate = sin.getStartDate();
 		if (StringUtils.isNotBlank(startDate)) {
-			sql.gte(SysPssPurchaseStockOrderR.insertTime, startDate);
+			sql.gte(SysPssPurchaseStockOrderR.billDate, startDate);
 		}
 
 		String endDate = sin.getEndDate();
 		if (StringUtils.isNotBlank(endDate)) {
-			sql.lte(SysPssPurchaseStockOrderR.insertTime, endDate);
+			sql.lte(SysPssPurchaseStockOrderR.billDate, endDate);
 		}
 
 		// 排序条件

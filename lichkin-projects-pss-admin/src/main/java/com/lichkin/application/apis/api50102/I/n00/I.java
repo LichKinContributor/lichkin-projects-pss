@@ -15,6 +15,8 @@ public class I extends LKRequestBean {
 
 	private String remarks;
 
+	private Boolean orderType;
+
 	private String storageId;
 
 	private String orderId;
