@@ -27,13 +27,10 @@
     <module>lichkin-projects-pss-apis-common</module>
     <module>lichkin-projects-pss-admin</module>
     <module>lichkin-projects-pss-admin-ui</module>
-    <module>lichkin-projects-pss-admin-launcher</module>
     <module>lichkin-projects-pss-user</module>
     <module>lichkin-projects-pss-user-ui</module>
-    <module>lichkin-projects-pss-user-launcher</module>
     <module>lichkin-projects-pss-employee</module>
     <module>lichkin-projects-pss-employee-ui</module>
-    <module>lichkin-projects-pss-employee-launcher</module>
     <module>lichkin-projects-pss-quartz</module>
   </modules>
 
