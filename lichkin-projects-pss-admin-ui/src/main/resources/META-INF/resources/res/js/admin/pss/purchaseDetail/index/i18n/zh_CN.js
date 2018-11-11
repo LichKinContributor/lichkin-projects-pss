@@ -1,5 +1,5 @@
 $.LKExtendI18N({
-  'stockDetail' : {
+  'purchaseDetail' : {
     'title' : '采购单明细',
 
     'grid' : {

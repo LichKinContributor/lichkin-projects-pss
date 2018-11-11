@@ -47,7 +47,7 @@ public class LKDictUtils4Pss extends LKDictUtils {
 
 
 	/**
-	 * 连接字典表（其他入库单类型）
+	 * 连接字典表（其它入库单类型）
 	 * @param sql SQL语句对象
 	 * @param compId 公司ID
 	 * @param columnResId 列资源ID
@@ -59,7 +59,7 @@ public class LKDictUtils4Pss extends LKDictUtils {
 
 
 	/**
-	 * 连接字典表（其他出库单类型）
+	 * 连接字典表（其它出库单类型）
 	 * @param sql SQL语句对象
 	 * @param compId 公司ID
 	 * @param columnResId 列资源ID

@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 销售订单商品表实体类
+ * 销售订单产品表实体类
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter

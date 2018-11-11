@@ -1,9 +1,9 @@
 $.LKExtendI18N({
   'otherStockOutOrder' : {
-    'title' : '其他出库单',
+    'title' : '其它出库单',
 
     'grid' : {
-      'title' : '其他出库单',
+      'title' : '其它出库单',
 
       'columns' : {
         'orderNo' : '订单号',

@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 其他入库订单商品表实体类
+ * 其它库存单表产品表实体类
  * @author SuZhou LichKin Information Technology Co., Ltd.
  */
 @Getter

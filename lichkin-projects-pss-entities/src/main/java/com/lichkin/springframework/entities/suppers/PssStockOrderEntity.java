@@ -26,7 +26,7 @@ public abstract class PssStockOrderEntity extends PssOrderEntity {
 	@Column(length = 64, nullable = false)
 	private String storageId;
 
-	/** 订单类型。true:入库单;false:出库单; */
+	/** 订单类型（true:入库;false:出库;） */
 	@FieldGenerator(resultColumn = false, insertType = InsertType.COPY_RETAIN, updateable = false, queryCondition = true, queryConditionLike = false)
 	@Column(nullable = false)
 	private Boolean orderType;

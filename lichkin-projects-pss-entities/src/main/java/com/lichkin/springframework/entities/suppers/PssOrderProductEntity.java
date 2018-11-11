@@ -21,7 +21,7 @@ public abstract class PssOrderProductEntity extends IDEntity {
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
 
-	/** 订单ID（SysPssAllotOrderEntity.id） */
+	/** 订单ID（对应订单实体类.id） */
 	@FieldGenerator(queryCondition = true, queryConditionLike = false)
 	@Column(length = 64, nullable = false)
 	private String orderId;
