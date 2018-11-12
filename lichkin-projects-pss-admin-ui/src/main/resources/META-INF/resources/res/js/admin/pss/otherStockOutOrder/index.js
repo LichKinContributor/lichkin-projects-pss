@@ -66,7 +66,12 @@ var otherStockOutOrderFormPlugins = [
                   LK.alert('otherStockOutOrder.grid.the number of products currently available is zero');
                   return;
                 }
+
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
+                if (mergeProdOutnumber($productList, responseDatas[0])) {
+                  return;
+                }
+
                 $productList.LKInvokeAddDatas(responseDatas);
               } else {
                 LK.alert('otherStockOutOrder.grid.this product does not exist in the current storage');
@@ -125,7 +130,7 @@ var otherStockOutOrderFormPlugins = [
                   options : {
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 1,
-                    min : 0,
+                    min : 1,
                     max : rowData.stockQuantity
                   }
                 }
@@ -167,6 +172,8 @@ var otherStockOutOrderFormPlugins = [
             var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
             var notExist = false;
             var qtyIsZero = false;
+
+            var returnDatas = [];
             for (var i = 0; i < productDatas.length; i++) {
               var prod = productDatas[i];
               LK.ajax({
@@ -183,7 +190,10 @@ var otherStockOutOrderFormPlugins = [
                       qtyIsZero = true;
                       return;
                     }
-                    productDatas[i].stockQuantity = responseDatas[0].stockQuantity;
+                    if (mergeProdOutnumber($datagrid, responseDatas[0])) {
+                      return;
+                    }
+                    returnDatas.push(responseDatas[0]);
                   } else {
                     notExist = true;
                   }
@@ -198,7 +208,7 @@ var otherStockOutOrderFormPlugins = [
                 return [];
               }
             }
-            return productDatas;
+            return returnDatas;
           },
         },
         toolsRemoveData : {},
@@ -213,6 +223,23 @@ var otherStockOutOrderFormPlugins = [
       }
     }
 ];
+
+var mergeProdOutnumber = function($datagrid, addProd) {
+  var outnumber = false;
+  var $allRows = $datagrid.LKGetDataContainer().find('tr');
+  $allRows.each(function() {
+    var rowData = $(this).data();
+    if (rowData.id == addProd.id) {
+      outnumber = true;
+      var qty = parseInt($(this).LKGetSubPlugin('quantity').LKGetValue()) + 1;
+      if (qty <= addProd.stockQuantity) {
+        $(this).LKGetSubPlugin('quantity').LKSetValues(qty, true);
+      }
+      return false;
+    }
+  });
+  return outnumber;
+}
 
 var $otherStockOutOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
