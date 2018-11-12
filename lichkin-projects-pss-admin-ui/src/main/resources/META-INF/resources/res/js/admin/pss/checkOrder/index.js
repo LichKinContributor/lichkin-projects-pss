@@ -12,7 +12,10 @@ var checkOrderFormPlugins = [
         key : 'storageName',
         name : 'storageId',
         url : '/SysPssStorage/LD',
-        validator : true
+        validator : true,
+        linkages : [
+          'productList'
+        ]
       }
     }, {
       plugin : 'textbox',
@@ -74,6 +77,9 @@ var checkOrderFormPlugins = [
         url : '/SysPssStockCheckOrderProduct/L',
         lazy : true,
         $appendTo : $('body'),
+        onLinkaged : function($plugin, linkage) {
+          $plugin.LKClearDatas(false, true);
+        },
         columns : [
             {
               text : 'productCode',
@@ -314,6 +320,9 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           orderId : value
         }
       });
+      LK.UI.formUtils.changeOptions(formOptions.plugins, 'storageId', false, {
+        linkages : []
+      }, true);
     }
   },
   toolsView : {
@@ -336,6 +345,9 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         },
         tools : []
       });
+      LK.UI.formUtils.changeOptions(formOptions.plugins, 'storageId', false, {
+        linkages : []
+      }, true);
     }
   },
   toolsRemove : {
@@ -358,7 +370,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           LK.alert(i18nKey + 'only PENDING status can be submit');
           return false;
         }
-        if(selectedDatas[i].billDate != today()) {
+        if (selectedDatas[i].billDate != today()) {
           LK.alert(i18nKey + 'only today order can be submit');
           return false;
         }

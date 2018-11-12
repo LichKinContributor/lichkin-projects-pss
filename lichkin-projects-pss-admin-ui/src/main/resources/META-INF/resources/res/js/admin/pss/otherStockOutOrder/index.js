@@ -27,7 +27,10 @@ var otherStockOutOrderFormPlugins = [
         key : 'storageName',
         name : 'storageId',
         url : '/SysPssStorage/LD',
-        validator : true
+        validator : true,
+        linkages : [
+          'productList'
+        ]
       }
     }, {
       plugin : 'textbox',
@@ -89,6 +92,9 @@ var otherStockOutOrderFormPlugins = [
         url : '/SysPssOtherStockOrderProduct/L',
         lazy : true,
         $appendTo : $('body'),
+        onLinkaged : function($plugin, linkage) {
+          $plugin.LKClearDatas(false, true);
+        },
         columns : [
             {
               text : 'productCode',
@@ -300,6 +306,9 @@ var $otherStockOutOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'un
           orderType : false
         }
       });
+      LK.UI.formUtils.changeOptions(formOptions.plugins, 'storageId', false, {
+        linkages : []
+      }, true);
     }
   },
   toolsView : {
@@ -323,6 +332,9 @@ var $otherStockOutOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'un
         },
         tools : []
       });
+      LK.UI.formUtils.changeOptions(formOptions.plugins, 'storageId', false, {
+        linkages : []
+      }, true);
     }
   },
   toolsRemove : {

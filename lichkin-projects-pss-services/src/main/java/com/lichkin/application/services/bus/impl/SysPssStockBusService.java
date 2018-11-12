@@ -167,7 +167,7 @@ public class SysPssStockBusService extends LKDBService {
 			sql.eq(SysPssStockR.productId, productEntity.getProductId());
 			SysPssStockEntity stockEntity = dao.getOne(sql, SysPssStockEntity.class);
 			if (stockEntity != null) {
-				stockEntity.setQuantity(stockEntity.getQuantity() + productEntity.getDifferenceQuantity());
+				stockEntity.setQuantity(productEntity.getQuantity());
 				dao.mergeOne(stockEntity);
 			}
 		}

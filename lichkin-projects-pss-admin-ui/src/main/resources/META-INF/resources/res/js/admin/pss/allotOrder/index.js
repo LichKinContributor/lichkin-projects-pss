@@ -12,7 +12,10 @@ var allotOrderFormPlugins = [
         key : 'outStorageName',
         name : 'outStorageId',
         url : '/SysPssStorage/LD',
-        validator : true
+        validator : true,
+        linkages : [
+          'productList'
+        ]
       }
     }, {
       plugin : 'droplist',
@@ -84,6 +87,9 @@ var allotOrderFormPlugins = [
         url : '/SysPssAllotOrderProduct/L',
         lazy : true,
         $appendTo : $('body'),
+        onLinkaged : function($plugin, linkage) {
+          $plugin.LKClearDatas(false, true);
+        },
         columns : [
             {
               text : 'productCode',
@@ -294,6 +300,9 @@ var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined'
           orderId : value
         }
       });
+      LK.UI.formUtils.changeOptions(formOptions.plugins, 'outStorageId', false, {
+        linkages : []
+      }, true);
     }
   },
   toolsView : {
@@ -316,6 +325,9 @@ var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined'
         },
         tools : []
       });
+      LK.UI.formUtils.changeOptions(formOptions.plugins, 'outStorageId', false, {
+        linkages : []
+      }, true);
     }
   },
   toolsRemove : {
