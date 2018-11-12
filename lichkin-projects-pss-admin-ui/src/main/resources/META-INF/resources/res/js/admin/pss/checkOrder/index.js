@@ -111,11 +111,11 @@ var checkOrderFormPlugins = [
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 0,
                     min : 0,
-                    onChange : function($plugin, values, value, val) { // 产品数量值改变
+                    onChange : function($plugin, values, value, currentValue) { // 产品数量值改变
                       // 系统数量
                       var stockQuantity = rowData.stockQuantity;
                       if (stockQuantity) {
-                        var currentCount = parseInt(val) - parseInt(stockQuantity);
+                        var currentCount = parseInt(currentValue) - parseInt(stockQuantity);
                         $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(currentCount, true);
                       } else {
                         $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(0, true);

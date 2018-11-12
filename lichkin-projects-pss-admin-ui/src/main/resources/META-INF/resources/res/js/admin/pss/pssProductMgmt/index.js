@@ -32,8 +32,8 @@ var pssProductMgmtFormPlugins = [
         name : 'purchasePrice',
         validator : true,
         maxlength : 10,
-        onChange : function($plugin, values, value, val) {
-          $plugin.LKSetValues(value.replace(/[^0-9.]/g, ''), true);
+        onChange : function($plugin, values, value, currentValue) {
+          $plugin.LKSetValues(currentValue.replace(/[^0-9.]/g, ''), true);
         },
         value : 0
       }
@@ -43,8 +43,8 @@ var pssProductMgmtFormPlugins = [
         name : 'referencePrice',
         validator : true,
         maxlength : 10,
-        onChange : function($plugin, values, value, val) {
-          $plugin.LKSetValues(value.replace(/[^0-9.]/g, ''), true);
+        onChange : function($plugin, values, value, currentValue) {
+          $plugin.LKSetValues(currentValue.replace(/[^0-9.]/g, ''), true);
         },
         value : 0
       }
@@ -54,8 +54,8 @@ var pssProductMgmtFormPlugins = [
         name : 'retailPrice',
         validator : true,
         maxlength : 10,
-        onChange : function($plugin, values, value, val) {
-          $plugin.LKSetValues(value.replace(/[^0-9.]/g, ''), true);
+        onChange : function($plugin, values, value, currentValue) {
+          $plugin.LKSetValues(currentValue.replace(/[^0-9.]/g, ''), true);
         },
         value : 0
       }
