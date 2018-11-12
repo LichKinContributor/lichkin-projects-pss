@@ -3,8 +3,8 @@ package com.lichkin.application.apis.api50500.P.n00;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.lichkin.application.utils.LKDictUtils;
 import com.lichkin.application.utils.LKDictUtils4Activiti;
+import com.lichkin.application.utils.LKDictUtils4Pss;
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
@@ -36,7 +36,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockCheckOrderEntity>
 
 		// 字典表
 		int i = 0;
-		LKDictUtils.usingStatus(sql, SysPssStockCheckOrderR.usingStatus, i++);
+		LKDictUtils4Pss.checkOrderStatus(sql, SysPssStockCheckOrderR.usingStatus, i++);
 		LKDictUtils4Activiti.approvalStatus(sql, SysPssStockCheckOrderR.approvalStatus, i++);
 
 		// 筛选条件（必填项）

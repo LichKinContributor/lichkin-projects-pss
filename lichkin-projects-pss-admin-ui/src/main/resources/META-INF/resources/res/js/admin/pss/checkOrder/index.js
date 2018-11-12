@@ -358,6 +358,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           LK.alert(i18nKey + 'only PENDING status can be submit');
           return false;
         }
+        if(selectedDatas[i].billDate != today()) {
+          LK.alert(i18nKey + 'only today order can be submit');
+          return false;
+        }
       }
       return true;
     }
@@ -405,15 +409,9 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         plugin : 'droplist',
         options : {
           name : 'usingStatus',
-          data : [
-              {
-                value : 'STAND_BY',
-                text : $.LKGetI18N('checkOrder.grid.columns.USING_STATUS.STAND_BY')
-              }, {
-                value : 'USING',
-                text : $.LKGetI18N('checkOrder.grid.columns.USING_STATUS.USING')
-              }
-          ]
+          param : {
+            categoryCode : 'PSS_CHECK_ORDER_STATUS'
+          }
         }
       }, {
         plugin : 'droplist',

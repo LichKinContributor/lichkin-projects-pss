@@ -69,4 +69,15 @@ public class LKDictUtils4Pss extends LKDictUtils {
 		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STORAGE_OUT", columnResId, tableIdx);
 	}
 
+
+	/**
+	 * 连接字典表（盘点状态）
+	 * @param sql SQL语句对象
+	 * @param columnResId 列资源ID
+	 * @param tableIdx 字典表序号（从0开始）
+	 */
+	public static void checkOrderStatus(QuerySQL sql, int columnResId, int tableIdx) {
+		leftJoinDictionary(sql, "usingStatus", LKFrameworkStatics.LichKin, "PSS_CHECK_ORDER_STATUS", columnResId, tableIdx);
+	}
+
 }

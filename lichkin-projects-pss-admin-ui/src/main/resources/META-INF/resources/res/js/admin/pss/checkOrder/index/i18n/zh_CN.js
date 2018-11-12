@@ -10,11 +10,7 @@ $.LKExtendI18N({
         'billDate' : '盘点日期',
         'storageName' : '盘点仓库',
         'stockCheckCount' : '盘点产品数',
-        'usingStatus' : '在用状态',
-        'USING_STATUS' : {
-          'STAND_BY' : '待用',
-          'USING' : '在用'
-        },
+        'usingStatus' : '盘点状态',
         'approvalStatus' : '审批状态',
         'approvalTime' : '审批时间',
         'startDate' : '订单开始日期',
@@ -25,7 +21,7 @@ $.LKExtendI18N({
 
       'add' : '录入订单',
       'edit' : '编辑订单',
-      'hold' : '暂存订单',
+      'hold' : '盘点结束',
       'remove' : '删除订单',
       'submit' : '提交订单',
       'view' : '查看订单',
@@ -39,10 +35,11 @@ $.LKExtendI18N({
       'please choose the storage' : '请选择盘点仓库。',
       'product already exists' : '产品已存在。',
       'this product does not exist in the current storage' : '当前仓库不存在此产品。',
-      'only STAND_BY status can be edit' : '只有待用状态才可编辑。',
-      'only STAND_BY status can be hold' : '只有待用状态才可暂存。',
+      'only STAND_BY status can be edit' : '只有盘点中状态才可编辑。',
+      'only STAND_BY status can be hold' : '只有盘点中状态才可盘点结束。',
       'only PENDING status can be remove' : '只有草稿状态才可删除。',
       'only PENDING status can be submit' : '只有草稿状态才可提交。',
+      'only today order can be submit' : '只有当日盘点单才可提交。',
     },
 
     'product-grid' : {
