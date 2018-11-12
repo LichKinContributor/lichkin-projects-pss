@@ -2,6 +2,7 @@ package com.lichkin.application.apis.api50000.LD.n00;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.Order;
@@ -25,6 +26,11 @@ public class S extends LKApiBusGetDroplistService<I> {
 
 		sql.eq(SysPssStorageR.usingStatus, LKUsingStatusEnum.USING);
 		sql.eq(SysPssStorageR.compId, compId);
+
+		String excludeIds = sin.getExcludeIds();
+		if (StringUtils.isNotBlank(excludeIds)) {
+			sql.notIn(SysPssStorageR.id, excludeIds);
+		}
 
 		sql.addOrders(new Order(SysPssStorageR.storageName));
 

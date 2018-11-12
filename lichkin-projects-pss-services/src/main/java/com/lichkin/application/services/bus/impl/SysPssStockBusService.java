@@ -160,16 +160,24 @@ public class SysPssStockBusService extends LKDBService {
 
 
 	public void changeStockQuantityByCheckOrder(SysPssStockCheckOrderEntity checkOrder, List<SysPssStockCheckOrderProductEntity> orderProductList) {
-		for (SysPssStockCheckOrderProductEntity productEntity : orderProductList) {
+		if (CollectionUtils.isNotEmpty(orderProductList)) {
+			// 将相同产品合并计算数量
+			Map<String, Integer> prodQtyMap = orderProductList.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+
+			List<String> prodIdList = new ArrayList<>();
+			for (SysPssStockCheckOrderProductEntity prod : orderProductList) {
+				prodIdList.add(prod.getProductId());
+			}
 			// 查询库存中商品
 			QuerySQL sql = new QuerySQL(SysPssStockEntity.class);
 			sql.eq(SysPssStockR.storageId, checkOrder.getStorageId());
-			sql.eq(SysPssStockR.productId, productEntity.getProductId());
-			SysPssStockEntity stockEntity = dao.getOne(sql, SysPssStockEntity.class);
-			if (stockEntity != null) {
-				stockEntity.setQuantity(productEntity.getQuantity());
-				dao.mergeOne(stockEntity);
+			sql.in(SysPssStockR.productId, prodIdList);
+			List<SysPssStockEntity> stockList = dao.getList(sql, SysPssStockEntity.class);
+
+			for (SysPssStockEntity stockEntity : stockList) {
+				stockEntity.setQuantity(prodQtyMap.get(stockEntity.getProductId()));
 			}
+			dao.mergeList(stockList);
 		}
 	}
 

@@ -13,6 +13,13 @@ var allotOrderFormPlugins = [
         name : 'outStorageId',
         url : '/SysPssStorage/LD',
         validator : true,
+        onChange : function($plugin, values, value, currentValue) {
+          $plugin.LKGetSiblingPlugin('inStorageId').LKLoad({
+            param : {
+              excludeIds : currentValue
+            }
+          });
+        },
         linkages : [
           'productList'
         ]

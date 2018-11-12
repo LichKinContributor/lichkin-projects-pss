@@ -9,4 +9,7 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean {
 
+	/** 排除的ID */
+	private String excludeIds;
+
 }
