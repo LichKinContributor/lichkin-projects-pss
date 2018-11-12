@@ -37,6 +37,7 @@ $.LKExtendI18N({
       },
 
       'please choose the storage' : '请选择盘点仓库。',
+      'product already exists' : '产品已存在。',
       'this product does not exist in the current storage' : '当前仓库不存在此产品。',
       'only STAND_BY status can be edit' : '只有待用状态才可编辑。',
       'only STAND_BY status can be hold' : '只有待用状态才可暂存。',

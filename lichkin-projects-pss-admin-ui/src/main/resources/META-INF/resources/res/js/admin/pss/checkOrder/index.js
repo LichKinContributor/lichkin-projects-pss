@@ -34,13 +34,21 @@ var checkOrderFormPlugins = [
           LK.ajax({
             url : '/SysPssStock/L',
             data : {
+              orderType : 'PSS_CHECK',
               storageId : storageId,
               barcode : val
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
+
+                if (checkProdExists($productList, responseDatas[0])) {
+                  LK.alert('checkOrder.grid.product already exists');
+                  return;
+                }
+
                 $productList.LKInvokeAddDatas(responseDatas);
+
               } else {
                 LK.alert('checkOrder.grid.this product does not exist in the current storage');
               }
@@ -160,6 +168,7 @@ var checkOrderFormPlugins = [
                 url : '/SysPssStock/L',
                 async : false,
                 data : {
+                  orderType : 'PSS_CHECK',
                   storageId : storageId,
                   productId : prod.id
                 },
@@ -173,6 +182,11 @@ var checkOrderFormPlugins = [
               });
               if (notExist) {
                 LK.alert('checkOrder.grid.this product does not exist in the current storage');
+                return [];
+              }
+
+              if (checkProdExists($datagrid, prod)) {
+                LK.alert('checkOrder.grid.product already exists');
                 return [];
               }
             }
@@ -192,7 +206,20 @@ var checkOrderFormPlugins = [
     }
 ];
 
-var $checkOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
+var checkProdExists = function($datagrid, addProd) {
+  var exists = false;
+  var gridDatas = $datagrid.LKGetDatas();
+  // 判断grid中是否存在此产品
+  $(gridDatas).each(function() {
+    if (this.id == addProd.id) {
+      exists = true;
+      return false;
+    }
+  });
+  return exists;
+}
+
+LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
   icon : 'checkOrder',
 } : {}), {

@@ -15,6 +15,7 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssStockR;
+import com.lichkin.framework.defines.enums.impl.PssOrderTypeEnum;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -65,6 +66,11 @@ public class S extends LKApiBusGetListService<I, O, SysPssStockEntity> {
 
 	@Override
 	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+		// 盘点单显示实际库存量
+		if (PssOrderTypeEnum.PSS_CHECK.equals(sin.getOrderType())) {
+			return list;
+		}
+
 		if (CollectionUtils.isNotEmpty(list)) {
 			O O = list.get(0);
 			int stockQty = O.getStockQuantity();

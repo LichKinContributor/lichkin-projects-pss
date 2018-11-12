@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api50006.L.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestBean;
+import com.lichkin.framework.defines.enums.impl.PssOrderTypeEnum;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,5 +21,8 @@ public class I extends LKRequestBean {
 
 	/** 当前订单ID */
 	private String orderId;
+
+	/** 订单类型 */
+	private PssOrderTypeEnum orderType;
 
 }

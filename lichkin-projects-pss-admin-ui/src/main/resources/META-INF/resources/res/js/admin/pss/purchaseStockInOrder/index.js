@@ -26,7 +26,8 @@ var purchaseStockInOrderFormPlugins = [
         key : 'purchaseOrderNo',
         name : 'orderId',
         readonly : true,
-        commitable : true
+        commitable : true,
+        cols : 3
       }
     }, {
       plugin : 'textbox',
@@ -258,7 +259,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                   LK.UI.openDialog($.extend({}, {
                     size : {
                       cols : 3,
-                      rows : 14
+                      rows : 15
                     }
                   }, {
                     title : 'add',
@@ -450,7 +451,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 3,
-        rows : 14
+        rows : 15
       }
     },
     beforeSave : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey) {
@@ -488,7 +489,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 3,
-        rows : 13
+        rows : 14
       }
     },
     handleFormOptions : function(viewJson, formOptions, $datagrid, $selecteds, selectedDatas, value) {

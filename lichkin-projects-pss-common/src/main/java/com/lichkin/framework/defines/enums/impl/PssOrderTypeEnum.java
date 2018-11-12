@@ -13,21 +13,40 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum PssOrderTypeEnum implements LKEnum {
 
-	/** 正常采购入库 */
-	PSS_PURCHASE_STORAGE_IN("CGRKD"),
+	/** 采购 */
+	PSS_PURCHASE,
+
+	/** 采购退货 */
+	PSS_PURCHASE_RETURN,
+
+	/** 采购入库 */
+	PSS_PURCHASE_STORAGE_IN,
+
+	/** 采购出库（退货） */
+	PSS_PURCHASE_STORAGE_OUT,
+
+	/** 销售 */
+	PSS_SELL,
+
+	/** 销售退货 */
+	PSS_SELL_RETURN,
+
+	/** 销售出库 */
+	PSS_SELL_STORAGE_OUT,
+
+	/** 销售入库（退货） */
+	PSS_SELL_STORAGE_IN,
 
 	/** 其它入库 */
-	PSS_OTHER_STORAGE_IN("QTRKD"),
-
-	/** 正常销售出库 */
-	PSS_SELL_STORAGE_OUT("XSCKD"),
+	PSS_OTHER_STORAGE_IN,
 
 	/** 其它出库 */
-	PSS_OTHER_STORAGE_OUT("QTCKD"),
+	PSS_OTHER_STORAGE_OUT,
 
-	/** 退货 */
-	PSS_RETURN_STORAGE_OUT("THD");
+	/** 调拨单 */
+	PSS_ALLOT,
 
-	private final String prefix;
+	/** 盘点单 */
+	PSS_CHECK;
 
 }
