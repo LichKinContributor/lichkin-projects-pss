@@ -80,6 +80,7 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStoreCashierEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockEntity", index + 1, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");

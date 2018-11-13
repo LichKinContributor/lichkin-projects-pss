@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lichkin.application.mappers.impl.PssStockReportMapper">
+  <resultMap id="BaseResultMap" type="com.lichkin.application.mappers.impl.out.PssStorageDetailOut"> 
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="BILL_DATE" property="billDate" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="STORAGE_NAME" property="storageName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="BARCODE" property="barcode" jdbcType="VARCHAR" />
+    <result column="UNIT" property="unit" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
+    <result column="storageType" property="storageType" jdbcType="VARCHAR"/>
+  </resultMap>
+
+
+  <sql id="findStorageDetailCommonSelect">
+  select
+ 	p.id,
+	o.BILL_DATE,
+	o.ORDER_NO,
+	s.STORAGE_NAME,
+	pp.PRODUCT_CODE,
+	pp.PRODUCT_NAME,
+	pp.BARCODE,
+	d.DICT_NAME as UNIT,
+	p.QUANTITY,
+	d1.DICT_NAME as storageType
+  </sql>
+  
+  <sql id="findStorageDetailCommonTable">
+    <choose>
+      <when test="orderType == true">
+          and d1.CATEGORY_CODE = 'PSS_STORAGE_IN_TYPE'  
+      </when>
+      <otherwise>
+          and d1.CATEGORY_CODE = 'PSS_STORAGE_OUT_TYPE'  
+      </otherwise>
+    </choose>
+    inner join t_sys_pss_product pp on
+      p.PRODUCT_ID = pp.id
+    inner join t_sys_dictionary d on
+      pp.UNIT = d.DICT_CODE
+      and d.CATEGORY_CODE = 'PSS_PRODUCT_UNIT'
+    inner join t_sys_pss_storage s on
+      o.STORAGE_ID = s.id
+    where
+      o.COMP_ID = '${compId}'
+      and o.APPROVAL_STATUS != 'REJECT'
+      and o.USING_STATUS != 'DEPRECATED'
+      and o.ORDER_TYPE <![CDATA[ = ]]> ${orderType}
+      
+    <if test="orderNo != null">
+      and o.ORDER_NO LIKE CONCAT('%','${orderNo}','%')
+    </if>
+    <if test="startDate != null">
+      and o.BILL_DATE <![CDATA[ >= ]]>
+      '${startDate}'
+    </if>
+    <if test="endDate != null">
+      and o.BILL_DATE <![CDATA[ <= ]]>
+      '${endDate}'
+    </if>
+    <if test="productCode != null">
+      and pp.PRODUCT_CODE LIKE CONCAT('%','${productCode}','%')
+    </if>
+    <if test="productName != null">
+      and pp.PRODUCT_NAME LIKE CONCAT('%','${productName}','%')
+    </if>
+    <if test="barcode != null">
+      and pp.barcode LIKE CONCAT('%','${barcode}','%')
+    </if>
+    <if test="storageId != null">
+      and s.ID <![CDATA[ = ]]>
+      '${storageId}'
+    </if>
+  </sql>
+  
+  <!-- 采购入库  -->
+  <sql id="purchaseStorageDetailCommonSql">
+    <include refid="findStorageDetailCommonSelect"></include>
+    from
+      t_sys_pss_purchase_stock_order_product p
+    inner join t_sys_pss_purchase_stock_order o on
+      o.id = p.ORDER_ID
+    inner join t_sys_dictionary d1 on
+      d1.DICT_CODE = 'PURCHASE'
+    <include refid="findStorageDetailCommonTable"></include>
+  </sql>
+  
+  <!-- 其他入库  -->
+  <sql id="otherStorageDetailCommonSql">
+    <include refid="findStorageDetailCommonSelect"></include>
+    from
+      t_sys_pss_other_stock_order_product p
+    inner join t_sys_pss_other_stock_order o on
+      o.id = p.ORDER_ID
+    inner join t_sys_dictionary d1 on
+      d1.DICT_CODE = 'OTHER'
+    <include refid="findStorageDetailCommonTable"></include>
+  </sql>
+  
+  <!-- 销售退货入库  -->
+  <sql id="sellStorageDetailCommonSql">
+    <include refid="findStorageDetailCommonSelect"></include>
+    from
+      t_sys_pss_sell_stock_order_product p
+    inner join t_sys_pss_sell_stock_order o on
+      o.id = p.ORDER_ID
+    inner join t_sys_dictionary d1 on
+      d1.DICT_CODE = 'SELL'
+    <include refid="findStorageDetailCommonTable"></include>
+  </sql>
+  
+  <sql id="findStorageDetailCommonSql">
+    <choose>
+      <when test="storageType == 'PURCHASE'">
+          <include refid="purchaseStorageDetailCommonSql"></include>
+      </when>
+      <when test="storageType == 'OTHER'">
+          <include refid="otherStorageDetailCommonSql"></include>
+      </when>
+      <when test="storageType == 'SELL'">
+          <include refid="sellStorageDetailCommonSql"></include>
+      </when>
+      <otherwise>
+        <include refid="purchaseStorageDetailCommonSql"></include>
+        union all 
+        <include refid="otherStorageDetailCommonSql"></include>
+        union all 
+        <include refid="sellStorageDetailCommonSql"></include>
+      </otherwise>
+    </choose>
+   
+    order by
+      BILL_DATE,
+      STORAGE_NAME,
+      PRODUCT_CODE
+  </sql>
+
+  <select id="findStorageDetailTotalCount" parameterType="com.lichkin.application.mappers.impl.in.PssStorageDetailIn" resultType="java.lang.Long">
+    select count(1) from (
+    <include refid="findStorageDetailCommonSql"></include>
+    ) as t
+  </select>
+
+  <select id="findStorageDetail" parameterType="com.lichkin.application.mappers.impl.in.PssStorageDetailIn" resultMap="BaseResultMap">
+    <include refid="findStorageDetailCommonSql"></include>
+    LIMIT ${pageStartLine},${pageSize}
+  </select>
+</mapper>
