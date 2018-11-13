@@ -12,22 +12,22 @@ public class S extends LKApiBusGetOneService<I, O, SysPssProductEntity> {
 
 	/** 文件服务器URL根路径 */
 	@Value("${com.lichkin.files.server.rootUrl}")
-	private String fileServerRootUrl;
+	private String filesServerRootUrl;
 
 
 	@Override
 	protected void setOtherValues(SysPssProductEntity entity, String id, I sin, String locale, String compId, String loginId, O out) {
 		if (StringUtils.isNotBlank(out.getImageUrl1())) {
-			out.setImageUrl1(fileServerRootUrl + out.getImageUrl1());
+			out.setImageUrl1(filesServerRootUrl + out.getImageUrl1());
 		}
 		if (StringUtils.isNotBlank(out.getImageUrl2())) {
-			out.setImageUrl2(fileServerRootUrl + out.getImageUrl2());
+			out.setImageUrl2(filesServerRootUrl + out.getImageUrl2());
 		}
 		if (StringUtils.isNotBlank(out.getImageUrl3())) {
-			out.setImageUrl3(fileServerRootUrl + out.getImageUrl3());
+			out.setImageUrl3(filesServerRootUrl + out.getImageUrl3());
 		}
 		if (StringUtils.isNotBlank(out.getImageUrl4())) {
-			out.setImageUrl4(fileServerRootUrl + out.getImageUrl4());
+			out.setImageUrl4(filesServerRootUrl + out.getImageUrl4());
 		}
 	}
 

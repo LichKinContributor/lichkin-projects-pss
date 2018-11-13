@@ -78,17 +78,17 @@ public class SysPssProductBusService extends LKDBService {
 
 	/** 文件服务器URL根路径 */
 	@Value("${com.lichkin.files.server.rootUrl}")
-	private String fileServerRootUrl;
+	private String filesServerRootUrl;
 
 	/** 文件服务器保存根路径 */
 	@Value("${com.lichkin.files.save.path:/opt/files}")
-	private String fileSaveRootPath;
+	private String filesSaveRootPath;
 
 	/** 图片保存子路径 */
 	private static final String IMAGES_PATH = "/images/pssProduct";
 
 
 	public String analysisImageUrl(String url) {
-		return LKUrlUtils.analysisBase64ImageUrl(true, url, fileServerRootUrl, fileSaveRootPath, IMAGES_PATH);
+		return LKUrlUtils.analysisBase64ImageUrl(true, url, filesServerRootUrl, filesSaveRootPath, IMAGES_PATH);
 	}
 }
