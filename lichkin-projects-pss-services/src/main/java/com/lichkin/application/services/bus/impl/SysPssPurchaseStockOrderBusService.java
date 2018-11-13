@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.application.mappers.impl.PssStockQtyMapper;
-import com.lichkin.application.mappers.impl.in.PurchaseProdStockInQtyIn;
-import com.lichkin.application.mappers.impl.out.PurchaseProdStockInQtyOut;
+import com.lichkin.application.mappers.impl.in.PurchaseOrderSavedStockInQtyIn;
+import com.lichkin.application.mappers.impl.out.PurchaseOrderSavedStockInQtyOut;
 import com.lichkin.framework.db.beans.DeleteSQL;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
@@ -97,7 +97,7 @@ public class SysPssPurchaseStockOrderBusService extends LKDBService {
 		}
 
 		// 采购单已填写的入库数量
-		List<PurchaseProdStockInQtyOut> listPurchaseProdStockInQty = pssStockOutQtyMapper.findPurchaseProdStockInQty(new PurchaseProdStockInQtyIn(prodIds.toString(), purchaseOrderId, id));
+		List<PurchaseOrderSavedStockInQtyOut> listPurchaseProdStockInQty = pssStockOutQtyMapper.findPurchaseOrderSavedStockInQty(new PurchaseOrderSavedStockInQtyIn(prodIds.toString(), purchaseOrderId, id));
 		Map<String, Integer> purchaseProdStockInQtyMap = listPurchaseProdStockInQty.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
 
 		// 采购入库单填写的产品入库数量
@@ -105,7 +105,7 @@ public class SysPssPurchaseStockOrderBusService extends LKDBService {
 		// 按照产品ID合并数量
 		Map<String, Integer> purchaseStockInProdQtyMap = listPurchaseStockProduct.stream().collect(Collectors.groupingBy(o -> o.getId(), Collectors.summingInt(o -> o.getQuantity())));
 
-		// 判断产品入库数量是否足够
+		// 判断产品入库数量是否超出采购数量
 		for (Map.Entry<String, Integer> entry : purchaseStockInProdQtyMap.entrySet()) {
 			String prodId = entry.getKey();
 			// 填写数量

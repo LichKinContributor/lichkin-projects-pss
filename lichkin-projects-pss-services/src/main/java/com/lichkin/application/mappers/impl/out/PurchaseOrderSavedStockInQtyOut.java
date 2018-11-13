@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PurchaseProdStockInQtyOut {
+public class PurchaseOrderSavedStockInQtyOut {
 
 	/** 产品ID */
 	private String productId;

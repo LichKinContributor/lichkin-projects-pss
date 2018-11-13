@@ -104,7 +104,9 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderProductEntity", index + 1, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 	}
 
 

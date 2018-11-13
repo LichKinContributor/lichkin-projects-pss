@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.lichkin.application.mappers.impl.in.PssPurchaseStockInQtyIn;
 import com.lichkin.application.mappers.impl.in.PssStockOutQtyIn;
-import com.lichkin.application.mappers.impl.in.PurchaseProdStockInQtyIn;
+import com.lichkin.application.mappers.impl.in.PurchaseOrderSavedStockInQtyIn;
+import com.lichkin.application.mappers.impl.in.SellOrderSavedStockOutQtyIn;
 import com.lichkin.application.mappers.impl.out.PssPurchaseStockInQtyOut;
 import com.lichkin.application.mappers.impl.out.PssStockOutQtyOut;
-import com.lichkin.application.mappers.impl.out.PurchaseProdStockInQtyOut;
+import com.lichkin.application.mappers.impl.out.PurchaseOrderSavedStockInQtyOut;
+import com.lichkin.application.mappers.impl.out.SellOrderSavedStockOutQtyOut;
 
 @Mapper
 public interface PssStockQtyMapper {
@@ -23,5 +25,10 @@ public interface PssStockQtyMapper {
 
 
 	/** 查询单个采购单已填写的入库的数量（订单非驳回 非删除状态） */
-	List<PurchaseProdStockInQtyOut> findPurchaseProdStockInQty(PurchaseProdStockInQtyIn in);
+	List<PurchaseOrderSavedStockInQtyOut> findPurchaseOrderSavedStockInQty(PurchaseOrderSavedStockInQtyIn in);
+
+
+	/** 查询单个销售单已填写的出库的数量（订单非驳回 非删除状态） */
+	List<SellOrderSavedStockOutQtyOut> findSellOrderSavedStockOutQty(SellOrderSavedStockOutQtyIn in);
+
 }

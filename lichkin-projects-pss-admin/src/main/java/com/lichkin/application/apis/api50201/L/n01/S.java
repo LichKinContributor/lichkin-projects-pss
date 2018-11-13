@@ -1,4 +1,4 @@
-package com.lichkin.application.apis.api50101.L.n01;
+package com.lichkin.application.apis.api50201.L.n01;
 
 import java.util.List;
 
@@ -10,23 +10,22 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
-import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
+import com.lichkin.framework.db.beans.SysPssSellOrderProductR;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssSellOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
-@Service("SysPssPurchaseOrderProductL01Service")
-public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEntity> {
+@Service("SysPssSellOrderProductL01Service")
+public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity> {
 
 	@Override
 	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
 		// 主表
-		// sql.select(SysPssPurchaseOrderProductR.id);
-		sql.select(SysPssPurchaseOrderProductR.quantity, "purchaseQty");
-		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
+		sql.select(SysPssSellOrderProductR.quantity, "salesQuantity");
+		sql.select(SysPssSellOrderProductR.inventoryQuantity);
 
 		// 关联表
-		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssPurchaseOrderProductR.productId));
+		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssSellOrderProductR.productId));
 		sql.select(SysPssProductR.id);
 		sql.select(SysPssProductR.productCode);
 		sql.select(SysPssProductR.productName);
@@ -36,13 +35,13 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		int i = 0;
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
-		// 筛选条件（必填项）过滤已经全部入库的产品
-		sql.lt_(SysPssPurchaseOrderProductR.inventoryQuantity, SysPssPurchaseOrderProductR.quantity);
+		// 筛选条件（必填项）
+		sql.lt_(SysPssSellOrderProductR.inventoryQuantity, SysPssSellOrderProductR.quantity);
 
 		// 筛选条件（业务项）
 		String orderId = sin.getOrderId();
 		if (StringUtils.isNotBlank(orderId)) {
-			sql.eq(SysPssPurchaseOrderProductR.orderId, orderId);
+			sql.eq(SysPssSellOrderProductR.orderId, orderId);
 		}
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
@@ -54,14 +53,14 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		}
 
 		// 排序条件
-		sql.addOrders(new Order(SysPssPurchaseOrderProductR.sortId));
+		sql.addOrders(new Order(SysPssSellOrderProductR.sortId));
 	}
 
 
 	@Override
 	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
 		for (O o : list) {
-			o.setCanStockInQty(o.getPurchaseQty() - o.getInventoryQuantity());
+			o.setCanStockOutQty(o.getSalesQuantity() - o.getInventoryQuantity());
 		}
 		return list;
 	}

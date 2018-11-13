@@ -92,8 +92,11 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssPurchaseStoc
 			sql.eq(SysPssPurchaseStockOrderProductR.orderId, id);
 			List<PssOrderProductEntity> orderProductList = dao.getList(sql, PssOrderProductEntity.class);
 			stockBusService.changeStockQuantity(entity, orderProductList);
-			// 修改采购单入库数量及状态
-			purchaseOrderBusService.changePurchaseOrderProductInventoryQuantity(entity.getOrderId(), orderProductList);
+			if (entity.getOrderType().equals(Boolean.TRUE)) {
+				// 修改采购单入库数量及状态
+				purchaseOrderBusService.changePurchaseOrderProductInventoryQuantity(entity.getOrderId(), orderProductList);
+			}
+
 		}
 	}
 

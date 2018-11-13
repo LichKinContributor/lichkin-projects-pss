@@ -46,6 +46,13 @@ public class SysPssStockBusService extends LKDBService {
 	}
 
 
+	/**
+	 * 校验产品出库数量在库存中是否足够
+	 * @param storageId 仓库ID
+	 * @param productList 出库产品json列表
+	 * @param orderId 当前出库单ID（支持所有类型的出库单）
+	 * @return 提示信息
+	 */
 	public String checkProductStockOut(String storageId, String productList, String orderId) {
 		String errorMsg = "";
 
@@ -116,38 +123,6 @@ public class SysPssStockBusService extends LKDBService {
 		}
 
 		return "";
-	}
-
-
-	public int checkProductStockOut3(String storageId, List<PssOrderProductEntity> orderProductList, String orderId) {
-		// 将相同产品合并计算数量
-		Map<String, Integer> prodQtyMap = orderProductList.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
-
-		int errorCode = 0;
-		for (Map.Entry<String, Integer> entry : prodQtyMap.entrySet()) {
-			QuerySQL sql = new QuerySQL(SysPssStockEntity.class);
-			sql.eq(SysPssStockR.storageId, storageId);
-			sql.eq(SysPssStockR.productId, entry.getKey());
-			SysPssStockEntity stockEntity = dao.getOne(sql, SysPssStockEntity.class);
-			if (stockEntity == null) {
-				errorCode = 1;
-				break;
-			} else {
-				// 用mybatis 查询所有类型出库单的已填写的产品出库总和，计算可提交的出库数量
-				List<PssStockOutQtyOut> list = pssStockOutQtyMapper.findStockOutQty(new PssStockOutQtyIn("'" + storageId + "'", "'" + entry.getKey() + "'", orderId));
-				int stockQty = stockEntity.getQuantity();
-				if (CollectionUtils.isNotEmpty(list)) {
-					PssStockOutQtyOut out = list.get(0);
-					stockQty = stockQty - out.getQuantity();
-				}
-
-				if (entry.getValue() > stockQty) {
-					errorCode = 2;
-					break;
-				}
-			}
-		}
-		return errorCode;
 	}
 
 

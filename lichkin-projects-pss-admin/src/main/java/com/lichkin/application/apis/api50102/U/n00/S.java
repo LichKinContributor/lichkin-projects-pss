@@ -23,7 +23,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssPurchaseStoc
 	@Getter
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
-		PSS_PURCHASE_STOCK_IN_MSG(60000),
+		PSS_STOCK_IN_MSG(60000),
 
 		;
 
@@ -44,7 +44,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssPurchaseStoc
 		if (entity.getOrderType()) {
 			String errorMsg = busService.checkProductQty(entity.getId(), entity.getOrderId(), sin.getProductList());
 			if (StringUtils.isNotBlank(errorMsg)) {
-				throw new LKRuntimeException(ErrorCodes.PSS_PURCHASE_STOCK_IN_MSG).withParam("#prodName", errorMsg);
+				throw new LKRuntimeException(ErrorCodes.PSS_STOCK_IN_MSG).withParam("#prodName", errorMsg);
 			}
 		}
 	}

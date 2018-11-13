@@ -87,7 +87,7 @@ public class SysPssPurchaseOrderBusService extends LKDBService {
 						product.setInventoryQuantity(product.getInventoryQuantity() + qty);
 						break;
 					} else {
-						// 剩余数小于入库的单数量 继续扣下一个相同的产品
+						// 剩余数小于入库数量 继续扣下一个相同的产品
 						product.setInventoryQuantity(product.getQuantity());
 						qty = qty - remainingQty;
 					}
