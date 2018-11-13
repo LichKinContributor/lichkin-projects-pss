@@ -88,7 +88,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderProductEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
-		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderProductEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderProductEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+
 	}
 
 

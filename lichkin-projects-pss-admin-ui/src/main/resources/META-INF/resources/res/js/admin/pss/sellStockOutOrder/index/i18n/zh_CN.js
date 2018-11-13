@@ -70,7 +70,6 @@ $.LKExtendI18N({
         'startDate' : '订单开始日期',
         'endDate' : '订单结束日期',
       },
-
     },
 
   }
