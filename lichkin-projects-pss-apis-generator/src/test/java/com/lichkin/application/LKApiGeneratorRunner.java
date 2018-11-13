@@ -31,6 +31,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.Insert, "新增数据接口");
 	}
 
 
@@ -51,6 +53,10 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderEntity", index + 1, errorCode, Type.Update, "提交数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index, errorCode, Type.Update, "编辑数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index + 1, errorCode, Type.Update, "提交数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.Update, "编辑数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index + 1, errorCode, Type.Update, "提交数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.Update, "编辑数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index + 1, errorCode, Type.Update, "提交数据接口");
 	}
 
 
@@ -62,6 +68,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.Delete, "删除数据接口");
 	}
 
 
@@ -77,6 +85,10 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderProductEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseStockOrderProductEntity", index, errorCode, Type.GetPage, "获取分页数据接口");
 	}
 
 
@@ -91,6 +103,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssPurchaseOrderEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderProductEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 	}
 
 
@@ -106,6 +120,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.GetOne, "获取单个数据接口");
 	}
 
 
@@ -121,6 +137,8 @@ public class LKApiGeneratorRunner {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssAllotOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssOtherStockOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssStockCheckOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysPssSellStockOrderEntity", index, errorCode, Type.UpdateUsingStatus, "修改状态接口");
 	}
 
 }
