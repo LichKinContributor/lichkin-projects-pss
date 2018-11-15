@@ -1,29 +1,24 @@
 package com.lichkin.application.apis.api50102.U.n01;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lichkin.application.services.bus.impl.SysPssPurchaseOrderBusService;
-import com.lichkin.application.services.bus.impl.SysPssStockBusService;
 import com.lichkin.application.services.impl.ActivitiStartProcessService;
+import com.lichkin.application.services.impl.SysPssPurchaseStockOrderApprovedService;
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderR;
-import com.lichkin.framework.db.beans.SysPssPurchaseStockOrderProductR;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
-import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
 @Service("SysPssPurchaseStockOrderU01Service")
@@ -33,10 +28,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssPurchaseStoc
 	private ActivitiStartProcessService activitiStartProcessService;
 
 	@Autowired
-	private SysPssStockBusService stockBusService;
-
-	@Autowired
-	private SysPssPurchaseOrderBusService purchaseOrderBusService;
+	private SysPssPurchaseStockOrderApprovedService approvedService;
 
 
 	@Override
@@ -87,16 +79,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssPurchaseStoc
 	@Override
 	protected void afterSaveMain(I sin, String locale, String compId, String loginId, SysPssPurchaseStockOrderEntity entity, String id) {
 		if (ApprovalStatusEnum.APPROVED.equals(entity.getApprovalStatus())) {
-			// 改库存
-			QuerySQL sql = new QuerySQL(false, SysPssPurchaseStockOrderProductEntity.class);
-			sql.eq(SysPssPurchaseStockOrderProductR.orderId, id);
-			List<PssOrderProductEntity> orderProductList = dao.getList(sql, PssOrderProductEntity.class);
-			stockBusService.changeStockQuantity(entity, orderProductList);
-			if (entity.getOrderType().equals(Boolean.TRUE)) {
-				// 修改采购单入库数量及状态
-				purchaseOrderBusService.changePurchaseOrderProductInventoryQuantity(entity.getOrderId(), orderProductList);
-			}
-
+			approvedService.changeStockQty(entity);
 		}
 	}
 

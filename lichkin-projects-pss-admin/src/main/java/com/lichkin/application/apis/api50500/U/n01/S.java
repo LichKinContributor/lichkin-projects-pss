@@ -1,23 +1,20 @@
 package com.lichkin.application.apis.api50500.U.n01;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lichkin.application.services.bus.impl.SysPssStockBusService;
 import com.lichkin.application.services.impl.ActivitiStartProcessService;
+import com.lichkin.application.services.impl.SysPssStockCheckOrderApprovedService;
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
-import com.lichkin.framework.db.beans.SysPssStockCheckOrderProductR;
 import com.lichkin.framework.db.beans.SysPssStockCheckOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
-import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
@@ -28,7 +25,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssStockCheckOr
 	private ActivitiStartProcessService activitiStartProcessService;
 
 	@Autowired
-	private SysPssStockBusService stockBusService;
+	private SysPssStockCheckOrderApprovedService approvedService;
 
 
 	@Override
@@ -68,11 +65,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssStockCheckOr
 	@Override
 	protected void afterSaveMain(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity, String id) {
 		if (ApprovalStatusEnum.APPROVED.equals(entity.getApprovalStatus())) {
-			QuerySQL sql = new QuerySQL(false, SysPssStockCheckOrderProductEntity.class);
-			sql.eq(SysPssStockCheckOrderProductR.orderId, id);
-			List<SysPssStockCheckOrderProductEntity> orderProductList = dao.getList(sql, SysPssStockCheckOrderProductEntity.class);
-			// 处理库存
-			stockBusService.changeStockQuantityByCheckOrder(entity, orderProductList);
+			approvedService.changeStockQty(entity);
 		}
 	}
 
