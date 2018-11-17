@@ -9,26 +9,26 @@ public interface PssStatics {
 	/** 采购单 */
 	public static final String PSS_PURCHASE_ORDER = "PSS_PURCHASE_ORDER";
 
-	/** 采购退货单（未入库退货，不修改库存） */
-	public static final String PSS_PURCHASE_RETURN_ORDER = "PSS_PURCHASE_RETURN_ORDER";
-
 	/** 采购入库单（需修改库存） */
 	public static final String PSS_PURCHASE_STOCK_IN_ORDER = "PSS_PURCHASE_STOCK_IN_ORDER";
 
-	/** 采购退货单（已入库退货，需修改库存） */
+	/** 采购退货单（已入库退货）（需修改库存） */
 	public static final String PSS_PURCHASE_STOCK_OUT_ORDER = "PSS_PURCHASE_STOCK_OUT_ORDER";
+
+	/** 采购退货单（未入库退货）（不修改库存） */
+	public static final String PSS_PURCHASE_RETURN_ORDER = "PSS_PURCHASE_RETURN_ORDER";
 
 	/** 销售单 */
 	public static final String PSS_SELL_ORDER = "PSS_SELL_ORDER";
 
-	/** 销售退货单（未出库退货，不修改库存） */
-	public static final String PSS_SELL_RETURN_ORDER = "PSS_SELL_RETURN_ORDER";
+	/** 销售出库单（需修改库存） */
+	public static final String PSS_SELL_STOCK_OUT_ORDER = "PSS_SELL_STOCK_OUT_ORDER";
 
-	/** 销售退货单（已出库退货，需修改库存） */
+	/** 销售退货单（已出库退货）（需修改库存） */
 	public static final String PSS_SELL_STOCK_IN_ORDER = "PSS_SELL_STOCK_IN_ORDER";
 
-	/** 销售入库单（需修改库存） */
-	public static final String PSS_SELL_STOCK_OUT_ORDER = "PSS_SELL_STOCK_OUT_ORDER";
+	/** 销售退货单（未出库退货）（不修改库存） */
+	public static final String PSS_SELL_RETURN_ORDER = "PSS_SELL_RETURN_ORDER";
 
 	/** 其它入库单（需修改库存） */
 	public static final String PSS_OTHER_STOCK_IN_ORDER = "PSS_OTHER_STOCK_IN_ORDER";
