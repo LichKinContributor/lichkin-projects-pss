@@ -14,11 +14,6 @@
   </parent>
 
   <dependencies>
-    <!-- lichkin starter -->
-    <dependency>
-      <groupId>com.lichkin.springframework.boot</groupId>
-      <artifactId>lichkin-spring-boot-starter-base</artifactId>
-    </dependency>
     <!-- lichkin projects core -->
     <dependency>
       <groupId>com.lichkin.projects</groupId>

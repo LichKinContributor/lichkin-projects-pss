@@ -19,12 +19,6 @@
       <groupId>com.lichkin.springframework.boot</groupId>
       <artifactId>lichkin-spring-boot-starter-quartz</artifactId>
     </dependency>
-    <!-- lichkin projects pss -->
-    <dependency>
-      <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-pss-services</artifactId>
-      <version>${com.lichkin.projects.pss.version}</version>
-    </dependency>
   </dependencies>
 
 </project>

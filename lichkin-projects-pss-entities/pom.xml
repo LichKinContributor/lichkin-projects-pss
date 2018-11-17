@@ -14,17 +14,6 @@
   </parent>
 
   <dependencies>
-    <!-- lichkin starter -->
-    <dependency>
-      <groupId>com.lichkin.springframework.boot</groupId>
-      <artifactId>lichkin-spring-boot-starter-jpa</artifactId>
-    </dependency>
-    <!-- lichkin projects pss -->
-    <dependency>
-      <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-pss-common</artifactId>
-      <version>${com.lichkin.projects.pss.version}</version>
-    </dependency>
     <!-- lichkin projects core -->
     <dependency>
       <groupId>com.lichkin.projects</groupId>
@@ -36,6 +25,12 @@
       <groupId>com.lichkin.projects</groupId>
       <artifactId>lichkin-projects-activiti-entities</artifactId>
       <version>${com.lichkin.projects.activiti.version}</version>
+    </dependency>
+    <!-- lichkin projects pss -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-pss-common</artifactId>
+      <version>${com.lichkin.projects.pss.version}</version>
     </dependency>
   </dependencies>
 

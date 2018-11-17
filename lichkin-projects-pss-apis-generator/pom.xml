@@ -14,13 +14,11 @@
   </parent>
 
   <dependencies>
-    <!-- lichkin projects -->
-    <dependency>
-      <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-pss-services</artifactId>
-      <version>${com.lichkin.projects.pss.version}</version>
-    </dependency>
     <!-- lichkin starter -->
+    <dependency>
+      <groupId>com.lichkin.springframework.boot</groupId>
+      <artifactId>lichkin-spring-boot-starter-web-api-defines</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.lichkin.springframework.boot</groupId>
       <artifactId>lichkin-spring-boot-starter-web-api</artifactId>
@@ -28,6 +26,24 @@
     <dependency>
       <groupId>com.lichkin.springframework.boot</groupId>
       <artifactId>lichkin-spring-boot-starter-web-api-generator</artifactId>
+    </dependency>
+    <!-- lichkin projects core -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-core-starter-web-api-common</artifactId>
+      <version>${com.lichkin.projects.core.version}</version>
+    </dependency>
+    <!-- lichkin projects activiti -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-activiti-starter-web-api-common</artifactId>
+      <version>${com.lichkin.projects.activiti.version}</version>
+    </dependency>
+    <!-- lichkin projects pss -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-pss-services</artifactId>
+      <version>${com.lichkin.projects.pss.version}</version>
     </dependency>
   </dependencies>
 

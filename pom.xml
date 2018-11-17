@@ -20,17 +20,28 @@
   </properties>
 
   <modules>
+    <!-- 通用模块（子项目需依赖） -->
     <module>lichkin-projects-pss-common</module>
     <module>lichkin-projects-pss-entities</module>
     <module>lichkin-projects-pss-services</module>
+
+    <!-- 平台间通用模块（子项目不依赖） -->
     <module>lichkin-projects-pss-apis-generator</module>
     <module>lichkin-projects-pss-apis-common</module>
+
+    <!-- 管理平台模块（子项目需依赖starter） -->
     <module>lichkin-projects-pss-admin</module>
     <module>lichkin-projects-pss-admin-ui</module>
+
+    <!-- 用户平台模块（子项目需依赖starter） -->
     <module>lichkin-projects-pss-user</module>
     <module>lichkin-projects-pss-user-ui</module>
+
+    <!-- 员工平台模块（子项目需依赖starter） -->
     <module>lichkin-projects-pss-employee</module>
     <module>lichkin-projects-pss-employee-ui</module>
+
+    <!-- 定时任务模块 -->
     <module>lichkin-projects-pss-quartz</module>
   </modules>
 
