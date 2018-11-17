@@ -28,12 +28,13 @@ public class C extends LKApiY0Controller<I, Page<PssStorageDetailOut>> {
 	private PssStockReportMapper pssStockReportMapper;
 
 
+	@Deprecated
 	@Override
 	protected Page<PssStorageDetailOut> doInvoke(I cin) throws LKException {
 		PssStorageDetailIn in = LKBeanUtils.newInstance(cin, PssStorageDetailIn.class);
 		in.setCompId(cin.getDatas().getCompId());
 
-		List list = pssStockReportMapper.findStorageDetail(in);
+		List<PssStorageDetailOut> list = pssStockReportMapper.findStorageDetail(in);
 		Long total = pssStockReportMapper.findStorageDetailTotalCount(in);
 
 		// 返回结果
