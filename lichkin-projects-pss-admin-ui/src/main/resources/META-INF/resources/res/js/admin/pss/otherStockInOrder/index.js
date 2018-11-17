@@ -268,7 +268,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsSubmit : {
-    saveUrl : '/SysPssOtherStockOrder/U01',
+    processCode : 'PSS_OTHER_STOCK_ORDER',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
         if (selectedDatas[i].approvalStatusDictCode != 'PENDING') {
