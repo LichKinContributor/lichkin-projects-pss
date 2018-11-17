@@ -19,7 +19,7 @@
     			*
     		from
     			(
-    				/** 其他出库 计算已出库的数量 */
+    				/** 其它出库 计算已出库的数量 */
     				select
     					o.STORAGE_ID,
     					p.PRODUCT_ID,

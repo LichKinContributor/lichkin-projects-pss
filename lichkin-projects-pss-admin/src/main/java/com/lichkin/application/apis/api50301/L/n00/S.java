@@ -43,7 +43,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 		sql.select(SysPssProductR.productName);
 		sql.select(SysPssProductR.barcode);
 
-		// 其他出库单
+		// 其它出库单
 		if (sin.getOrderType().equals(Boolean.FALSE)) {
 			sql.innerJoin(SysPssOtherStockOrderEntity.class, new Condition(SysPssOtherStockOrderProductR.orderId, SysPssOtherStockOrderR.id));
 			sql.innerJoin(SysPssStockEntity.class,

@@ -98,7 +98,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         options : {
           name : 'storageType',
           param : {
-            categoryCode : 'PSS_STORAGE_OUT_TYPE'
+            categoryCode : 'PSS_STOCK_OUT_TYPE'
           }
         }
       }

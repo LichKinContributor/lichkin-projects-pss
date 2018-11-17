@@ -32,10 +32,10 @@
   <sql id="findStorageDetailCommonTable">
     <choose>
       <when test="orderType == true">
-          and d1.CATEGORY_CODE = 'PSS_STORAGE_IN_TYPE'  
+          and d1.CATEGORY_CODE = 'PSS_STOCK_IN_TYPE'  
       </when>
       <otherwise>
-          and d1.CATEGORY_CODE = 'PSS_STORAGE_OUT_TYPE'  
+          and d1.CATEGORY_CODE = 'PSS_STOCK_OUT_TYPE'  
       </otherwise>
     </choose>
     inner join t_sys_pss_product pp on
@@ -89,7 +89,7 @@
     <include refid="findStorageDetailCommonTable"></include>
   </sql>
   
-  <!-- 其他入库  -->
+  <!-- 其它入库  -->
   <sql id="otherStorageDetailCommonSql">
     <include refid="findStorageDetailCommonSelect"></include>
     from
