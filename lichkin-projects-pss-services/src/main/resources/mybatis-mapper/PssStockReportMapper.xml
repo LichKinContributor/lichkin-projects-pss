@@ -84,7 +84,7 @@
       t_sys_pss_purchase_stock_order_product p
     inner join t_sys_pss_purchase_stock_order o on
       o.id = p.ORDER_ID
-    inner join t_sys_dictionary d1 on
+    left join t_sys_dictionary d1 on
       d1.DICT_CODE = 'PURCHASE'
     <include refid="findStorageDetailCommonTable"></include>
   </sql>
@@ -96,7 +96,7 @@
       t_sys_pss_other_stock_order_product p
     inner join t_sys_pss_other_stock_order o on
       o.id = p.ORDER_ID
-    inner join t_sys_dictionary d1 on
+    left join t_sys_dictionary d1 on
       d1.DICT_CODE = 'OTHER'
     <include refid="findStorageDetailCommonTable"></include>
   </sql>
@@ -108,7 +108,7 @@
       t_sys_pss_sell_stock_order_product p
     inner join t_sys_pss_sell_stock_order o on
       o.id = p.ORDER_ID
-    inner join t_sys_dictionary d1 on
+    left join t_sys_dictionary d1 on
       d1.DICT_CODE = 'SELL'
     <include refid="findStorageDetailCommonTable"></include>
   </sql>

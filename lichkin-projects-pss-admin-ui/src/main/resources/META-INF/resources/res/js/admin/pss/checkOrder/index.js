@@ -4,7 +4,9 @@ var checkOrderFormPlugins = [
       options : {
         name : 'billDate',
         validator : true,
-        value : today()
+        value : today(),
+        readonly : true,
+        commitable : true
       }
     }, {
       plugin : 'droplist',
@@ -167,6 +169,8 @@ var checkOrderFormPlugins = [
           handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
             var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();
             var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
+
+            var returnDatas = [];
             var notExist = false;
             for (var i = 0; i < productDatas.length; i++) {
               var prod = productDatas[i];
@@ -180,7 +184,7 @@ var checkOrderFormPlugins = [
                 },
                 success : function(responseDatas) {
                   if (responseDatas && responseDatas.length == 1) {
-                    productDatas[i].stockQuantity = responseDatas[0].stockQuantity;
+                    returnDatas.push(responseDatas[0]);
                   } else {
                     notExist = true;
                   }
@@ -196,7 +200,7 @@ var checkOrderFormPlugins = [
                 return [];
               }
             }
-            return productDatas;
+            return returnDatas;
           },
         },
         toolsRemoveData : {},
@@ -310,7 +314,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     },
     readonlyPlugins : function(editJson, formOptions, $datagrid, $selecteds, selectedDatas, value) {
       return [
-          'billDate', 'storageId'
+        'storageId'
       ];
     },
     handleFormOptions : function(editJson, formOptions, $datagrid, $selecteds, selectedDatas, value) {
@@ -354,8 +358,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     saveUrl : '/SysPssStockCheckOrder/D',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
-        if (selectedDatas[i].approvalStatusDictCode != 'PENDING') {
-          LK.alert(i18nKey + 'only PENDING status can be remove');
+        if (selectedDatas[i].usingStatusDictCode != 'STAND_BY') {
+          LK.alert(i18nKey + 'only STAND_BY status can be remove');
           return false;
         }
       }
@@ -366,6 +370,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     processCode : 'PSS_STOCK_CHECK_ORDER',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
+        if (selectedDatas[i].usingStatusDictCode != 'USING') {
+          LK.alert(i18nKey + 'only USING status can be submit');
+          return false;
+        }
         if (selectedDatas[i].approvalStatusDictCode != 'PENDING') {
           LK.alert(i18nKey + 'only PENDING status can be submit');
           return false;
