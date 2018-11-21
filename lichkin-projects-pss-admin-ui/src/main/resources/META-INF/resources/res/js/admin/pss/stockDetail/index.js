@@ -31,6 +31,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         text : 'quantity',
         width : 80,
         name : 'quantity'
+      }, {
+        text : 'canOutQty',
+        width : 90,
+        name : 'canOutQty'
       }
   ],
   searchForm : [

@@ -62,13 +62,13 @@ var otherStockOutOrderFormPlugins = [
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
-                if (responseDatas[0].stockQuantity == 0) {
+                if (responseDatas[0].canOutQty == 0) {
                   LK.alert('otherStockOutOrder.grid.the number of products currently available is zero');
                   return;
                 }
 
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
-                if (mergeProdOutnumber($productList, responseDatas[0])) {
+                if (otherStockOutOrderMergeProd($productList, responseDatas[0])) {
                   return;
                 }
 
@@ -122,8 +122,12 @@ var otherStockOutOrderFormPlugins = [
               width : 80,
               name : 'stockQuantity'
             }, {
+              text : 'canOutQty',
+              width : 90,
+              name : 'canOutQty'
+            }, {
               text : 'quantity',
-              width : 100,
+              width : 80,
               formatter : function(rowData) {
                 return {
                   plugin : 'numberspinner',
@@ -131,7 +135,7 @@ var otherStockOutOrderFormPlugins = [
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 1,
                     min : 1,
-                    max : rowData.stockQuantity
+                    max : rowData.canOutQty
                   }
                 }
               }
@@ -186,11 +190,11 @@ var otherStockOutOrderFormPlugins = [
                 },
                 success : function(responseDatas) {
                   if (responseDatas && responseDatas.length == 1) {
-                    if (responseDatas[0].stockQuantity == 0) {
+                    if (responseDatas[0].canOutQty == 0) {
                       qtyIsZero = true;
                       return;
                     }
-                    if (mergeProdOutnumber($datagrid, responseDatas[0])) {
+                    if (otherStockOutOrderMergeProd($datagrid, responseDatas[0])) {
                       return;
                     }
                     returnDatas.push(responseDatas[0]);
@@ -224,7 +228,7 @@ var otherStockOutOrderFormPlugins = [
     }
 ];
 
-var mergeProdOutnumber = function($datagrid, addProd) {
+var otherStockOutOrderMergeProd = function($datagrid, addProd) {
   var outnumber = false;
   var $allRows = $datagrid.LKGetDataContainer().find('tr');
   $allRows.each(function() {
@@ -232,7 +236,7 @@ var mergeProdOutnumber = function($datagrid, addProd) {
     if (rowData.id == addProd.id) {
       outnumber = true;
       var qty = parseInt($(this).LKGetSubPlugin('quantity').LKGetValue()) + 1;
-      if (qty <= addProd.stockQuantity) {
+      if (qty <= addProd.canOutQty) {
         $(this).LKGetSubPlugin('quantity').LKSetValues(qty, true);
       }
       return false;
