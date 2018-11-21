@@ -181,7 +181,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'sellOrder',
   $appendTo : true,
-  cols : 3,
+  cols : 4,
   url : '/SysPssSellOrder/P',
   columns : [
       {
@@ -191,23 +191,23 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         cssClass : 'monospacedFont'
       }, {
         text : 'billDate',
-        width : 100,
+        width : 180,
         name : 'billDate'
       }, {
         text : 'salesName',
-        width : 120,
+        width : null,
         name : 'salesName'
       }, {
         text : 'orderAmount',
-        width : 80,
+        width : 120,
         name : 'orderAmount'
       }, {
         text : 'inventoryStatus',
-        width : 80,
+        width : 120,
         name : 'inventoryStatus'
       }, {
         text : 'approvalStatus',
-        width : 80,
+        width : 120,
         name : 'approvalStatus'
       }, {
         text : 'approvalTime',
