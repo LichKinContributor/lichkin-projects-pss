@@ -9,15 +9,38 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssStockCheckOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
+import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
+import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 @Service("SysPssStockCheckOrderU01Service")
 public class S extends LKApiBusStartProcessService<I, SysPssStockCheckOrderEntity> {
 
+	@Getter
+	@RequiredArgsConstructor
+	enum ErrorCodes implements LKCodeEnum {
+		PSS_ONLY_THE_CHECK_ORDER_OF_THE_DAY_CAN_BE_SUBMITTED(60000),
+
+		;
+
+		private final Integer code;
+
+	}
+
+
 	@Override
 	protected void initFormData(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity, Map<String, Object> datas) {
+		if (!entity.getBillDate().equals(LKDateTimeUtils.now(LKDateTimeTypeEnum.DATE_ONLY))) {
+			throw new LKRuntimeException(ErrorCodes.PSS_ONLY_THE_CHECK_ORDER_OF_THE_DAY_CAN_BE_SUBMITTED);
+		}
+
 		// 订单统一参数
 		datas.put("orderNo", entity.getOrderNo());
 		datas.put("billDate", entity.getBillDate());

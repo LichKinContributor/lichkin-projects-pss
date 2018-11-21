@@ -11,6 +11,7 @@ import com.lichkin.application.services.bus.impl.SysPssStockBusService;
 import com.lichkin.defines.PssStatics;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssStockCheckOrderProductR;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.entities.impl.SysActivitiFormDataEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity;
@@ -25,6 +26,8 @@ public class ActivitiCallbackService_PSS_STOCK_CHECK_ORDER extends LKDBService i
 
 	@Override
 	public void directFinish(SysPssStockCheckOrderEntity processEntity, String compId, String loginId) {
+		processEntity.setUsingStatus(LKUsingStatusEnum.LOCKED);
+		dao.mergeOne(processEntity);
 		QuerySQL sql = new QuerySQL(false, SysPssStockCheckOrderProductEntity.class);
 		sql.eq(SysPssStockCheckOrderProductR.orderId, processEntity.getId());
 		List<SysPssStockCheckOrderProductEntity> orderProductList = dao.getList(sql, SysPssStockCheckOrderProductEntity.class);

@@ -46,14 +46,8 @@ var checkOrderFormPlugins = [
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
-
-                if (checkProdExists($productList, responseDatas[0])) {
-                  LK.alert('checkOrder.grid.product already exists');
-                  return;
-                }
-
+                responseDatas[0].differenceQuantity = 0 - responseDatas[0].stockQuantity;
                 $productList.LKInvokeAddDatas(responseDatas);
-
               } else {
                 LK.alert('checkOrder.grid.this product does not exist in the current storage');
               }
@@ -106,7 +100,7 @@ var checkOrderFormPlugins = [
             }, {
               text : 'quantity',
               width : 80,
-              formatter : function(rowData) {
+              formatter : function(rowData, $datagrid) {
                 return {
                   plugin : 'numberspinner',
                   options : {
@@ -116,11 +110,23 @@ var checkOrderFormPlugins = [
                     onChange : function($plugin, values, value, currentValue) { // 产品数量值改变
                       // 系统数量
                       var stockQuantity = rowData.stockQuantity;
+                      if (!currentValue) {
+                        currentValue = 0;
+                      }
+
+                      var gridDatas = $datagrid.LKGetDatas();
+                      var checkQty = 0;
+                      // 判断grid中是否存在此产品
+                      $(gridDatas).each(function() {
+                        // checkQty += $(this).find('input[name=quantity]').val();
+                      });
+                      console.log(checkQty);
+
                       if (stockQuantity) {
                         var currentCount = parseInt(currentValue) - parseInt(stockQuantity);
-                        $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(currentCount, true);
+                        $plugin.LKGetSameNodePlugin('differenceQuantity').LKSetValues(currentCount, true);
                       } else {
-                        $plugin.LKGetSiblingPlugin('differenceQuantity').LKSetValues(0, true);
+                        $plugin.LKGetSameNodePlugin('differenceQuantity').LKSetValues(0, true);
                       }
                     }
                   }
@@ -184,6 +190,7 @@ var checkOrderFormPlugins = [
                 },
                 success : function(responseDatas) {
                   if (responseDatas && responseDatas.length == 1) {
+                    responseDatas[0].differenceQuantity = 0 - responseDatas[0].stockQuantity;
                     returnDatas.push(responseDatas[0]);
                   } else {
                     notExist = true;
@@ -192,11 +199,6 @@ var checkOrderFormPlugins = [
               });
               if (notExist) {
                 LK.alert('checkOrder.grid.this product does not exist in the current storage');
-                return [];
-              }
-
-              if (checkProdExists($datagrid, prod)) {
-                LK.alert('checkOrder.grid.product already exists');
                 return [];
               }
             }
@@ -259,10 +261,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         text : 'usingStatus',
         width : 120,
         name : 'usingStatus'
-      }, {
-        text : 'approvalStatus',
-        width : 120,
-        name : 'approvalStatus'
       }, {
         text : 'approvalTime',
         width : null,
@@ -374,10 +372,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           LK.alert(i18nKey + 'only USING status can be submit');
           return false;
         }
-        if (selectedDatas[i].approvalStatusDictCode != 'PENDING') {
-          LK.alert(i18nKey + 'only PENDING status can be submit');
-          return false;
-        }
         if (selectedDatas[i].billDate != today()) {
           LK.alert(i18nKey + 'only today order can be submit');
           return false;
@@ -431,14 +425,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           name : 'usingStatus',
           param : {
             categoryCode : 'PSS_CHECK_ORDER_STATUS'
-          }
-        }
-      }, {
-        plugin : 'droplist',
-        options : {
-          name : 'approvalStatus',
-          param : {
-            categoryCode : 'ACTIVITI_APPROVAL_STATUS'
           }
         }
       }

@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import com.lichkin.application.services.bus.impl.SysPssStockCheckOrderBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.json.LKJsonUtils;
+import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
@@ -47,9 +49,10 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssStockCheckOr
 
 	@Override
 	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity) {
+		entity.setBillDate(LKDateTimeUtils.now(LKDateTimeTypeEnum.DATE_ONLY));
 		List<SysPssStockCheckOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssStockCheckOrderProductEntity.class);
 		// 校验处理
-		String errorMsg = busService.checkProdExist(sin.getBillDate(), listProduct, null);
+		String errorMsg = busService.checkProdExist(entity.getBillDate(), listProduct, null);
 		if (StringUtils.isNotBlank(errorMsg)) {
 			throw new LKRuntimeException(ErrorCodes.PSS_STOCK_CHECK_MSG).withParam("#prodName", errorMsg);
 		}

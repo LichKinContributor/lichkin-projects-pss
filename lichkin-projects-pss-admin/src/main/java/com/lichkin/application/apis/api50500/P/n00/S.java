@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api50500.P.n00;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.application.utils.LKDictUtils4Activiti;
@@ -10,9 +11,12 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssStockCheckOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
+import com.lichkin.framework.db.beans.eq;
+import com.lichkin.framework.db.beans.gte;
+import com.lichkin.framework.db.beans.neq;
 import com.lichkin.framework.db.enums.LikeType;
-import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -43,14 +47,46 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockCheckOrderEntity>
 		// 公司ID
 		addConditionCompId(false, sql, SysPssStockCheckOrderR.compId, compId, sin.getCompId());
 		// 在用状态
-		addConditionUsingStatus(sql, SysPssStockCheckOrderR.usingStatus, compId, sin.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		LKUsingStatusEnum usingStatus = sin.getUsingStatus();
+		if (usingStatus == null) {
+			sql.where(
 
-		// 筛选条件（业务项）
-		ApprovalStatusEnum approvalStatus = sin.getApprovalStatus();
-		if (approvalStatus != null) {
-			sql.eq(SysPssStockCheckOrderR.approvalStatus, approvalStatus);
+					new Condition(
+
+							new Condition(new neq(SysPssStockCheckOrderR.usingStatus, LKUsingStatusEnum.STAND_BY)),
+
+							new Condition(false,
+
+									new Condition(null, new eq(SysPssStockCheckOrderR.usingStatus, LKUsingStatusEnum.STAND_BY)),
+
+									new Condition(true, new gte(SysPssStockCheckOrderR.insertTime, LKDateTimeUtils.toString(DateTime.now().minusHours(12))))
+
+							)
+
+					)
+
+			);
+		} else {
+			switch (usingStatus) {
+				case STAND_BY:
+					sql.where(
+
+							new Condition(true,
+
+									new Condition(null, new eq(SysPssStockCheckOrderR.usingStatus, LKUsingStatusEnum.STAND_BY)),
+
+									new Condition(true, new gte(SysPssStockCheckOrderR.insertTime, LKDateTimeUtils.toString(DateTime.now().minusHours(12))))
+
+							)
+
+					);
+				break;
+				default:
+					sql.eq(SysPssStockCheckOrderR.usingStatus, usingStatus);
+			}
 		}
 
+		// 筛选条件（业务项）
 		String orderNo = sin.getOrderNo();
 		if (StringUtils.isNotBlank(orderNo)) {
 			sql.like(SysPssStockCheckOrderR.orderNo, LikeType.ALL, orderNo);

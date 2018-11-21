@@ -11,8 +11,6 @@ public class I extends LKRequestBean {
 
 	private String compId;
 
-	private String billDate;
-
 	private String remarks;
 
 	private String storageId;

@@ -136,8 +136,10 @@ public class SysPssStockBusService extends LKDBService {
 
 	public void changeStockQuantityByCheckOrder(SysPssStockCheckOrderEntity checkOrder, List<SysPssStockCheckOrderProductEntity> orderProductList) {
 		if (CollectionUtils.isNotEmpty(orderProductList)) {
-			// 将相同产品合并计算数量
+			// 将相同产品合并计算盘点数量和
 			Map<String, Integer> prodQtyMap = orderProductList.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+			// 获取同一个产品的库存数量
+			// Map<Object, Double> stockQtyMap = orderProductList.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.averagingInt(o -> o.getStockQuantity())));
 
 			List<String> prodIdList = new ArrayList<>();
 			for (SysPssStockCheckOrderProductEntity prod : orderProductList) {
@@ -150,6 +152,8 @@ public class SysPssStockBusService extends LKDBService {
 			List<SysPssStockEntity> stockList = dao.getList(sql, SysPssStockEntity.class);
 
 			for (SysPssStockEntity stockEntity : stockList) {
+				// int differenceQuantity = prodQtyMap.get(stockEntity.getProductId()) - stockQtyMap.get(stockEntity.getProductId()).intValue();
+				// 实际库存加上盘盈盘亏数（盘点单未审核通过之前 库存可能会变化）
 				stockEntity.setQuantity(prodQtyMap.get(stockEntity.getProductId()));
 			}
 			dao.mergeList(stockList);

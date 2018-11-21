@@ -23,13 +23,13 @@ $.LKExtendI18N({
       'edit' : '编辑订单',
       'hold' : '盘点结束',
       'remove' : '删除订单',
-      'submit' : '提交订单',
+      'submit' : '修改库存',
       'view' : '查看订单',
 
       'confirm' : {
         'remove' : '数据删除后将不能恢复，确认删除么？',
-        'hold' : '数据暂存后将不能修改，确认暂存么？',
-        'submit' : '数据提交后将会根据盘点数据修正库存，确认提交么？',
+        'hold' : '盘点结束后将不能修改，确认？',
+        'submit' : '数据提交后将修改库存，确认提交么？',
       },
 
       'please choose the storage' : '请选择盘点仓库。',
@@ -38,9 +38,8 @@ $.LKExtendI18N({
       'only STAND_BY status can be edit' : '只有盘点中状态才可编辑。',
       'only STAND_BY status can be hold' : '只有盘点中状态才可盘点结束。',
       'only STAND_BY status can be remove' : '只有盘点中状态才可删除。',
-      'only USING status can be submit' : '只有盘点结束状态才可提交。',
-      'only PENDING status can be submit' : '只有草稿状态才可提交。',
-      'only today order can be submit' : '只有当日盘点单才可提交。',
+      'only USING status can be submit' : '只有盘点结束状态才可修改库存。',
+      'only today order can be submit' : '只有当日盘点单才可修改库存。',
     },
 
     'product-grid' : {
