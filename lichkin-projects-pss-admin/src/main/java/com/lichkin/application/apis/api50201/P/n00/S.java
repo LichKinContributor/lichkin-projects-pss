@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssSellOrderProductR;
 import com.lichkin.framework.db.beans.SysPssSellOrderR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
@@ -53,6 +54,8 @@ public class S extends LKApiBusGetPageService<I, O, SysPssSellOrderProductEntity
 		addConditionCompId(false, sql, SysPssSellOrderR.compId, compId, sin.getCompId());
 		// 在用状态
 		addConditionUsingStatus(sql, SysPssSellOrderR.usingStatus, compId, LKUsingStatusEnum.USING);
+		// 审核状态
+		sql.eq(SysPssSellOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 
 		// 筛选条件（业务项）
 		String orderNo = sin.getOrderNo();
