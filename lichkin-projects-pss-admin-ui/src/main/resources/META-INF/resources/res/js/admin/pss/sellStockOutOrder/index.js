@@ -192,11 +192,11 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         name : 'storageName'
       }, {
         text : 'billDate',
-        width : 120,
+        width : 100,
         name : 'billDate'
       }, {
         text : 'approvalStatus',
-        width : 120,
+        width : 100,
         name : 'approvalStatus'
       }, {
         text : 'approvalTime',
@@ -210,7 +210,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         name : 'sellOrderNo'
       }, {
         text : 'sellBillDate',
-        width : 120,
+        width : 100,
         name : 'sellBillDate'
       }, {
         text : 'sellOrderAmount',
@@ -230,8 +230,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       click : function($button, $plugin, $selecteds, selectedDatas, value, i18nKey) {
         LK.UI.openDialog($.extend({}, {
           size : {
-            cols : 3,
-            rows : 12
+            cols : 4,
+            rows : 15
           }
         }, {
           title : i18nKey + 'selectSellOrder',
@@ -347,8 +347,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                     key : 'title',
                     name : 'sellOrderList',
                     valueFieldName : 'id',
-                    cols : 3,
-                    rows : 12,
+                    cols : 4,
+                    rows : 15,
                     pageable : false,
                     url : '/SysPssSellOrder/L',
                     $appendTo : $('body'),
@@ -361,19 +361,19 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                         }, {
                           text : 'billDate',
                           name : 'billDate',
-                          width : 120
+                          width : 200
                         }, {
                           text : 'inventoryStatus',
                           name : 'inventoryStatus',
-                          width : 100
+                          width : 200
                         }, {
                           text : 'salesName',
                           name : 'salesName',
-                          width : 150
+                          width : 200
                         }, {
                           text : 'orderAmount',
                           name : 'orderAmount',
-                          width : 100
+                          width : 180
                         }
                     ],
                     searchForm : [
