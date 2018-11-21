@@ -46,6 +46,7 @@ $.LKExtendI18N({
         'barcode' : '条形码',
         'unit' : '单位',
         'stockQuantity' : '库存数量',
+        'canOutQty' : '可用库存数量',
         'quantity' : '调拨数量',
         'product' : '选择产品',
       },

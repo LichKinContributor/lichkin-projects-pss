@@ -63,11 +63,16 @@ var allotOrderFormPlugins = [
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
-                if (responseDatas[0].stockQuantity == 0) {
+                if (responseDatas[0].canOutQty == 0) {
                   LK.alert('allotOrder.grid.the number of products currently available is zero');
                   return;
                 }
+
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
+                if (allotOrderMergeProd($productList, responseDatas[0])) {
+                  return;
+                }
+
                 $productList.LKInvokeAddDatas(responseDatas);
               } else {
                 LK.alert('allotOrder.grid.this product does not exist in the storage');
@@ -119,8 +124,12 @@ var allotOrderFormPlugins = [
               width : 80,
               name : 'stockQuantity'
             }, {
+              text : 'canOutQty',
+              width : 90,
+              name : 'canOutQty'
+            }, {
               text : 'quantity',
-              width : 100,
+              width : 80,
               formatter : function(rowData) {
                 return {
                   plugin : 'numberspinner',
@@ -128,7 +137,7 @@ var allotOrderFormPlugins = [
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 1,
                     min : 0,
-                    max : rowData.stockQuantity
+                    max : rowData.canOutQty
                   }
                 }
               }
@@ -169,6 +178,8 @@ var allotOrderFormPlugins = [
             var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
             var notExist = false;
             var qtyIsZero = false;
+
+            var returnDatas = [];
             for (var i = 0; i < productDatas.length; i++) {
               var prod = productDatas[i];
               LK.ajax({
@@ -181,11 +192,14 @@ var allotOrderFormPlugins = [
                 },
                 success : function(responseDatas) {
                   if (responseDatas && responseDatas.length == 1) {
-                    if (responseDatas[0].stockQuantity == 0) {
+                    if (responseDatas[0].canOutQty == 0) {
                       qtyIsZero = true;
                       return;
                     }
-                    productDatas[i].stockQuantity = responseDatas[0].stockQuantity;
+                    if (allotOrderMergeProd($datagrid, responseDatas[0])) {
+                      return;
+                    }
+                    returnDatas.push(responseDatas[0]);
                   } else {
                     notExist = true;
                   }
@@ -200,7 +214,7 @@ var allotOrderFormPlugins = [
                 return [];
               }
             }
-            return productDatas;
+            return returnDatas;
           },
         },
         toolsRemoveData : {},
@@ -215,6 +229,23 @@ var allotOrderFormPlugins = [
       }
     }
 ];
+
+var allotOrderMergeProd = function($datagrid, addProd) {
+  var outnumber = false;
+  var $allRows = $datagrid.LKGetDataContainer().find('tr');
+  $allRows.each(function() {
+    var rowData = $(this).data();
+    if (rowData.id == addProd.id) {
+      outnumber = true;
+      var qty = parseInt($(this).LKGetSubPlugin('quantity').LKGetValue()) + 1;
+      if (qty <= addProd.canOutQty) {
+        $(this).LKGetSubPlugin('quantity').LKSetValues(qty, true);
+      }
+      return false;
+    }
+  });
+  return outnumber;
+}
 
 var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
