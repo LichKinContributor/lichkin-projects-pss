@@ -73,6 +73,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssAllotOrderProductEntit
 			StringBuffer prodIds = new StringBuffer();
 			for (int i = 0; i < list.size(); i++) {
 				O o = list.get(i);
+				o.setCanOutQty(o.getStockQuantity());
 				storageId = o.getStorageId();
 				prodIds.append("'" + o.getId() + "'");
 				if (i < (list.size() - 1)) {
@@ -86,7 +87,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssAllotOrderProductEntit
 				for (PssStockOutQtyOut stockOutQty : qtyList) {
 					for (O o : list) {
 						if (o.getId().equals(stockOutQty.getProductId())) {
-							o.setStockQuantity(o.getStockQuantity() - stockOutQty.getQuantity());
+							o.setCanOutQty(o.getStockQuantity() - stockOutQty.getQuantity());
 							break;
 						}
 					}

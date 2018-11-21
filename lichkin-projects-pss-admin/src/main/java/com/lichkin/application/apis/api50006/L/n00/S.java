@@ -80,7 +80,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssStockEntity> {
 				PssStockOutQtyOut out = qtyList.get(0);
 				stockQty = stockQty - out.getQuantity();
 			}
-			O.setStockQuantity(stockQty < 0 ? 0 : stockQty);
+			O.setCanOutQty(stockQty < 0 ? 0 : stockQty);
 		}
 		return list;
 	}

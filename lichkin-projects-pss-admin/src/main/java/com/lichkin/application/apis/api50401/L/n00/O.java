@@ -13,6 +13,9 @@ public class O {
 	/** 库存数量 */
 	private int stockQuantity;
 
+	/** 可用库存数量 */
+	private int canOutQty;
+
 	private int quantity;
 
 	/** 产品编码 */
