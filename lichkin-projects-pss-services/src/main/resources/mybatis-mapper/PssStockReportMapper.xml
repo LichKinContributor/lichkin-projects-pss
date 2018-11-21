@@ -40,7 +40,7 @@
     </choose>
     inner join t_sys_pss_product pp on
       p.PRODUCT_ID = pp.id
-    inner join t_sys_dictionary d on
+    left join t_sys_dictionary d on
       pp.UNIT = d.DICT_CODE
       and d.CATEGORY_CODE = 'PSS_PRODUCT_UNIT'
     inner join t_sys_pss_storage s on
