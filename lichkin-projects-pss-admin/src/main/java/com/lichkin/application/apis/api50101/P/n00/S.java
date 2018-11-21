@@ -13,6 +13,7 @@ import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderR;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
@@ -58,6 +59,8 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseOrderProductEn
 		addConditionCompId(false, sql, SysPssPurchaseOrderR.compId, compId, sin.getCompId());
 		// 在用状态
 		addConditionUsingStatus(sql, SysPssPurchaseOrderR.usingStatus, compId, LKUsingStatusEnum.USING);
+		// 审核状态
+		sql.eq(SysPssPurchaseOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 
 		// 筛选条件（业务项）
 		String orderNo = sin.getOrderNo();
@@ -97,7 +100,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseOrderProductEn
 
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
-			sql.like(SysPssProductR.barcode, LikeType.ALL, barcode);
+			sql.eq(SysPssProductR.barcode, barcode);
 		}
 		// 排序条件
 		sql.addOrders(new Order(SysPssPurchaseOrderR.id, false), new Order(SysPssPurchaseOrderProductR.id, false));

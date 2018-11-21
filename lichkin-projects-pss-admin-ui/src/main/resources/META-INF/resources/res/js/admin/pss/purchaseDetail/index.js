@@ -89,15 +89,13 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'textbox',
         options : {
-          name : 'barcode',
-          cls : 'fuzzy-left fuzzy-right'
+          name : 'barcode'
         }
       }, {
-        plugin : 'droplist',
+        plugin : 'textbox',
         options : {
-          key : 'supplierName',
-          name : 'supplierId',
-          url : '/SysPssSupplier/LD'
+          name : 'supplierName',
+          cls : 'fuzzy-left fuzzy-right'
         }
       }, {
         plugin : 'textbox',
