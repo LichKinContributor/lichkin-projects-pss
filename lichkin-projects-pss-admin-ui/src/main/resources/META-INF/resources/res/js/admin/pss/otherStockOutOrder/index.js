@@ -17,7 +17,7 @@ var otherStockOutOrderFormPlugins = [
       options : {
         name : 'storageType',
         param : {
-          categoryCode : 'PSS_OTHER_STORAGE_OUT'
+          categoryCode : 'PSS_OTHER_STOCK_OUT'
         },
         validator : true
       }
@@ -410,7 +410,7 @@ var $otherStockOutOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'un
         options : {
           name : 'storageType',
           param : {
-            categoryCode : 'PSS_OTHER_STORAGE_OUT'
+            categoryCode : 'PSS_OTHER_STOCK_OUT'
           }
         }
       }, {

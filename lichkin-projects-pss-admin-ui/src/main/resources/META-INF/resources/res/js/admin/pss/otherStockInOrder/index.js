@@ -17,7 +17,7 @@ var otherStockInOrderFormPlugins = [
       options : {
         name : 'storageType',
         param : {
-          categoryCode : 'PSS_OTHER_STORAGE_IN'
+          categoryCode : 'PSS_OTHER_STOCK_IN'
         },
         validator : true
       }
@@ -297,7 +297,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         options : {
           name : 'storageType',
           param : {
-            categoryCode : 'PSS_OTHER_STORAGE_IN'
+            categoryCode : 'PSS_OTHER_STOCK_IN'
           }
         }
       }, {

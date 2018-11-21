@@ -38,10 +38,10 @@ public enum PssOrderTypeEnum implements LKEnum {
 	PSS_SELL_STORAGE_IN,
 
 	/** 其它入库 */
-	PSS_OTHER_STORAGE_IN,
+	PSS_OTHER_STOCK_IN,
 
 	/** 其它出库 */
-	PSS_OTHER_STORAGE_OUT,
+	PSS_OTHER_STOCK_OUT,
 
 	/** 调拨单 */
 	PSS_ALLOT,

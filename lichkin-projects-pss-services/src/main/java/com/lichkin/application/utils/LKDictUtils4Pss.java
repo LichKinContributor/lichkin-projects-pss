@@ -54,7 +54,7 @@ public class LKDictUtils4Pss extends LKDictUtils {
 	 * @param tableIdx 字典表序号（从0开始）
 	 */
 	public static void storageTypeIn(QuerySQL sql, String compId, int columnResId, int tableIdx) {
-		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STORAGE_IN", columnResId, tableIdx);
+		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STOCK_IN", columnResId, tableIdx);
 	}
 
 
@@ -66,7 +66,7 @@ public class LKDictUtils4Pss extends LKDictUtils {
 	 * @param tableIdx 字典表序号（从0开始）
 	 */
 	public static void storageTypeOut(QuerySQL sql, String compId, int columnResId, int tableIdx) {
-		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STORAGE_OUT", columnResId, tableIdx);
+		leftJoinDictionary(sql, "storageType", compId, "PSS_OTHER_STOCK_OUT", columnResId, tableIdx);
 	}
 
 
