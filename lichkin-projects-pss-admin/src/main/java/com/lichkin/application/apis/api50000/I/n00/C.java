@@ -13,7 +13,7 @@ import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
 @RestController("SysPssStorageI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysPssStorage/I")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssStorage/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusInsertController<I, SysPssStorageEntity> {
 

@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEnt
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
 @RestController("SysPssStockCheckOrderProductL00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysPssStockCheckOrderProduct/L")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssStockCheckOrderProduct/L")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetListController<I, O, SysPssStockCheckOrderProductEntity> {
 

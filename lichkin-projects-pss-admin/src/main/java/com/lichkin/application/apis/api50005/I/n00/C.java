@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssStoreCashierEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
 @RestController("SysPssStoreCashierI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysPssStoreCashier/I")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssStoreCashier/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusInsertController<I, SysPssStoreCashierEntity> {
 

@@ -14,7 +14,7 @@ import com.lichkin.springframework.entities.impl.SysPssSellStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
 
 @RestController(PssStatics.PSS_SELL_STOCK_ORDER + ActivitiStatics.START_PROCESS + "Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/" + PssStatics.PSS_SELL_STOCK_ORDER + "/" + ActivitiStatics.START_PROCESS)
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/" + PssStatics.PSS_SELL_STOCK_ORDER + "/" + ActivitiStatics.START_PROCESS)
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusStartProcessController<I, SysPssSellStockOrderEntity> {
 
