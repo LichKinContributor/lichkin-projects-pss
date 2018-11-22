@@ -69,7 +69,7 @@
       and pp.PRODUCT_NAME LIKE CONCAT('%','${productName}','%')
     </if>
     <if test="barcode != null">
-      and pp.barcode LIKE CONCAT('%','${barcode}','%')
+      and pp.barcode <![CDATA[ = ]]> '${barcode}'
     </if>
     <if test="storageId != null">
       and s.ID <![CDATA[ = ]]>

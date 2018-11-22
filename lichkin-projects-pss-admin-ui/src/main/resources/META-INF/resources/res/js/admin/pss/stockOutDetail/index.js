@@ -98,8 +98,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'textbox',
         options : {
-          name : 'barcode',
-          cls : 'fuzzy-left fuzzy-right'
+          name : 'barcode'
         }
       }
   ]
