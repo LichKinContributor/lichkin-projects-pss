@@ -29,8 +29,6 @@ public class PssStorageDetailIn extends LKPageBean {
 
 	private String storageType;
 
-	private Integer pageStartLine;
-
 
 	public Integer getPageStartLine() {
 		if (getPageNumber() == null) {
