@@ -90,7 +90,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssSellOrderProductEntity
 
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
-			sql.like(SysPssProductR.barcode, LikeType.ALL, barcode);
+			sql.eq(SysPssProductR.barcode, barcode);
 		}
 
 		// 排序条件

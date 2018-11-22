@@ -4,25 +4,25 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'purchaseDetail',
   $appendTo : true,
-  cols : 5,
+  cols : 4,
   url : '/SysPssPurchaseOrderProduct/P',
   columns : [
       {
-        text : 'billDate',
-        name : 'billDate',
-        width : 100
-      }, {
         text : 'orderNo',
         name : 'orderNo',
         width : 260
       }, {
+        text : 'billDate',
+        name : 'billDate',
+        width : 100
+      }, {
         text : 'supplierName',
         name : 'supplierName',
-        width : null
+        width : 150
       }, {
         text : 'purchaserName',
         name : 'purchaserName',
-        width : 120
+        width : 150
       }, {
         text : 'productCode',
         name : 'productCode',
@@ -77,6 +77,18 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'textbox',
         options : {
+          name : 'supplierName',
+          cls : 'fuzzy-left fuzzy-right'
+        }
+      }, {
+        plugin : 'textbox',
+        options : {
+          name : 'purchaserName',
+          cls : 'fuzzy-left fuzzy-right'
+        }
+      }, {
+        plugin : 'textbox',
+        options : {
           name : 'productCode',
           cls : 'fuzzy-left fuzzy-right'
         }
@@ -90,18 +102,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         plugin : 'textbox',
         options : {
           name : 'barcode'
-        }
-      }, {
-        plugin : 'textbox',
-        options : {
-          name : 'supplierName',
-          cls : 'fuzzy-left fuzzy-right'
-        }
-      }, {
-        plugin : 'textbox',
-        options : {
-          name : 'purchaserName',
-          cls : 'fuzzy-left fuzzy-right'
         }
       }
   ]

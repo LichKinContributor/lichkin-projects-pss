@@ -4,21 +4,21 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'sellDetail',
   $appendTo : true,
-  cols : 5,
+  cols : 4,
   url : '/SysPssSellOrderProduct/P',
   columns : [
       {
-        text : 'billDate',
-        name : 'billDate',
-        width : 100
-      }, {
         text : 'orderNo',
         name : 'orderNo',
         width : 260
       }, {
+        text : 'billDate',
+        name : 'billDate',
+        width : 100
+      }, {
         text : 'salesName',
         name : 'salesName',
-        width : null
+        width : 150
       }, {
         text : 'productCode',
         name : 'productCode',
@@ -34,23 +34,23 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         text : 'unit',
         name : 'unit',
-        width : 100
+        width : 80
       }, {
         text : 'quantity',
         name : 'quantity',
-        width : 100
+        width : 80
       }, {
         text : 'inventoryQuantity',
         name : 'inventoryQuantity',
-        width : 100
+        width : 80
       }, {
         text : 'unitPrice',
         name : 'unitPrice',
-        width : 100
+        width : 80
       }, {
         text : 'subTotalPrice',
         name : 'subTotalPrice',
-        width : 100
+        width : 80
       }
   ],
   searchForm : [
@@ -73,6 +73,12 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'textbox',
         options : {
+          name : 'salesName',
+          cls : 'fuzzy-left fuzzy-right'
+        }
+      }, {
+        plugin : 'textbox',
+        options : {
           name : 'productCode',
           cls : 'fuzzy-left fuzzy-right'
         }
@@ -85,14 +91,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'textbox',
         options : {
-          name : 'barcode',
-          cls : 'fuzzy-left fuzzy-right'
-        }
-      }, {
-        plugin : 'textbox',
-        options : {
-          name : 'salesName',
-          cls : 'fuzzy-left fuzzy-right'
+          name : 'barcode'
         }
       }
   ]
