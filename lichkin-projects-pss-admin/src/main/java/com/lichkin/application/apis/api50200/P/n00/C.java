@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssSellOrderEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
 
 @RestController("SysPssSellOrderP00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssSellOrder/P")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssSellOrder/P")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetPageController<I, O, SysPssSellOrderEntity> {
 

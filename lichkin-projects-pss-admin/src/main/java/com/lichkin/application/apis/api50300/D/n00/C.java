@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusDeleteService;
 
 @RestController("SysPssOtherStockOrderD00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssOtherStockOrder/D")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssOtherStockOrder/D")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusDeleteController<I, SysPssOtherStockOrderEntity> {
 

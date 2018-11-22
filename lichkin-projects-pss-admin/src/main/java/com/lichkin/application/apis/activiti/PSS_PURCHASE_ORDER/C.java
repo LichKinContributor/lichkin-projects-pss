@@ -14,7 +14,7 @@ import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
 
 @RestController(PssStatics.PSS_PURCHASE_ORDER + ActivitiStatics.START_PROCESS + "Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/" + PssStatics.PSS_PURCHASE_ORDER + "/" + ActivitiStatics.START_PROCESS)
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/" + PssStatics.PSS_PURCHASE_ORDER + "/" + ActivitiStatics.START_PROCESS)
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusStartProcessController<I, SysPssPurchaseOrderEntity> {
 

@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
 @RestController("SysPssSupplierU00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssSupplier/U")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssSupplier/U")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusUpdateController<I, SysPssSupplierEntity> {
 

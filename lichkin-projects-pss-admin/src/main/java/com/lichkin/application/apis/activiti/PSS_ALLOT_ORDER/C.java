@@ -14,7 +14,7 @@ import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
 
 @RestController(PssStatics.PSS_ALLOT_ORDER + ActivitiStatics.START_PROCESS + "Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/" + PssStatics.PSS_ALLOT_ORDER + "/" + ActivitiStatics.START_PROCESS)
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/" + PssStatics.PSS_ALLOT_ORDER + "/" + ActivitiStatics.START_PROCESS)
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusStartProcessController<I, SysPssAllotOrderEntity> {
 

@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateUsingStatusService;
 
 @RestController("SysPssAllotOrderUS00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssAllotOrder/US")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssAllotOrder/US")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusUpdateUsingStatusController<I, SysPssAllotOrderEntity> {
 

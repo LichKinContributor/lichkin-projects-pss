@@ -17,7 +17,7 @@ import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.services.LKApiService;
 
 @RestController("SysPssProductCategoryS00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssProductCategory/S")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssProductCategory/S")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiYYController<I, List<LKTreeBean>, I, List<SysPssProductCategoryEntity>> {
 

@@ -11,7 +11,7 @@ import com.lichkin.springframework.controllers.LKApiBusGetDroplistController;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
 @RestController("SysPssStorageLD00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssStorage/LD")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssStorage/LD")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetDroplistController<I> {
 

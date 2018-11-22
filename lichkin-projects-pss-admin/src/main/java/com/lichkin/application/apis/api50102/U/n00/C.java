@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
 @RestController("SysPssPurchaseStockOrderU00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssPurchaseStockOrder/U")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssPurchaseStockOrder/U")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusUpdateController<I, SysPssPurchaseStockOrderEntity> {
 

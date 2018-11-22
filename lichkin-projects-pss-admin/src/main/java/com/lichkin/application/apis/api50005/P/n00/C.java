@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysPssStoreCashierEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
 
 @RestController("SysPssStoreCashierP00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssStoreCashier/P")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssStoreCashier/P")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetPageController<I, O, SysPssStoreCashierEntity> {
 

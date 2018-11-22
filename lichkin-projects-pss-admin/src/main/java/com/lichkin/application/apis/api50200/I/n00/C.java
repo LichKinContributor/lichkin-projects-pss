@@ -13,7 +13,7 @@ import com.lichkin.springframework.entities.impl.SysPssSellOrderEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
 
 @RestController("SysPssSellOrderI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssSellOrder/I")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssSellOrder/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusInsertController<I, SysPssSellOrderEntity> {
 

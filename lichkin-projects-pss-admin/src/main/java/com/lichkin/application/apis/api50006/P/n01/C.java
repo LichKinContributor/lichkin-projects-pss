@@ -20,7 +20,7 @@ import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.LKApiY0Controller;
 
 @RestController("SysPssStockP01Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysPssStock/P01")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssStock/P01")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiY0Controller<I, Page<PssStorageDetailOut>> {
 
