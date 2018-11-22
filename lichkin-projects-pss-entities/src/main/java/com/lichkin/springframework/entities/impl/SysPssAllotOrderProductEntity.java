@@ -45,12 +45,12 @@ public class SysPssAllotOrderProductEntity extends PssOrderProductEntity {
 
 	/** 当时库存数量 */
 	@FieldGenerator(resultColumn = true)
-	@Column
-	private int stockQuantity;
+	@Column(nullable = false)
+	private Integer stockQuantity;
 
 	/** 当时可出库数量 */
 	@FieldGenerator(resultColumn = true)
-	@Column
-	private int canOutQuantity;
+	@Column(nullable = false)
+	private Integer canOutQuantity;
 
 }
