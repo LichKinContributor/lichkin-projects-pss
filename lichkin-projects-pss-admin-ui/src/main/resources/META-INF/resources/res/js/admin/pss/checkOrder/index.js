@@ -48,6 +48,7 @@ var checkOrderFormPlugins = [
                 var $productList = $plugin.LKGetSiblingPlugin('productList');
                 responseDatas[0].differenceQuantity = 0 - responseDatas[0].stockQuantity;
                 $productList.LKInvokeAddDatas(responseDatas);
+                checkOrderQtyChange($productList, responseDatas[0], 0);
               } else {
                 LK.alert('checkOrder.grid.this product does not exist in the current storage');
               }
@@ -108,26 +109,10 @@ var checkOrderFormPlugins = [
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 0,
                     min : 0,
                     onChange : function($plugin, values, value, currentValue) { // 产品数量值改变
-                      // 系统数量
-                      var stockQuantity = rowData.stockQuantity;
                       if (!currentValue) {
                         currentValue = 0;
                       }
-
-                      var gridDatas = $datagrid.LKGetDatas();
-                      var checkQty = 0;
-                      // 判断grid中是否存在此产品
-                      $(gridDatas).each(function() {
-                        // checkQty += $(this).find('input[name=quantity]').val();
-                      });
-                      console.log(checkQty);
-
-                      if (stockQuantity) {
-                        var currentCount = parseInt(currentValue) - parseInt(stockQuantity);
-                        $plugin.LKGetSameNodePlugin('differenceQuantity').LKSetValues(currentCount, true);
-                      } else {
-                        $plugin.LKGetSameNodePlugin('differenceQuantity').LKSetValues(0, true);
-                      }
+                      checkOrderQtyChange($datagrid, rowData, currentValue);
                     }
                   }
                 }
@@ -204,8 +189,36 @@ var checkOrderFormPlugins = [
             }
             return returnDatas;
           },
+          afterAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
+            var storageId = $datagrid.LKGetSiblingPlugin('storageId').LKGetValue();
+            var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
+            for (var i = 0; i < productDatas.length; i++) {
+              var prod = productDatas[i];
+              LK.ajax({
+                url : '/SysPssStock/L',
+                async : false,
+                data : {
+                  orderType : 'PSS_CHECK',
+                  storageId : storageId,
+                  productId : prod.id
+                },
+                success : function(responseDatas) {
+                  if (responseDatas && responseDatas.length == 1) {
+                    responseDatas[0].differenceQuantity = 0 - responseDatas[0].stockQuantity;
+                    checkOrderQtyChange($datagrid, responseDatas[0], 0);
+                  }
+                }
+              });
+            }
+          }
         },
-        toolsRemoveData : {},
+        toolsRemoveData : {
+          afterRemove : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
+            for (var i = 0; i < selectedDatas.length; i++) {
+              checkOrderQtyChange($datagrid, selectedDatas[i], 0);
+            }
+          }
+        },
       }
     }, {
       plugin : 'textbox',
@@ -231,6 +244,30 @@ var checkProdExists = function($datagrid, addProd) {
   return exists;
 }
 
+var checkOrderQtyChange = function($datagrid, rowData, currentValue) {
+  // 系统数量
+  var stockQuantity = rowData.stockQuantity;
+  var $allRows = $datagrid.LKGetDataContainer().find('tr');
+  var checkQty = parseInt(currentValue);
+  $allRows.each(function() {
+    var data = $(this).data();
+    if (rowData.id == data.id && rowData.random != data.random) {
+      checkQty += parseInt($(this).LKGetSubPlugin('quantity').LKGetValue());
+    }
+  });
+
+  var differenceQuantity = 0;
+  if (stockQuantity) {
+    differenceQuantity = checkQty - parseInt(stockQuantity);
+  }
+  $allRows.each(function() {
+    var data = $(this).data();
+    if (rowData.id == data.id) {
+      $(this).LKGetSubPlugin('differenceQuantity').LKSetValues(differenceQuantity, true);
+    }
+  });
+}
+
 LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
   icon : 'checkOrder',
@@ -252,18 +289,18 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         text : 'storageName',
         name : 'storageName',
-        width : 200
+        width : '1/2'
       }, {
         text : 'stockCheckCount',
         name : 'stockCheckCount',
-        width : 100
+        width : 120
       }, {
         text : 'usingStatus',
         width : 120,
         name : 'usingStatus'
       }, {
         text : 'approvalTime',
-        width : null,
+        width : '1/2',
         formatter : function(rowData) {
           return showStandardTime(rowData.approvalTime);
         }

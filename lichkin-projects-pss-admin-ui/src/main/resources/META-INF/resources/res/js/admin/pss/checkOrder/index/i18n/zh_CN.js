@@ -12,7 +12,7 @@ $.LKExtendI18N({
         'stockCheckCount' : '盘点产品数',
         'usingStatus' : '盘点状态',
         'approvalStatus' : '审批状态',
-        'approvalTime' : '审批时间',
+        'approvalTime' : '修改库存时间',
         'startDate' : '订单开始日期',
         'endDate' : '订单结束日期',
         'scanCode' : '扫码',
