@@ -13,7 +13,7 @@ public class O {
 	private int quantity;
 
 	/** 可用库存数量 */
-	private int canOutQty;
+	private int canOutQuantity;
 
 	/** 仓库ID */
 	private String storageId;

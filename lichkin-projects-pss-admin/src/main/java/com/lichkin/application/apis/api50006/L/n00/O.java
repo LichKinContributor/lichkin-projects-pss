@@ -14,7 +14,7 @@ public class O {
 	private int stockQuantity;
 
 	/** 可用库存数量 */
-	private int canOutQty;
+	private int canOutQuantity;
 
 	/** 产品名称 */
 	private String productName;

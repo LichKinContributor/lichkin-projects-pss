@@ -14,4 +14,7 @@ public class I extends LKRequestBean {
 	/** 订单类型。true:入库单;false:出库单; */
 	private Boolean orderType;
 
+	/** 是否查看 */
+	private Boolean isView = false;
+
 }

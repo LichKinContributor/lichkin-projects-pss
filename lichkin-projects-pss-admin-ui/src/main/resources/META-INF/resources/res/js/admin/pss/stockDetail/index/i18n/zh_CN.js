@@ -12,7 +12,7 @@ $.LKExtendI18N({
         'productCode' : '产品编码',
         'barcode' : '条形码',
         'quantity' : '库存数量',
-        'canOutQty' : '可用库存数量'
+        'canOutQuantity' : '可用库存数量'
       },
     }
   }

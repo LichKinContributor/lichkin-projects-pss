@@ -52,7 +52,13 @@ public class S extends LKApiBusGetListService<I, O, SysPssAllotOrderProductEntit
 
 		);
 		sql.select(SysPssStockR.storageId);
-		sql.select(SysPssStockR.quantity, "stockQuantity");
+
+		if (sin.getIsView().equals(Boolean.TRUE)) {
+			sql.select(SysPssAllotOrderProductR.stockQuantity);
+			sql.select(SysPssAllotOrderProductR.canOutQuantity);
+		} else {
+			sql.select(SysPssStockR.quantity, "stockQuantity");
+		}
 
 		// 字典表
 		int i = 0;
@@ -68,12 +74,17 @@ public class S extends LKApiBusGetListService<I, O, SysPssAllotOrderProductEntit
 
 	@Override
 	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+		// 只是查看 不需要计算可出库数量
+		if (sin.getIsView().equals(Boolean.TRUE)) {
+			return list;
+		}
+
 		if (CollectionUtils.isNotEmpty(list)) {
 			String storageId = "";
 			StringBuffer prodIds = new StringBuffer();
 			for (int i = 0; i < list.size(); i++) {
 				O o = list.get(i);
-				o.setCanOutQty(o.getStockQuantity());
+				o.setCanOutQuantity(o.getStockQuantity());
 				storageId = o.getStorageId();
 				prodIds.append("'" + o.getId() + "'");
 				if (i < (list.size() - 1)) {
@@ -87,7 +98,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssAllotOrderProductEntit
 				for (PssStockOutQtyOut stockOutQty : qtyList) {
 					for (O o : list) {
 						if (o.getId().equals(stockOutQty.getProductId())) {
-							o.setCanOutQty(o.getStockQuantity() - stockOutQty.getQuantity());
+							o.setCanOutQuantity(o.getStockQuantity() - stockOutQty.getQuantity());
 							break;
 						}
 					}

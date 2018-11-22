@@ -11,4 +11,7 @@ public class I extends LKRequestBean {
 
 	private String orderId;
 
+	/** 是否查看 */
+	private Boolean isView = false;
+
 }

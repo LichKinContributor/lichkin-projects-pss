@@ -43,18 +43,23 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 		sql.select(SysPssProductR.productName);
 		sql.select(SysPssProductR.barcode);
 
-		// 其它出库单
-		if (sin.getOrderType().equals(Boolean.FALSE)) {
-			sql.innerJoin(SysPssOtherStockOrderEntity.class, new Condition(SysPssOtherStockOrderProductR.orderId, SysPssOtherStockOrderR.id));
-			sql.innerJoin(SysPssStockEntity.class,
+		if (sin.getIsView().equals(Boolean.TRUE)) {
+			sql.select(SysPssOtherStockOrderProductR.stockQuantity);
+			sql.select(SysPssOtherStockOrderProductR.canOutQuantity);
+		} else {
+			// 其它出库单
+			if (sin.getOrderType().equals(Boolean.FALSE)) {
+				sql.innerJoin(SysPssOtherStockOrderEntity.class, new Condition(SysPssOtherStockOrderProductR.orderId, SysPssOtherStockOrderR.id));
+				sql.innerJoin(SysPssStockEntity.class,
 
-					new Condition(SysPssStockR.storageId, SysPssOtherStockOrderR.storageId),
+						new Condition(SysPssStockR.storageId, SysPssOtherStockOrderR.storageId),
 
-					new Condition(SysPssStockR.productId, SysPssOtherStockOrderProductR.productId)
+						new Condition(SysPssStockR.productId, SysPssOtherStockOrderProductR.productId)
 
-			);
-			sql.select(SysPssStockR.storageId);
-			sql.select(SysPssStockR.quantity, "stockQuantity");
+				);
+				sql.select(SysPssStockR.storageId);
+				sql.select(SysPssStockR.quantity, "stockQuantity");
+			}
 		}
 
 		// 字典表
@@ -71,6 +76,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 
 	@Override
 	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+		// 只是查看 不需要计算可出库数量
+		if (sin.getIsView().equals(Boolean.TRUE)) {
+			return list;
+		}
 		// 出库单
 		if (sin.getOrderType().equals(Boolean.FALSE)) {
 			if (CollectionUtils.isNotEmpty(list)) {
@@ -78,7 +87,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 				StringBuffer prodIds = new StringBuffer();
 				for (int i = 0; i < list.size(); i++) {
 					O o = list.get(i);
-					o.setCanOutQty(o.getStockQuantity());
+					o.setCanOutQuantity(o.getStockQuantity());
 					storageId = o.getStorageId();
 					prodIds.append("'" + o.getId() + "'");
 					if (i < (list.size() - 1)) {
@@ -92,7 +101,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 					for (PssStockOutQtyOut stockOutQty : qtyList) {
 						for (O o : list) {
 							if (o.getId().equals(stockOutQty.getProductId())) {
-								o.setCanOutQty(o.getStockQuantity() - stockOutQty.getQuantity());
+								o.setCanOutQuantity(o.getStockQuantity() - stockOutQty.getQuantity());
 								break;
 							}
 						}

@@ -92,7 +92,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockEntity> {
 			StringBuffer prodIds = new StringBuffer();
 			for (int i = 0; i < list.size(); i++) {
 				O o = list.get(i);
-				o.setCanOutQty(o.getQuantity());
+				o.setCanOutQuantity(o.getQuantity());
 				storageIds.append("'" + o.getStorageId() + "'");
 				prodIds.append("'" + o.getProductId() + "'");
 				if (i < (list.size() - 1)) {
@@ -107,7 +107,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockEntity> {
 				for (PssStockOutQtyOut stockOutQty : qtyList) {
 					for (O o : list) {
 						if (o.getStorageId().equals(stockOutQty.getStorageId()) && o.getProductId().equals(stockOutQty.getProductId())) {
-							o.setCanOutQty(o.getQuantity() - stockOutQty.getQuantity());
+							o.setCanOutQuantity(o.getQuantity() - stockOutQty.getQuantity());
 							break;
 						}
 					}

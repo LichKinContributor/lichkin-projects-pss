@@ -62,7 +62,7 @@ var otherStockOutOrderFormPlugins = [
             },
             success : function(responseDatas) {
               if (responseDatas && responseDatas.length == 1) {
-                if (responseDatas[0].canOutQty == 0) {
+                if (responseDatas[0].canOutQuantity == 0) {
                   LK.alert('otherStockOutOrder.grid.the number of products currently available is zero');
                   return;
                 }
@@ -122,9 +122,9 @@ var otherStockOutOrderFormPlugins = [
               width : 80,
               name : 'stockQuantity'
             }, {
-              text : 'canOutQty',
+              text : 'canOutQuantity',
               width : 90,
-              name : 'canOutQty'
+              name : 'canOutQuantity'
             }, {
               text : 'quantity',
               width : 80,
@@ -135,7 +135,7 @@ var otherStockOutOrderFormPlugins = [
                     name : 'quantity',
                     value : (typeof rowData.quantity != 'undefined') ? rowData.quantity : 1,
                     min : 1,
-                    max : rowData.canOutQty
+                    max : rowData.canOutQuantity
                   }
                 }
               }
@@ -190,7 +190,7 @@ var otherStockOutOrderFormPlugins = [
                 },
                 success : function(responseDatas) {
                   if (responseDatas && responseDatas.length == 1) {
-                    if (responseDatas[0].canOutQty == 0) {
+                    if (responseDatas[0].canOutQuantity == 0) {
                       qtyIsZero = true;
                       return;
                     }
@@ -236,7 +236,7 @@ var otherStockOutOrderMergeProd = function($datagrid, addProd) {
     if (rowData.id == addProd.id) {
       outnumber = true;
       var qty = parseInt($(this).LKGetSubPlugin('quantity').LKGetValue()) + 1;
-      if (qty <= addProd.canOutQty) {
+      if (qty <= addProd.canOutQuantity) {
         $(this).LKGetSubPlugin('quantity').LKSetValues(qty, true);
       }
       return false;
@@ -359,7 +359,8 @@ var $otherStockOutOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'un
         lazy : false,
         param : {
           orderId : value,
-          orderType : false
+          orderType : false,
+          isView : true
         },
         tools : []
       });
