@@ -202,11 +202,11 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         name : 'billDate'
       }, {
         text : 'supplierName',
-        width : 200,
+        width : '1/2',
         name : 'supplierName'
       }, {
         text : 'purchaserName',
-        width : 120,
+        width : '1/2',
         name : 'purchaserName'
       }, {
         text : 'orderAmount',
