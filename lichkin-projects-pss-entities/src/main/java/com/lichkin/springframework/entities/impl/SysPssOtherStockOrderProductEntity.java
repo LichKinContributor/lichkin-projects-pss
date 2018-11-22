@@ -1,8 +1,10 @@
 package com.lichkin.springframework.entities.impl;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.lichkin.framework.defines.annotations.ClassGenerator;
+import com.lichkin.framework.defines.annotations.FieldGenerator;
 import com.lichkin.framework.defines.annotations.InsertCheckType;
 import com.lichkin.framework.defines.annotations.UpdateCheckType;
 import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
@@ -40,5 +42,15 @@ public class SysPssOtherStockOrderProductEntity extends PssOrderProductEntity {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 50301L;
+
+	/** 当时库存数量 */
+	@FieldGenerator(resultColumn = true)
+	@Column
+	private int stockQuantity;
+
+	/** 当时可出库数量 */
+	@FieldGenerator(resultColumn = true)
+	@Column
+	private int canOutQuantity;
 
 }

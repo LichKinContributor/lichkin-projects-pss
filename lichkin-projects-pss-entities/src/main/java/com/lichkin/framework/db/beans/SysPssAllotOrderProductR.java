@@ -16,4 +16,8 @@ public interface SysPssAllotOrderProductR {
 
 	public static final int sortId = 0x50401004;
 
+	public static final int stockQuantity = 0x50401005;
+
+	public static final int canOutQuantity = 0x50401006;
+
 }

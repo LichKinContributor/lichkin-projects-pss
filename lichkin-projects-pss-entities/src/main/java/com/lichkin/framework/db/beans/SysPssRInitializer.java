@@ -185,6 +185,8 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50301002", "SysPssOtherStockOrderProductEntity", "productId");
 		LKDBResource.addColumn("50301003", "SysPssOtherStockOrderProductEntity", "quantity");
 		LKDBResource.addColumn("50301004", "SysPssOtherStockOrderProductEntity", "sortId");
+		LKDBResource.addColumn("50301005", "SysPssOtherStockOrderProductEntity", "stockQuantity");
+		LKDBResource.addColumn("50301006", "SysPssOtherStockOrderProductEntity", "canOutQuantity");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity", "T_SYS_PSS_ALLOT_ORDER", "SysPssAllotOrderEntity");
 		LKDBResource.addColumn("50400000", "SysPssAllotOrderEntity", "id");
 		LKDBResource.addColumn("50400001", "SysPssAllotOrderEntity", "usingStatus");
@@ -203,6 +205,8 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50401002", "SysPssAllotOrderProductEntity", "productId");
 		LKDBResource.addColumn("50401003", "SysPssAllotOrderProductEntity", "quantity");
 		LKDBResource.addColumn("50401004", "SysPssAllotOrderProductEntity", "sortId");
+		LKDBResource.addColumn("50401005", "SysPssAllotOrderProductEntity", "stockQuantity");
+		LKDBResource.addColumn("50401006", "SysPssAllotOrderProductEntity", "canOutQuantity");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity", "T_SYS_PSS_STOCK_CHECK_ORDER", "SysPssStockCheckOrderEntity");
 		LKDBResource.addColumn("50500000", "SysPssStockCheckOrderEntity", "id");
 		LKDBResource.addColumn("50500001", "SysPssStockCheckOrderEntity", "usingStatus");
