@@ -178,7 +178,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'purchaseStockInOrder',
   $appendTo : true,
-  cols : 5,
+  cols : 4,
   url : '/SysPssPurchaseStockOrder/P',
   columns : [
       {
@@ -222,7 +222,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         name : 'supplierName'
       }, {
         text : 'purchaserName',
-        width : null,
+        width : 120,
         name : 'purchaserName'
       }
   ],
@@ -423,7 +423,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                           options : {
                             name : 'inventoryStatus',
                             param : {
-                              categoryCode : 'PSS_INVENTORY_STATUS'
+                              categoryCode : 'PSS_INVENTORY_STATUS',
+                              excludes : 'ALL'
                             }
                           }
                         }
