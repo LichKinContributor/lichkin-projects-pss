@@ -134,9 +134,12 @@
     </choose>
    
     order by
+      ORDER_NO desc,
       BILL_DATE,
+      storageType,
       STORAGE_NAME,
-      PRODUCT_CODE
+      PRODUCT_CODE,
+      PRODUCT_NAME
   </sql>
 
   <select id="findStorageDetailTotalCount" parameterType="com.lichkin.application.mappers.impl.in.PssStorageDetailIn" resultType="java.lang.Long">

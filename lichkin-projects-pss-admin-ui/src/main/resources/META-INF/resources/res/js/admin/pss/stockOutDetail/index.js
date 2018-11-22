@@ -4,17 +4,17 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'stockOutDetail',
   $appendTo : true,
-  cols : 5,
+  cols : 4,
   url : '/SysPssStock/P01',
   columns : [
       {
-        text : 'billDate',
-        name : 'billDate',
-        width : 120
-      }, {
         text : 'orderNo',
         name : 'orderNo',
         width : 260
+      }, {
+        text : 'billDate',
+        name : 'billDate',
+        width : 100
       }, {
         text : 'storageType',
         name : 'storageType',
@@ -22,7 +22,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         text : 'storageName',
         name : 'storageName',
-        width : null
+        width : 150
       }, {
         text : 'productCode',
         name : 'productCode',
@@ -38,11 +38,11 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         text : 'unit',
         name : 'unit',
-        width : 120
+        width : 80
       }, {
         text : 'quantity',
         name : 'quantity',
-        width : 120
+        width : 80
       }
   ],
   searchForm : [
@@ -69,6 +69,21 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           name : 'endDate'
         }
       }, {
+        plugin : 'droplist',
+        options : {
+          name : 'storageType',
+          param : {
+            categoryCode : 'PSS_STOCK_OUT_TYPE'
+          }
+        }
+      }, {
+        plugin : 'droplist',
+        options : {
+          key : 'storageName',
+          name : 'storageId',
+          url : '/SysPssStorage/LD'
+        }
+      }, {
         plugin : 'textbox',
         options : {
           name : 'productCode',
@@ -85,21 +100,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         options : {
           name : 'barcode',
           cls : 'fuzzy-left fuzzy-right'
-        }
-      }, {
-        plugin : 'droplist',
-        options : {
-          key : 'storageName',
-          name : 'storageId',
-          url : '/SysPssStorage/LD'
-        }
-      }, {
-        plugin : 'droplist',
-        options : {
-          name : 'storageType',
-          param : {
-            categoryCode : 'PSS_STOCK_OUT_TYPE'
-          }
         }
       }
   ]
