@@ -24,6 +24,12 @@
       <groupId>com.lichkin.ui</groupId>
       <artifactId>lichkin-ui</artifactId>
     </dependency>
+    <!-- lichkin projects core -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-core-starter-web-admin</artifactId>
+      <version>${com.lichkin.projects.core.version}</version>
+    </dependency>
   </dependencies>
 
   <build>

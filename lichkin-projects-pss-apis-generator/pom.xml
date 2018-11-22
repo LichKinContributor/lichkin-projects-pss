@@ -17,6 +17,10 @@
     <!-- lichkin starter -->
     <dependency>
       <groupId>com.lichkin.springframework.boot</groupId>
+      <artifactId>lichkin-spring-boot-starter-web-defines</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.lichkin.springframework.boot</groupId>
       <artifactId>lichkin-spring-boot-starter-web-api-defines</artifactId>
     </dependency>
     <dependency>
