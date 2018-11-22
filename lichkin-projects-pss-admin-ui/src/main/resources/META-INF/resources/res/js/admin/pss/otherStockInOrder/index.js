@@ -154,19 +154,19 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         cssClass : 'monospacedFont'
       }, {
         text : 'storageType',
-        width : 100,
+        width : '1/2',
         name : 'storageType'
       }, {
         text : 'storageName',
-        width : 100,
+        width : '1/2',
         name : 'storageName'
       }, {
         text : 'billDate',
-        width : null,
+        width : 100,
         name : 'billDate'
       }, {
         text : 'approvalStatus',
-        width : 100,
+        width : 80,
         name : 'approvalStatus'
       }, {
         text : 'approvalTime',
