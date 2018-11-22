@@ -51,21 +51,21 @@ public class SysPssStockCheckOrderBusService extends LKDBService {
 
 	/**
 	 * 验证产品是否盘点过
-	 * @param billDate 盘点日期
+	 * @param checkOrder 盘点单
 	 * @param currentListProduct 盘点产品列表
-	 * @param orderId 盘点单ID
 	 * @return 错误提示信息
 	 */
-	public String checkProdExist(String billDate, List<SysPssStockCheckOrderProductEntity> currentListProduct, String orderId) {
+	public String checkProdExist(SysPssStockCheckOrderEntity checkOrder, List<SysPssStockCheckOrderProductEntity> currentListProduct) {
 		// 查询是否在当天的盘点单盘点过相同的产品
 		QuerySQL sql = new QuerySQL(SysPssProductEntity.class);
 		sql.selectTable(SysPssProductEntity.class);
 		sql.innerJoin(SysPssStockCheckOrderProductEntity.class, new Condition(SysPssProductR.id, SysPssStockCheckOrderProductR.productId));
 		sql.innerJoin(SysPssStockCheckOrderEntity.class, new Condition(SysPssStockCheckOrderProductR.orderId, SysPssStockCheckOrderR.id));
+		sql.eq(SysPssStockCheckOrderR.storageId, checkOrder.getStorageId());
 		sql.gte(SysPssStockCheckOrderR.insertTime, LKDateTimeUtils.toString(DateTime.now().minusHours(12)));
 		sql.neq(SysPssStockCheckOrderR.usingStatus, LKUsingStatusEnum.DEPRECATED);
-		if (StringUtils.isNotBlank(orderId)) {
-			sql.neq(SysPssStockCheckOrderR.id, orderId);
+		if (StringUtils.isNotBlank(checkOrder.getId())) {
+			sql.neq(SysPssStockCheckOrderR.id, checkOrder.getId());
 		}
 		List<SysPssProductEntity> checkedListProduct = dao.getList(sql, SysPssProductEntity.class);
 

@@ -49,7 +49,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssStockCheckOr
 		entity.setBillDate(LKDateTimeUtils.now(LKDateTimeTypeEnum.DATE_ONLY));
 		List<SysPssStockCheckOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssStockCheckOrderProductEntity.class);
 		// 校验处理
-		String errorMsg = busService.checkProdExist(entity.getBillDate(), listProduct, entity.getId());
+		String errorMsg = busService.checkProdExist(entity, listProduct);
 		if (StringUtils.isNotBlank(errorMsg)) {
 			throw new LKRuntimeException(ErrorCodes.PSS_STOCK_CHECK_MSG).withParam("#prodName", errorMsg);
 		}
