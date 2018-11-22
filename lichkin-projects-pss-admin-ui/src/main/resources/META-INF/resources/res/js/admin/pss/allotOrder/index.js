@@ -263,23 +263,23 @@ var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined'
         cssClass : 'monospacedFont'
       }, {
         text : 'billDate',
-        width : 120,
+        width : 100,
         name : 'billDate'
       }, {
         text : 'outStorageName',
-        width : 210,
+        width : '1/2',
         name : 'outStorageName'
       }, {
         text : 'inStorageName',
-        width : 210,
+        width : '1/2',
         name : 'inStorageName'
       }, {
         text : 'approvalStatus',
-        width : 120,
+        width : 80,
         name : 'approvalStatus'
       }, {
         text : 'approvalTime',
-        width : null,
+        width : 160,
         formatter : function(rowData) {
           return showStandardTime(rowData.approvalTime);
         }
@@ -400,6 +400,16 @@ var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined'
           cls : 'fuzzy-left fuzzy-right'
         }
       }, {
+        plugin : 'datepicker',
+        options : {
+          name : 'startDate'
+        }
+      }, {
+        plugin : 'datepicker',
+        options : {
+          name : 'endDate'
+        }
+      }, {
         plugin : 'droplist',
         options : {
           key : 'outStorageName',
@@ -412,16 +422,6 @@ var $allotOrderDatagrid = LK.UI.datagrid($.extend((typeof LK.home == 'undefined'
           key : 'inStorageName',
           name : 'inStorageId',
           url : '/SysPssStorage/LD'
-        }
-      }, {
-        plugin : 'datepicker',
-        options : {
-          name : 'startDate'
-        }
-      }, {
-        plugin : 'datepicker',
-        options : {
-          name : 'endDate'
         }
       }, {
         plugin : 'droplist',
