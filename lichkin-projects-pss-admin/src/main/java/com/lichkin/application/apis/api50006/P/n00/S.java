@@ -80,7 +80,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockEntity> {
 		sql.neq(SysPssStockR.quantity, 0);// 排除库存为0的项
 
 		// 排序条件
-		sql.addOrders(new Order(SysPssStockR.id, false));
+		sql.addOrders(new Order(SysPssStorageR.id), new Order(SysPssProductR.productName));
 	}
 
 
