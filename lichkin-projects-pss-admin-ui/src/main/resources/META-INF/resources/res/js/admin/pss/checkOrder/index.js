@@ -256,10 +256,7 @@ var checkOrderQtyChange = function($datagrid, rowData, currentValue) {
     }
   });
 
-  var differenceQuantity = 0;
-  if (stockQuantity) {
-    differenceQuantity = checkQty - parseInt(stockQuantity);
-  }
+  var differenceQuantity = checkQty - parseInt(stockQuantity);
   $allRows.each(function() {
     var data = $(this).data();
     if (rowData.id == data.id) {
