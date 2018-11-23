@@ -11,6 +11,8 @@ import com.lichkin.application.services.bus.impl.SysPssStockBusService;
 import com.lichkin.defines.PssStatics;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssOtherStockOrderProductR;
+import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.springframework.entities.impl.SysActivitiFormDataEntity;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderProductEntity;
@@ -40,12 +42,21 @@ public class ActivitiCallbackService_PSS_OTHER_STOCK_IN_ORDER extends LKDBServic
 
 	@Override
 	public void finish(SysActivitiFormDataEntity formDataEntity) {
-		directFinish(dao.findOneById(SysPssOtherStockOrderEntity.class, formDataEntity.getField1()), formDataEntity.getCompId(), formDataEntity.getApproverLoginId());
+		SysPssOtherStockOrderEntity processEntity = dao.findOneById(SysPssOtherStockOrderEntity.class, formDataEntity.getField1());
+		processEntity.setApprovalStatus(ApprovalStatusEnum.APPROVED);
+		processEntity.setApprovalTime(LKDateTimeUtils.now());
+		dao.mergeOne(processEntity);
+
+		directFinish(processEntity, formDataEntity.getCompId(), formDataEntity.getApproverLoginId());
 	}
 
 
 	@Override
 	public void reject(SysActivitiFormDataEntity formDataEntity) {
+		SysPssOtherStockOrderEntity processEntity = dao.findOneById(SysPssOtherStockOrderEntity.class, formDataEntity.getField1());
+		processEntity.setApprovalStatus(ApprovalStatusEnum.REJECT);
+		processEntity.setApprovalTime(LKDateTimeUtils.now());
+		dao.mergeOne(processEntity);
 	}
 
 }
