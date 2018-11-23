@@ -28,6 +28,12 @@ public class SysPssOtherStockOrderBusService extends LKDBService {
 			product.setId(null);
 			product.setOrderId(id);
 			product.setSortId(i);
+			if (product.getCanOutQuantity() == null) {
+				product.setCanOutQuantity(0);
+			}
+			if (product.getStockQuantity() == null) {
+				product.setStockQuantity(0);
+			}
 		}
 		dao.persistList(listProduct);
 	}
