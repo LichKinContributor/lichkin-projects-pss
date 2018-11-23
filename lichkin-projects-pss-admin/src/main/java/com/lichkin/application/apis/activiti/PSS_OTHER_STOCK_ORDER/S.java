@@ -24,7 +24,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssOtherStockOrderEntit
 		datas.put("billDate", entity.getBillDate());
 		datas.put("remarks", entity.getRemarks());
 		// 关联表参数转换
-		setOrderDatas(datas, entity.getId(), compId);
+		setOrderDatas(datas, entity, compId);
 	}
 
 
@@ -34,7 +34,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssOtherStockOrderEntit
 	}
 
 
-	private void setOrderDatas(Map<String, Object> datas, String id, String compId) {
+	private void setOrderDatas(Map<String, Object> datas, SysPssOtherStockOrderEntity entity, String compId) {
 		QuerySQL sql = new QuerySQL(SysPssOtherStockOrderEntity.class);
 
 		// P接口逻辑简化
@@ -47,9 +47,13 @@ public class S extends LKApiBusStartProcessService<I, SysPssOtherStockOrderEntit
 
 		// 字典表
 		int i = 0;
-		LKDictUtils4Pss.storageTypeIn(sql, compId, SysPssOtherStockOrderR.storageType, i++);
+		if (entity.getOrderType()) {
+			LKDictUtils4Pss.storageTypeIn(sql, compId, SysPssOtherStockOrderR.storageType, i++);
+		} else {
+			LKDictUtils4Pss.storageTypeOut(sql, compId, SysPssOtherStockOrderR.storageType, i++);
+		}
 
-		sql.eq(SysPssOtherStockOrderR.id, id);
+		sql.eq(SysPssOtherStockOrderR.id, entity.getId());
 
 		com.lichkin.application.apis.api50300.P.n00.O out = dao.getOne(sql, com.lichkin.application.apis.api50300.P.n00.O.class);
 		datas.put("storageType", out.getStorageType());

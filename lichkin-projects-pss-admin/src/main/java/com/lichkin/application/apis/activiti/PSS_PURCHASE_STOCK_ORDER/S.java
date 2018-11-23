@@ -13,6 +13,7 @@ import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
+import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
 
@@ -26,7 +27,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssPurchaseStockOrderEn
 		datas.put("billDate", entity.getBillDate());
 		datas.put("remarks", entity.getRemarks());
 		// 关联表参数转换
-		setOrderDatas(datas, entity.getOrderId());
+		setOrderDatas(datas, entity.getOrderId(), entity.getStorageId());
 	}
 
 
@@ -36,7 +37,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssPurchaseStockOrderEn
 	}
 
 
-	private void setOrderDatas(Map<String, Object> datas, String orderId) {
+	private void setOrderDatas(Map<String, Object> datas, String orderId, String storageId) {
 		QuerySQL sql = new QuerySQL(SysPssPurchaseOrderEntity.class);
 
 		// P接口逻辑简化
@@ -62,6 +63,9 @@ public class S extends LKApiBusStartProcessService<I, SysPssPurchaseStockOrderEn
 		datas.put("purchaseOrderAmount", o.getOrderAmount());
 		datas.put("supplierName", o.getSupplierName());
 		datas.put("purchaserName", o.getPurchaserName());
+
+		SysPssStorageEntity storage = dao.findOneById(SysPssStorageEntity.class, storageId);
+		datas.put("storageName", storage.getStorageName());
 	}
 
 }
