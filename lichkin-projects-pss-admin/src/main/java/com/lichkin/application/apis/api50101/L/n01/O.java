@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class O {
 
-	/** 产品ID */
-	private String id;
+	/** 采购单产品ID */
+	private String purchaseOrderProductId;
 
 	/** 采购数量 */
 	private int purchaseQty;
@@ -18,6 +18,12 @@ public class O {
 
 	/** 可入库数量 */
 	private int canStockInQty;
+
+	/** 采购单价 */
+	private String unitPrice;
+
+	/** 产品ID */
+	private String id;
 
 	/** 产品编码 */
 	private String productCode;

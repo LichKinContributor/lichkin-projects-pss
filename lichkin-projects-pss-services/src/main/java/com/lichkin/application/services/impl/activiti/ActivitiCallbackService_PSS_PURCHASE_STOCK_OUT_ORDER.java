@@ -15,7 +15,6 @@ import com.lichkin.framework.db.beans.SysPssPurchaseStockOrderProductR;
 import com.lichkin.springframework.entities.impl.SysActivitiFormDataEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderProductEntity;
-import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service(PssStatics.PSS_PURCHASE_STOCK_OUT_ORDER)
@@ -32,9 +31,9 @@ public class ActivitiCallbackService_PSS_PURCHASE_STOCK_OUT_ORDER extends LKDBSe
 	public void directFinish(SysPssPurchaseStockOrderEntity processEntity, String compId, String loginId) {
 		QuerySQL sql = new QuerySQL(false, SysPssPurchaseStockOrderProductEntity.class);
 		sql.eq(SysPssPurchaseStockOrderProductR.orderId, processEntity.getId());
-		List<PssOrderProductEntity> orderProductList = dao.getList(sql, PssOrderProductEntity.class);
-		stockBusService.changeStockQuantity(processEntity, orderProductList);
-		purchaseOrderBusService.changePurchaseOrderProductInventoryQuantity(processEntity.getOrderId(), orderProductList);
+		List<SysPssPurchaseStockOrderProductEntity> stockOrderProductList = dao.getList(sql, SysPssPurchaseStockOrderProductEntity.class);
+		stockBusService.changeStockQuantity(processEntity, stockOrderProductList);
+		purchaseOrderBusService.changePurchaseOrderProductInventoryQuantity(processEntity, stockOrderProductList);
 	}
 
 

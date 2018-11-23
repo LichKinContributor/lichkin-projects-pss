@@ -21,9 +21,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 	@Override
 	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
 		// 主表
-		// sql.select(SysPssPurchaseOrderProductR.id);
+		sql.select(SysPssPurchaseOrderProductR.id, "purchaseOrderProductId");
 		sql.select(SysPssPurchaseOrderProductR.quantity, "purchaseQty");
 		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
+		sql.select(SysPssPurchaseOrderProductR.unitPrice);
 
 		// 关联表
 		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssPurchaseOrderProductR.productId));

@@ -7,7 +7,20 @@ import lombok.Setter;
 @Setter
 public class O {
 
-//	private String id;
+	/** 采购单产品ID */
+	private String purchaseOrderProductId;
+
+	/** 采购数量 */
+	private int purchaseQty;
+
+	/** 已入库数量 */
+	private int inventoryQuantity;
+
+	/** 可入库数量 */
+	private int canStockInQty;
+
+	/** 采购单价 */
+	private String unitPrice;
 
 	private int quantity;
 

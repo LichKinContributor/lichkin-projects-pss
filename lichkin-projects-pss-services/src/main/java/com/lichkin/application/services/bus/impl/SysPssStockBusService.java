@@ -33,7 +33,7 @@ public class SysPssStockBusService extends LKDBService {
 	private PssStockQtyMapper pssStockOutQtyMapper;
 
 
-	public void changeStockQuantity(PssStockOrderEntity stockOrder, List<PssOrderProductEntity> orderProductList) {
+	public void changeStockQuantity(PssStockOrderEntity stockOrder, List<? extends PssOrderProductEntity> orderProductList) {
 		if (stockOrder.getOrderType()) {// 入库单业务处理
 			for (PssOrderProductEntity productEntity : orderProductList) {
 				increaseStock(stockOrder.getCompId(), stockOrder.getStorageId(), productEntity);

@@ -31,7 +31,6 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 		sql.select(SysPssProductR.productCode);
 		sql.select(SysPssProductR.productName);
 		sql.select(SysPssProductR.barcode);
-		sql.select(SysPssProductR.unit);
 
 		// 字典表
 		int i = 0;

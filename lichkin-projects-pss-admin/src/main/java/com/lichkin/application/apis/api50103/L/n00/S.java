@@ -1,5 +1,7 @@
 package com.lichkin.application.apis.api50103.L.n00;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,10 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
+import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
 import com.lichkin.framework.db.beans.SysPssPurchaseStockOrderProductR;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
@@ -19,10 +23,16 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseStockOrderProd
 	@Override
 	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
 		// 主表
-//		sql.select(SysPssPurchaseStockOrderProductR.id);
+		// sql.select(SysPssPurchaseStockOrderProductR.id);
 		sql.select(SysPssPurchaseStockOrderProductR.quantity);
 
 		// 关联表
+		sql.innerJoin(SysPssPurchaseOrderProductEntity.class, new Condition(SysPssPurchaseStockOrderProductR.purchaseOrderProductId, SysPssPurchaseOrderProductR.id));
+		sql.select(SysPssPurchaseOrderProductR.id, "purchaseOrderProductId");
+		sql.select(SysPssPurchaseOrderProductR.quantity, "purchaseQty");
+		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
+		sql.select(SysPssPurchaseOrderProductR.unitPrice);
+
 		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssPurchaseStockOrderProductR.productId));
 		sql.select(SysPssProductR.id);
 		sql.select(SysPssProductR.productCode);
@@ -43,6 +53,19 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseStockOrderProd
 
 		// 排序条件
 		sql.addOrders(new Order(SysPssPurchaseStockOrderProductR.sortId));
+	}
+
+
+	@Override
+	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+		for (O o : list) {
+			if (sin.getIsView().equals(Boolean.TRUE)) {
+				o.setCanStockInQty(o.getPurchaseQty());
+			} else {
+				o.setCanStockInQty(o.getPurchaseQty() - o.getInventoryQuantity());
+			}
+		}
+		return list;
 	}
 
 }

@@ -30,37 +30,6 @@ var sellStockOutOrderFormPlugins = [
         cols : 3
       }
     }, {
-      plugin : 'textbox',
-      options : {
-        name : 'scanCode',
-        cols : 3,
-        enterKeyClick : function($plugin, values, value, val) {// 扫码录入
-          $plugin.LKSetValues('', true);
-          if (!val) {
-            return;
-          }
-
-          // 销售单ID
-          var sellOrderId = $plugin.parents('form').find('input[name=orderId]').val();
-
-          LK.ajax({
-            url : '/SysPssSellOrderProduct/L01',
-            data : {
-              orderId : sellOrderId,
-              barcode : val
-            },
-            success : function(responseDatas) {
-              if (responseDatas && responseDatas.length != 0) {
-                var $productList = $plugin.LKGetSiblingPlugin('productList');
-                $productList.LKInvokeAddDatas(responseDatas);
-              } else {
-                LK.alert('sellStockOutOrder.grid.product not exists');
-              }
-            }
-          });
-        }
-      }
-    }, {
       plugin : 'datagrid',
       options : {
         i18nKey : 'sellStockOutOrder.product-grid',
@@ -68,9 +37,9 @@ var sellStockOutOrderFormPlugins = [
         name : 'productList',
         validator : 'datas',
         multiSelect : true,
-        valueFieldName : 'random',
+        valueFieldName : 'sellOrderProductId',
         cols : 3,
-        rows : 10,
+        rows : 11,
         showSearchButton : false,
         pageable : false,
         withoutFieldKey : true,
@@ -87,13 +56,21 @@ var sellStockOutOrderFormPlugins = [
               width : null,
               name : 'productName'
             }, {
-              text : 'barcode',
-              width : 120,
-              name : 'barcode'
-            }, {
               text : 'unit',
               width : 60,
               name : 'unit'
+            }, {
+              text : 'unitPrice',
+              width : 70,
+              name : 'unitPrice'
+            }, {
+              text : 'salesQuantity',
+              width : 70,
+              name : 'salesQuantity'
+            }, {
+              text : 'inventoryQuantity',
+              width : 80,
+              name : 'inventoryQuantity'
             }, {
               text : 'quantity',
               width : 80,
@@ -110,55 +87,6 @@ var sellStockOutOrderFormPlugins = [
               }
             }
         ],
-        toolsAddData : {
-          form : {
-            plugins : [
-              {
-                plugin : 'selector_product',
-                options : {
-                  name : 'product',
-                }
-              }
-            ]
-          },
-          dialog : {
-            size : {
-              cols : 1,
-              rows : 1
-            }
-          },
-          handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            // 销售单ID
-            var sellOrderId = $datagrid.parents('form').find('input[name=orderId]').val();
-
-            var products = [];
-            var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
-            var notExist = false;
-            for (var i = 0; i < productDatas.length; i++) {
-              var prod = productDatas[i];
-              LK.ajax({
-                url : '/SysPssSellOrderProduct/L01',
-                async : false,
-                data : {
-                  orderId : sellOrderId,
-                  productId : prod.id
-                },
-                success : function(responseDatas) {
-                  if (responseDatas && responseDatas.length != 0) {
-                    products = products.concat(responseDatas);
-                  } else {
-                    notExist = true;
-                  }
-                }
-              });
-              if (notExist) {
-                LK.alert('sellStockOutOrder.grid.product not exists');
-                return [];
-              }
-            }
-            return products;
-          },
-        },
         toolsRemoveData : {},
       }
     }, {
@@ -178,7 +106,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'sellStockOutOrder',
   $appendTo : true,
-  cols : 5,
+  cols : 4,
   url : '/SysPssSellStockOrder/P',
   columns : [
       {
@@ -218,7 +146,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         name : 'sellOrderAmount'
       }, {
         text : 'salesName',
-        width : null,
+        width : 120,
         name : 'salesName'
       }
   ],
@@ -408,7 +336,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                           options : {
                             name : 'inventoryStatus',
                             param : {
-                              categoryCode : 'PSS_INVENTORY_OUT_STATUS'
+                              categoryCode : 'PSS_INVENTORY_OUT_STATUS',
+                              excludes : 'ALL'
                             }
                           }
                         }
@@ -474,7 +403,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 3,
-        rows : 14
+        rows : 15
       }
     },
     handleFormOptions : function(viewJson, formOptions, $datagrid, $selecteds, selectedDatas, value) {

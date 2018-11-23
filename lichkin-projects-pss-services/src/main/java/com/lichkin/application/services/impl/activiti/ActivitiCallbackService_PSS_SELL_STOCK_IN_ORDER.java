@@ -15,7 +15,6 @@ import com.lichkin.framework.db.beans.SysPssSellStockOrderProductR;
 import com.lichkin.springframework.entities.impl.SysActivitiFormDataEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderProductEntity;
-import com.lichkin.springframework.entities.suppers.PssOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service(PssStatics.PSS_SELL_STOCK_IN_ORDER)
@@ -32,9 +31,9 @@ public class ActivitiCallbackService_PSS_SELL_STOCK_IN_ORDER extends LKDBService
 	public void directFinish(SysPssSellStockOrderEntity processEntity, String compId, String loginId) {
 		QuerySQL sql = new QuerySQL(false, SysPssSellStockOrderProductEntity.class);
 		sql.eq(SysPssSellStockOrderProductR.orderId, processEntity.getId());
-		List<PssOrderProductEntity> orderProductList = dao.getList(sql, PssOrderProductEntity.class);
+		List<SysPssSellStockOrderProductEntity> orderProductList = dao.getList(sql, SysPssSellStockOrderProductEntity.class);
 		stockBusService.changeStockQuantity(processEntity, orderProductList);
-		sellOrderBusService.changeSellOrderProductInventoryQuantity(processEntity.getOrderId(), orderProductList);
+		sellOrderBusService.changeSellOrderProductInventoryQuantity(processEntity, orderProductList);
 	}
 
 

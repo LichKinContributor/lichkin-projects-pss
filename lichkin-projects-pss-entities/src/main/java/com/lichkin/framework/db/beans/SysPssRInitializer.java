@@ -125,6 +125,7 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50103002", "SysPssPurchaseStockOrderProductEntity", "productId");
 		LKDBResource.addColumn("50103003", "SysPssPurchaseStockOrderProductEntity", "quantity");
 		LKDBResource.addColumn("50103004", "SysPssPurchaseStockOrderProductEntity", "sortId");
+		LKDBResource.addColumn("50103005", "SysPssPurchaseStockOrderProductEntity", "purchaseOrderProductId");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssSellOrderEntity", "T_SYS_PSS_SELL_ORDER", "SysPssSellOrderEntity");
 		LKDBResource.addColumn("50200000", "SysPssSellOrderEntity", "id");
 		LKDBResource.addColumn("50200001", "SysPssSellOrderEntity", "usingStatus");
@@ -166,6 +167,7 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50203002", "SysPssSellStockOrderProductEntity", "productId");
 		LKDBResource.addColumn("50203003", "SysPssSellStockOrderProductEntity", "quantity");
 		LKDBResource.addColumn("50203004", "SysPssSellStockOrderProductEntity", "sortId");
+		LKDBResource.addColumn("50203005", "SysPssSellStockOrderProductEntity", "sellOrderProductId");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity", "T_SYS_PSS_OTHER_STOCK_ORDER", "SysPssOtherStockOrderEntity");
 		LKDBResource.addColumn("50300000", "SysPssOtherStockOrderEntity", "id");
 		LKDBResource.addColumn("50300001", "SysPssOtherStockOrderEntity", "usingStatus");

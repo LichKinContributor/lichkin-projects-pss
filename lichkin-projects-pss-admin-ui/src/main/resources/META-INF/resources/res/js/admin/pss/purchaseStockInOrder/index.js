@@ -30,37 +30,6 @@ var purchaseStockInOrderFormPlugins = [
         cols : 3
       }
     }, {
-      plugin : 'textbox',
-      options : {
-        name : 'scanCode',
-        cols : 3,
-        enterKeyClick : function($plugin, values, value, val) {// 扫码录入
-          $plugin.LKSetValues('', true);
-          if (!val) {
-            return;
-          }
-
-          // 采购单ID
-          var purchaseOrderId = $plugin.parents('form').find('input[name=orderId]').val();
-
-          LK.ajax({
-            url : '/SysPssPurchaseOrderProduct/L01',
-            data : {
-              orderId : purchaseOrderId,
-              barcode : val
-            },
-            success : function(responseDatas) {
-              if (responseDatas && responseDatas.length != 0) {
-                var $productList = $plugin.LKGetSiblingPlugin('productList');
-                $productList.LKInvokeAddDatas(responseDatas);
-              } else {
-                LK.alert('purchaseStockInOrder.grid.product not exists');
-              }
-            }
-          });
-        }
-      }
-    }, {
       plugin : 'datagrid',
       options : {
         i18nKey : 'purchaseStockInOrder.product-grid',
@@ -68,9 +37,9 @@ var purchaseStockInOrderFormPlugins = [
         name : 'productList',
         validator : 'datas',
         multiSelect : true,
-        valueFieldName : 'random',
+        valueFieldName : 'purchaseOrderProductId',
         cols : 3,
-        rows : 10,
+        rows : 11,
         showSearchButton : false,
         pageable : false,
         withoutFieldKey : true,
@@ -87,16 +56,24 @@ var purchaseStockInOrderFormPlugins = [
               width : null,
               name : 'productName'
             }, {
-              text : 'barcode',
-              width : 120,
-              name : 'barcode'
-            }, {
               text : 'unit',
               width : 60,
               name : 'unit'
             }, {
-              text : 'quantity',
+              text : 'unitPrice',
+              width : 70,
+              name : 'unitPrice'
+            }, {
+              text : 'purchaseQty',
+              width : 70,
+              name : 'purchaseQty'
+            }, {
+              text : 'inventoryQuantity',
               width : 80,
+              name : 'inventoryQuantity'
+            }, {
+              text : 'quantity',
+              width : 70,
               formatter : function(rowData) {
                 return {
                   plugin : 'numberspinner',
@@ -110,55 +87,6 @@ var purchaseStockInOrderFormPlugins = [
               }
             }
         ],
-        toolsAddData : {
-          form : {
-            plugins : [
-              {
-                plugin : 'selector_product',
-                options : {
-                  name : 'product',
-                }
-              }
-            ]
-          },
-          dialog : {
-            size : {
-              cols : 1,
-              rows : 1
-            }
-          },
-          handleAddData : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog, i18nKey, $form) {
-            // 采购单ID
-            var purchaseOrderId = $datagrid.parents('form').find('input[name=orderId]').val();
-
-            var products = [];
-            var productDatas = $form.LKGetSubPlugin('product').LKGetValueDatas();
-            var notExist = false;
-            for (var i = 0; i < productDatas.length; i++) {
-              var prod = productDatas[i];
-              LK.ajax({
-                url : '/SysPssPurchaseOrderProduct/L01',
-                async : false,
-                data : {
-                  orderId : purchaseOrderId,
-                  productId : prod.id
-                },
-                success : function(responseDatas) {
-                  if (responseDatas && responseDatas.length != 0) {
-                    products = products.concat(responseDatas);
-                  } else {
-                    notExist = true;
-                  }
-                }
-              });
-              if (notExist) {
-                LK.alert('purchaseStockInOrder.grid.product not exists');
-                return [];
-              }
-            }
-            return products;
-          },
-        },
         toolsRemoveData : {},
       }
     }, {
@@ -490,7 +418,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 3,
-        rows : 14
+        rows : 15
       }
     },
     handleFormOptions : function(viewJson, formOptions, $datagrid, $selecteds, selectedDatas, value) {
@@ -499,7 +427,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         lazy : false,
         param : {
           orderId : value,
-          orderType : true
+          orderType : true,
+          isView : true
         },
         tools : []
       });

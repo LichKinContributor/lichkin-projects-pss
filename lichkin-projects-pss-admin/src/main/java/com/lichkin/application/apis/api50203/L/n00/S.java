@@ -1,5 +1,7 @@
 package com.lichkin.application.apis.api50203.L.n00;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,10 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
+import com.lichkin.framework.db.beans.SysPssSellOrderProductR;
 import com.lichkin.framework.db.beans.SysPssSellStockOrderProductR;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssSellOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
@@ -23,6 +27,12 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellStockOrderProductE
 		sql.select(SysPssSellStockOrderProductR.quantity);
 
 		// 关联表
+		sql.innerJoin(SysPssSellOrderProductEntity.class, new Condition(SysPssSellStockOrderProductR.sellOrderProductId, SysPssSellOrderProductR.id));
+		sql.select(SysPssSellOrderProductR.id, "sellOrderProductId");
+		sql.select(SysPssSellOrderProductR.quantity, "salesQuantity");
+		sql.select(SysPssSellOrderProductR.inventoryQuantity);
+		sql.select(SysPssSellOrderProductR.unitPrice);
+
 		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssSellStockOrderProductR.productId));
 		sql.select(SysPssProductR.id);
 		sql.select(SysPssProductR.productCode);
@@ -42,6 +52,19 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellStockOrderProductE
 
 		// 排序条件
 		sql.addOrders(new Order(SysPssSellStockOrderProductR.id, false));
+	}
+
+
+	@Override
+	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+		for (O o : list) {
+			if (sin.getIsView()) {
+				o.setCanStockOutQty(o.getSalesQuantity());
+			} else {
+				o.setCanStockOutQty(o.getSalesQuantity() - o.getInventoryQuantity());
+			}
+		}
+		return list;
 	}
 
 }

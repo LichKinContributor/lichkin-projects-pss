@@ -16,4 +16,6 @@ public interface SysPssSellStockOrderProductR {
 
 	public static final int sortId = 0x50203004;
 
+	public static final int sellOrderProductId = 0x50203005;
+
 }
