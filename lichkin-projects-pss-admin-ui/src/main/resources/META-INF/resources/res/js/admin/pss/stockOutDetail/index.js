@@ -41,8 +41,13 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         width : 80
       }, {
         text : 'quantity',
-        name : 'quantity',
-        width : 80
+        width : 80,
+        formatter : function(rowData) {
+          if (rowData.quantity < 0) {
+            return Math.abs(rowData.quantity) + '';
+          }
+          return rowData.quantity + '';
+        }
       }
   ],
   searchForm : [

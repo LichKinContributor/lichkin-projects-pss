@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lichkin.application.mappers.impl.PssStockReportMapper">
   <resultMap id="BaseResultMap" type="com.lichkin.application.mappers.impl.out.PssStorageDetailOut"> 
-    <result column="ID" property="id" jdbcType="VARCHAR" />
     <result column="BILL_DATE" property="billDate" jdbcType="VARCHAR" />
     <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
     <result column="STORAGE_NAME" property="storageName" jdbcType="VARCHAR" />
@@ -15,9 +14,8 @@
   </resultMap>
 
 
-  <sql id="findStorageDetailCommonSelect">
+  <sql id="commonSelect">
   select
- 	p.id,
 	o.BILL_DATE,
 	o.ORDER_NO,
 	s.STORAGE_NAME,
@@ -29,8 +27,16 @@
 	d1.DICT_NAME as storageType
   </sql>
   
-  <sql id="findStorageDetailCommonTable">
-    <choose>
+  <sql id="commonTable">
+    <include refid="commonInnerJoin"></include>
+      o.STORAGE_ID = s.id
+    where
+      o.ORDER_TYPE <![CDATA[ = ]]> ${orderType}
+    <include refid="commonWhere"></include>
+  </sql>
+  
+  <sql id="commonInnerJoin">
+   <choose>
       <when test="orderType == true">
           and d1.CATEGORY_CODE = 'PSS_STOCK_IN_TYPE'  
       </when>
@@ -44,13 +50,12 @@
       pp.UNIT = d.DICT_CODE
       and d.CATEGORY_CODE = 'PSS_PRODUCT_UNIT'
     inner join t_sys_pss_storage s on
-      o.STORAGE_ID = s.id
-    where
-      o.COMP_ID = '${compId}'
-      and o.APPROVAL_STATUS = 'APPROVED'
-      and o.USING_STATUS != 'DEPRECATED'
-      and o.ORDER_TYPE <![CDATA[ = ]]> ${orderType}
-      
+  </sql>
+  
+  <sql id="commonWhere">
+    and o.COMP_ID = '${compId}'
+    and o.APPROVAL_STATUS = 'APPROVED'
+    and o.USING_STATUS != 'DEPRECATED'
     <if test="orderNo != null">
       and o.ORDER_NO LIKE CONCAT('%','${orderNo}','%')
     </if>
@@ -77,40 +82,120 @@
     </if>
   </sql>
   
-  <!-- 采购入库  -->
+  <!-- 采购出入库  -->
   <sql id="purchaseStorageDetailCommonSql">
-    <include refid="findStorageDetailCommonSelect"></include>
+    <include refid="commonSelect"></include>
     from
       t_sys_pss_purchase_stock_order_product p
     inner join t_sys_pss_purchase_stock_order o on
       o.id = p.ORDER_ID
     inner join t_sys_dictionary d1 on
       d1.DICT_CODE = 'PURCHASE'
-    <include refid="findStorageDetailCommonTable"></include>
+    <include refid="commonTable"></include>
   </sql>
   
-  <!-- 其它入库  -->
+  <!-- 其它出入库  -->
   <sql id="otherStorageDetailCommonSql">
-    <include refid="findStorageDetailCommonSelect"></include>
+    <include refid="commonSelect"></include>
     from
       t_sys_pss_other_stock_order_product p
     inner join t_sys_pss_other_stock_order o on
       o.id = p.ORDER_ID
     inner join t_sys_dictionary d1 on
       d1.DICT_CODE = 'OTHER'
-    <include refid="findStorageDetailCommonTable"></include>
+    <include refid="commonTable"></include>
   </sql>
   
-  <!-- 销售退货入库  -->
+  <!-- 销售出入库  -->
   <sql id="sellStorageDetailCommonSql">
-    <include refid="findStorageDetailCommonSelect"></include>
+    <include refid="commonSelect"></include>
     from
       t_sys_pss_sell_stock_order_product p
     inner join t_sys_pss_sell_stock_order o on
       o.id = p.ORDER_ID
     inner join t_sys_dictionary d1 on
       d1.DICT_CODE = 'SELL'
-    <include refid="findStorageDetailCommonTable"></include>
+    <include refid="commonTable"></include>
+  </sql>
+  
+  <!-- 调拨出入库  -->
+  <sql id="allotStorageDetailCommonSql">
+    <include refid="commonSelect"></include>
+    from
+      t_sys_pss_allot_order_product p
+    inner join t_sys_pss_allot_order o on
+      o.id = p.ORDER_ID
+    inner join t_sys_dictionary d1 on
+      d1.DICT_CODE = 'ALLOT'
+    <include refid="commonInnerJoin"></include>
+    <choose>
+      <when test="orderType == true">
+           o.IN_STORAGE_ID = s.id
+      </when>
+      <otherwise>
+           o.OUT_STORAGE_ID = s.id  
+      </otherwise>
+    </choose>
+    where 1 = 1
+    <include refid="commonWhere"></include>
+  </sql>
+  
+  <!-- 盘点出入库  -->
+  <sql id="checkStorageDetailCommonSql">
+    select
+      o.BILL_DATE,
+      o.ORDER_NO,
+      s.STORAGE_NAME,
+      pp.PRODUCT_CODE,
+      pp.PRODUCT_NAME,
+      pp.BARCODE,
+      d.DICT_NAME as UNIT,
+      o.QUANTITY,
+      d1.DICT_NAME as storageType
+    from
+    (
+    select
+      distinct
+      o.BILL_DATE,
+      o.ORDER_NO,
+      o.STORAGE_ID,
+      p.PRODUCT_ID,
+      p.DIFFERENCE_QUANTITY as QUANTITY,
+      o.APPROVAL_STATUS,
+      o.USING_STATUS,
+      o.COMP_ID
+    from
+      t_sys_pss_stock_check_order o
+    inner join t_sys_pss_stock_check_order_product p
+    on o.ID=p.ORDER_ID
+    ) o
+    inner join t_sys_dictionary d1 on
+      d1.DICT_CODE = 'CHECK'
+   <choose>
+    <when test="orderType == true">
+        and d1.CATEGORY_CODE = 'PSS_STOCK_IN_TYPE'  
+    </when>
+    <otherwise>
+        and d1.CATEGORY_CODE = 'PSS_STOCK_OUT_TYPE'  
+    </otherwise>
+   </choose>
+    inner join t_sys_pss_product pp on
+      o.PRODUCT_ID = pp.id
+    left join t_sys_dictionary d on
+      pp.UNIT = d.DICT_CODE
+      and d.CATEGORY_CODE = 'PSS_PRODUCT_UNIT'
+    inner join t_sys_pss_storage s on
+      o.STORAGE_ID = s.id
+    where
+    <choose>
+      <when test="orderType == true">
+          o.QUANTITY <![CDATA[ > ]]> 0
+      </when>
+      <otherwise>
+          o.QUANTITY <![CDATA[ < ]]> 0
+      </otherwise>
+    </choose>
+    <include refid="commonWhere"></include>
   </sql>
   
   <sql id="findStorageDetailCommonSql">
@@ -124,12 +209,22 @@
       <when test="storageType == 'SELL'">
           <include refid="sellStorageDetailCommonSql"></include>
       </when>
+      <when test="storageType == 'ALLOT'">
+          <include refid="allotStorageDetailCommonSql"></include>
+      </when>
+      <when test="storageType == 'CHECK'">
+          <include refid="checkStorageDetailCommonSql"></include>
+      </when>
       <otherwise>
         <include refid="purchaseStorageDetailCommonSql"></include>
         union all 
         <include refid="otherStorageDetailCommonSql"></include>
         union all 
         <include refid="sellStorageDetailCommonSql"></include>
+        union all 
+        <include refid="allotStorageDetailCommonSql"></include>
+        union all 
+        <include refid="checkStorageDetailCommonSql"></include>
       </otherwise>
     </choose>
    
