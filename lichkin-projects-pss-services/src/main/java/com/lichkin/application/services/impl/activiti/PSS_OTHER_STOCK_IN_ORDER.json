@@ -1,0 +1,42 @@
+[
+	{
+		"plugin": "hidden",
+		"businessField": 1,
+		"options": {
+			"name": "id"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"businessField": 2,
+		"options": {
+			"name": "billDate"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"businessField": 3,
+		"options": {
+			"name": "orderNo"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
+			"name": "storageType"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
+			"name": "storageName"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
+			"name": "remarks",
+			"rows": 2
+		}
+	}
+]

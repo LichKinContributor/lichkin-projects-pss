@@ -23,6 +23,12 @@
 	{
 		"plugin": "textbox",
 		"options": {
+			"name": "storageName"
+		}
+	},
+	{
+		"plugin": "textbox",
+		"options": {
 			"name": "purchaseOrderNo"
 		}
 	},
