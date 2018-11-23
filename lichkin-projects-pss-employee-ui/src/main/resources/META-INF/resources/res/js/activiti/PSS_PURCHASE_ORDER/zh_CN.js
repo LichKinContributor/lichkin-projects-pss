@@ -1,5 +1,5 @@
 $.LKExtendI18N({
-  'PSS_PURCHASE_ORDER' : '采购订单',
+  'PSS_PURCHASE_ORDER' : '采购单',
 
   'orderNo' : '订单号',
   'billDate' : '订单日期',
