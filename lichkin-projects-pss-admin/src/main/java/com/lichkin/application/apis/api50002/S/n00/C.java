@@ -32,12 +32,6 @@ public class C extends LKApiYYController<I, List<LKTreeBean>, I, List<SysPssProd
 
 
 	@Override
-	protected I beforeInvokeService(I cin) throws LKException {
-		return cin;
-	}
-
-
-	@Override
 	protected List<LKTreeBean> afterInvokeService(I cin, I sin, List<SysPssProductCategoryEntity> sout) throws LKException {
 		return LKTreeUtils.toTree(sout, "id", "categoryName", "categoryCode", "parentCode");
 	}
