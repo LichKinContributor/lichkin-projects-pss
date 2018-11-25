@@ -20,7 +20,7 @@ import com.lichkin.springframework.services.LKApiService;
 @RestController("SysPssProductCategoryS00Controller")
 @RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssProductCategory/S")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
-public class C extends LKApiYYController<I, List<LKTreeBean>, I, List<SysPssProductCategoryEntity>> {
+public class C extends LKApiYYController<I, List<LKTreeBean>, List<SysPssProductCategoryEntity>> {
 
 	@Autowired
 	private S service;
