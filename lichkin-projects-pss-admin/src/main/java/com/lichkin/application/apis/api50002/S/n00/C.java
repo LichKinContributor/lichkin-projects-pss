@@ -12,6 +12,7 @@ import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKTreeUtils;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiYYController;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.services.LKApiService;
@@ -26,7 +27,7 @@ public class C extends LKApiYYController<I, List<LKTreeBean>, I, List<SysPssProd
 
 
 	@Override
-	protected LKApiService<I, List<SysPssProductCategoryEntity>> getService(I cin) {
+	protected LKApiService<I, List<SysPssProductCategoryEntity>> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 

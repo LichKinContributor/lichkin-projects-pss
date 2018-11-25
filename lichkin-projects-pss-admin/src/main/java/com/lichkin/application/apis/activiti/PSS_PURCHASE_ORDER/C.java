@@ -9,6 +9,7 @@ import com.lichkin.defines.PssStatics;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusStartProcessController;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
@@ -23,7 +24,7 @@ public class C extends LKApiBusStartProcessController<I, SysPssPurchaseOrderEnti
 
 
 	@Override
-	protected LKApiBusStartProcessService<I, SysPssPurchaseOrderEntity> getService(I cin) {
+	protected LKApiBusStartProcessService<I, SysPssPurchaseOrderEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 

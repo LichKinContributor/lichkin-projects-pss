@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusGetPageController;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -21,7 +22,7 @@ public class C extends LKApiBusGetPageController<I, O, SysPssAllotOrderEntity> {
 
 
 	@Override
-	protected LKApiBusGetPageService<I, O, SysPssAllotOrderEntity> getService(I cin) {
+	protected LKApiBusGetPageService<I, O, SysPssAllotOrderEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 

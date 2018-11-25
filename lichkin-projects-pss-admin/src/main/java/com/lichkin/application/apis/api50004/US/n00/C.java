@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusUpdateUsingStatusController;
 import com.lichkin.springframework.entities.impl.SysPssStoreEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateUsingStatusService;
@@ -21,7 +22,7 @@ public class C extends LKApiBusUpdateUsingStatusController<I, SysPssStoreEntity>
 
 
 	@Override
-	protected LKApiBusUpdateUsingStatusService<I, SysPssStoreEntity> getService(I cin) {
+	protected LKApiBusUpdateUsingStatusService<I, SysPssStoreEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 
