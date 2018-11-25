@@ -11,20 +11,21 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.utils.LKUrlUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
 public class SysPssProductBusService extends LKDBService {
 
-	public List<SysPssProductEntity> findExist(String id, String compId, String busCompId, String productCode, String productName, String barcode) {
+	public List<SysPssProductEntity> findExist(String id, ApiKeyValues<?> params, String productCode, String productName, String barcode) {
 		QuerySQL sql = new QuerySQL(false, SysPssProductEntity.class);
 
 		if (StringUtils.isNotBlank(id)) {
 			sql.neq(SysPssProductR.id, id);
 		}
 
-		addConditionCompId(true, sql, SysPssProductR.compId, compId, busCompId);
+		params.addConditionCompId(true, sql, SysPssProductR.compId);
 
 		if (StringUtils.isBlank(barcode)) {
 			if (StringUtils.isBlank(productCode)) {

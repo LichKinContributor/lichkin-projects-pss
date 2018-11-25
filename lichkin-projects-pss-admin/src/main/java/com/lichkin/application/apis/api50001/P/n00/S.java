@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -19,7 +20,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysPssSupplierEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssSupplierR.id);
 		sql.select(SysPssSupplierR.insertTime);
@@ -42,9 +43,9 @@ public class S extends LKApiBusGetPageService<I, O, SysPssSupplierEntity> {
 
 		// 筛选条件（必填项）
 		// 公司ID
-		addConditionCompId(false, sql, SysPssSupplierR.compId, compId, sin.getCompId());
+		params.addConditionCompId(false, sql, SysPssSupplierR.compId);
 		// 在用状态
-		addConditionUsingStatus(sql, SysPssSupplierR.usingStatus, compId, sin.getUsingStatus());
+		params.addConditionUsingStatus(sql, SysPssSupplierR.usingStatus, sin.getUsingStatus());
 
 		// 筛选条件（业务项）
 		String supplierCode = sin.getSupplierCode();

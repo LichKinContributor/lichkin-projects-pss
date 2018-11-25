@@ -8,6 +8,7 @@ import com.lichkin.application.services.bus.impl.SysPssSellStockOrderBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
 
@@ -34,14 +35,14 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssSellStockOrd
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity) {
+		entity.setCompId(params.getCompId(true));
 		entity.setOrderNo(busService.analysisOrderNo());
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity) {
 		// 销售出库 （进行出库数量校验）
 		if (sin.getOrderType().equals(Boolean.FALSE)) {
 			String errorMsg = busService.checkProductQty(entity.getId(), entity.getStorageId(), entity.getOrderId(), sin.getProductList());
@@ -54,7 +55,7 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssSellStockOrd
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity, String id) {
 		busService.addPssSellStockOrderProduct(id, sin.getProductList());
 	}
 

@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssSellOrderProductR;
 import com.lichkin.framework.db.beans.SysPssSellStockOrderProductR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderProductEntity;
@@ -21,7 +22,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysPssSellStockOrderProductEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		// sql.select(SysPssSellStockOrderProductR.id);
 		sql.select(SysPssSellStockOrderProductR.quantity);
@@ -56,7 +57,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellStockOrderProductE
 
 
 	@Override
-	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
 		for (O o : list) {
 			if (sin.getIsView()) {
 				o.setCanStockOutQty(o.getSalesQuantity());

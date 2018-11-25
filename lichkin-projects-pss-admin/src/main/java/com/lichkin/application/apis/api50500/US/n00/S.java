@@ -8,6 +8,7 @@ import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateUsingStatusService;
 
@@ -36,7 +37,7 @@ public class S extends LKApiBusUpdateUsingStatusService<I, SysPssStockCheckOrder
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity, String id) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssStockCheckOrderEntity entity, String id) {
 		if (LKDateTimeUtils.toDateTime(entity.getInsertTime()).isBefore(DateTime.now().minusHours(12))) {
 			throw new LKRuntimeException(ErrorCodes.PSS_ONLY_THE_CHECK_ORDER_OF_THE_DAY_CAN_BE_COMPLETED);
 		}

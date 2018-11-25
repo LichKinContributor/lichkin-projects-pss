@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.lichkin.application.services.bus.impl.SysPssSellStockOrderBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
@@ -33,7 +34,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssSellStockOrd
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity) {
 		// 销售出库 （进行出库数量校验）
 		if (entity.getOrderType().equals(Boolean.FALSE)) {
 			String errorMsg = busService.checkProductQty(entity.getId(), entity.getStorageId(), entity.getOrderId(), sin.getProductList());
@@ -45,13 +46,13 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssSellStockOrd
 
 
 	@Override
-	protected void clearSubs(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity, String id) {
+	protected void clearSubs(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity, String id) {
 		busService.clearPssSellStockOrderProduct(id);
 	}
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity, String id) {
 		busService.addPssSellStockOrderProduct(id, sin.getProductList());
 	}
 

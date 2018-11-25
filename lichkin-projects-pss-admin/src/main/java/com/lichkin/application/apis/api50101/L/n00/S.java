@@ -9,6 +9,7 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -17,7 +18,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 //		sql.select(SysPssPurchaseOrderProductR.id);
 		sql.select(SysPssPurchaseOrderProductR.quantity);

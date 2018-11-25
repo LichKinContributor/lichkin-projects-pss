@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.lichkin.application.services.bus.impl.SysPssProductBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.utils.LKPriceUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -35,7 +36,7 @@ public class S extends LKApiBusUpdateService<I, SysPssProductEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysPssProductEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysPssProductEntity entity, String id) {
 		String productCodeSaved = entity.getProductCode();
 		String productCodeIn = sin.getProductCode();
 		if (((productCodeSaved == null) && (productCodeIn != null)) || ((productCodeSaved != null) && ((productCodeIn == null) || !productCodeSaved.equals(productCodeIn)))) {
@@ -54,19 +55,19 @@ public class S extends LKApiBusUpdateService<I, SysPssProductEntity> {
 
 
 	@Override
-	protected List<SysPssProductEntity> findExist(I sin, String locale, String compId, String loginId, SysPssProductEntity entity, String id) {
-		return busService.findExist(id, compId, null, sin.getProductCode(), sin.getProductName(), sin.getBarcode());
+	protected List<SysPssProductEntity> findExist(I sin, ApiKeyValues<I> params, SysPssProductEntity entity, String id) {
+		return busService.findExist(id, params, sin.getProductCode(), sin.getProductName(), sin.getBarcode());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssProduct_EXIST;
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssProductEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssProductEntity entity) {
 		entity.setPurchasePrice(LKPriceUtils.analysisPrice(sin.getPurchasePrice()));
 		entity.setReferencePrice(LKPriceUtils.analysisPrice(sin.getReferencePrice()));
 		entity.setRetailPrice(LKPriceUtils.analysisPrice(sin.getRetailPrice()));

@@ -8,6 +8,7 @@ import com.lichkin.application.services.bus.impl.SysPssAllotOrderBusService;
 import com.lichkin.application.services.bus.impl.SysPssStockBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
@@ -38,7 +39,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssAllotOrderEn
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity) {
 		// 出库需做校验处理
 		String errorMsg = stockBusService.checkProductStockOut(entity.getOutStorageId(), sin.getProductList(), entity.getId());
 		if (StringUtils.isNotBlank(errorMsg)) {
@@ -48,13 +49,13 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysPssAllotOrderEn
 
 
 	@Override
-	protected void clearSubs(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity, String id) {
+	protected void clearSubs(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity, String id) {
 		busService.clearPssAllotOrderProduct(id);
 	}
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity, String id) {
 		busService.addPssAllotOrderProduct(id, sin.getProductList());
 	}
 

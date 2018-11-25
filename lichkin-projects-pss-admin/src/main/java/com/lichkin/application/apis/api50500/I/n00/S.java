@@ -14,6 +14,7 @@ import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
@@ -41,14 +42,14 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssStockCheckOr
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssStockCheckOrderEntity entity) {
+		entity.setCompId(params.getCompId(true));
 		entity.setOrderNo(busService.analysisOrderNo());
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssStockCheckOrderEntity entity) {
 		entity.setBillDate(LKDateTimeUtils.now(LKDateTimeTypeEnum.DATE_ONLY));
 		List<SysPssStockCheckOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssStockCheckOrderProductEntity.class);
 		// 校验处理
@@ -63,7 +64,7 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssStockCheckOr
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysPssStockCheckOrderEntity entity, String id) {
 		busService.addPssStockCheckOrderProduct(id, sin.getProductList());
 	}
 

@@ -10,6 +10,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderR;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
@@ -21,7 +22,7 @@ import com.lichkin.springframework.services.LKApiBusStartProcessService;
 public class S extends LKApiBusStartProcessService<I, SysPssPurchaseStockOrderEntity> {
 
 	@Override
-	protected void initFormData(I sin, String locale, String compId, String loginId, SysPssPurchaseStockOrderEntity entity, Map<String, Object> datas) {
+	protected void initFormData(I sin, ApiKeyValues<I> params, SysPssPurchaseStockOrderEntity entity, Map<String, Object> datas) {
 		// 订单统一参数
 		datas.put("orderNo", entity.getOrderNo());
 		datas.put("billDate", entity.getBillDate());
@@ -32,7 +33,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssPurchaseStockOrderEn
 
 
 	@Override
-	protected String getProcessCode(I sin, String locale, String compId, String loginId, SysPssPurchaseStockOrderEntity entity) {
+	protected String getProcessCode(I sin, ApiKeyValues<I> params, SysPssPurchaseStockOrderEntity entity) {
 		return entity.getOrderType() ? PssStatics.PSS_PURCHASE_STOCK_IN_ORDER : PssStatics.PSS_PURCHASE_STOCK_OUT_ORDER;
 	}
 

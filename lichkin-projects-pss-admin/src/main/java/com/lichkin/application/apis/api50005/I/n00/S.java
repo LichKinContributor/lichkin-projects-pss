@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssStoreCashierBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStoreCashierEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
@@ -34,26 +35,26 @@ public class S extends LKApiBusInsertService<I, SysPssStoreCashierEntity> {
 
 
 	@Override
-	protected List<SysPssStoreCashierEntity> findExist(I sin, String locale, String compId, String loginId) {
-		return busService.findExist(null, compId, sin.getCompId(), sin.getCashier());
+	protected List<SysPssStoreCashierEntity> findExist(I sin, ApiKeyValues<I> params) {
+		return busService.findExist(null, params, sin.getCashier());
 	}
 
 
 	@Override
-	protected boolean forceCheck(I sin, String locale, String compId, String loginId) {
+	protected boolean forceCheck(I sin, ApiKeyValues<I> params) {
 		return true;
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssStoreCashier_EXIST;
 	}
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysPssStoreCashierEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssStoreCashierEntity entity) {
+		entity.setCompId(params.getCompId(true));
 	}
 
 }

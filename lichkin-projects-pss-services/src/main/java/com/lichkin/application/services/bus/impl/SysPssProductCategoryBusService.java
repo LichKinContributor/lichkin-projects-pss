@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductCategoryR;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.services.LKCodeService;
 import com.lichkin.springframework.services.LKDBService;
@@ -32,14 +33,14 @@ public class SysPssProductCategoryBusService extends LKDBService {
 	}
 
 
-	public List<SysPssProductCategoryEntity> findExist(String id, String compId, String busCompId, String parentCode, String categoryName) {
+	public List<SysPssProductCategoryEntity> findExist(String id, ApiKeyValues<?> params, String parentCode, String categoryName) {
 		QuerySQL sql = new QuerySQL(false, SysPssProductCategoryEntity.class);
 
 		if (StringUtils.isNotBlank(id)) {
 			sql.neq(SysPssProductCategoryR.id, id);
 		}
 
-		addConditionCompId(true, sql, SysPssProductCategoryR.compId, compId, busCompId);
+		params.addConditionCompId(true, sql, SysPssProductCategoryR.compId);
 
 		sql.eq(SysPssProductCategoryR.parentCode, parentCode);
 		sql.eq(SysPssProductCategoryR.categoryName, categoryName);

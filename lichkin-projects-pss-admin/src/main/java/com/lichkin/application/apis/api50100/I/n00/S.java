@@ -7,6 +7,7 @@ import com.lichkin.application.services.bus.impl.SysPssPurchaseOrderBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.InventoryStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
 
@@ -32,14 +33,14 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssPurchaseOrde
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysPssPurchaseOrderEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssPurchaseOrderEntity entity) {
+		entity.setCompId(params.getCompId(true));
 		entity.setOrderNo(busService.analysisOrderNo());
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssPurchaseOrderEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssPurchaseOrderEntity entity) {
 		entity.setOrderAmount(busService.analysisOrderAmount(sin));
 		entity.setApprovalStatus(ApprovalStatusEnum.PENDING);
 		entity.setInventoryStatus(InventoryStatusEnum.NOT);
@@ -47,7 +48,7 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssPurchaseOrde
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysPssPurchaseOrderEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysPssPurchaseOrderEntity entity, String id) {
 		busService.addPssPurchaseOrderProduct(id, sin.getListProduct());
 	}
 

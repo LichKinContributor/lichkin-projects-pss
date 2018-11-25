@@ -10,6 +10,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -18,7 +19,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysPssStorageEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssStorageR.id);
 		sql.select(SysPssStorageR.insertTime);
@@ -38,9 +39,9 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStorageEntity> {
 
 		// 筛选条件（必填项）
 		// 公司ID
-		addConditionCompId(false, sql, SysPssStorageR.compId, compId, sin.getCompId());
+		params.addConditionCompId(false, sql, SysPssStorageR.compId);
 		// 在用状态
-		addConditionUsingStatus(sql, SysPssStorageR.usingStatus, compId, sin.getUsingStatus());
+		params.addConditionUsingStatus(sql, SysPssStorageR.usingStatus, sin.getUsingStatus());
 
 		// 筛选条件（业务项）
 		String storageCode = sin.getStorageCode();

@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductCategoryR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.utils.LKCodeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
@@ -18,9 +19,9 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, SysPssProductCategoryEntity, SysPssProductCategoryEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
-		addConditionCompId(true, sql, SysPssProductCategoryR.compId, compId, sin.getCompId());
-		addConditionUsingStatus(sql, SysPssProductCategoryR.usingStatus, compId, sin.getUsingStatus());
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
+		params.addConditionCompId(true, sql, SysPssProductCategoryR.compId);
+		params.addConditionUsingStatus(sql, SysPssProductCategoryR.usingStatus, sin.getUsingStatus());
 
 		if (StringUtils.isNotBlank(sin.getCategoryName())) {
 			sql.like(SysPssProductCategoryR.categoryName, LikeType.ALL, sin.getCategoryName());
@@ -31,7 +32,7 @@ public class S extends LKApiBusGetListService<I, SysPssProductCategoryEntity, Sy
 
 
 	@Override
-	protected List<SysPssProductCategoryEntity> afterQuery(I sin, String locale, String compId, String loginId, List<SysPssProductCategoryEntity> list) {
+	protected List<SysPssProductCategoryEntity> afterQuery(I sin, ApiKeyValues<I> params, List<SysPssProductCategoryEntity> list) {
 		if (StringUtils.isNotBlank(sin.getCategoryName())) {
 			List<String> codeList = new ArrayList<>();
 			for (int i = 0; i < list.size(); i++) {

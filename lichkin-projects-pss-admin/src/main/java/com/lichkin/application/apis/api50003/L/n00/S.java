@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductCategoryR;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -19,7 +20,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysPssProductEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssProductR.id);
 		sql.select(SysPssProductR.insertTime);
@@ -41,9 +42,9 @@ public class S extends LKApiBusGetListService<I, O, SysPssProductEntity> {
 
 		// 筛选条件（必填项）
 		// 公司ID
-		addConditionCompId(false, sql, SysPssProductR.compId, compId, sin.getCompId());
+		params.addConditionCompId(false, sql, SysPssProductR.compId);
 		// 在用状态
-		addConditionUsingStatus(sql, SysPssProductR.usingStatus, compId, sin.getUsingStatus());
+		params.addConditionUsingStatus(sql, SysPssProductR.usingStatus, sin.getUsingStatus());
 
 		// 筛选条件（业务项）
 		String productCategory = sin.getProductCategory();

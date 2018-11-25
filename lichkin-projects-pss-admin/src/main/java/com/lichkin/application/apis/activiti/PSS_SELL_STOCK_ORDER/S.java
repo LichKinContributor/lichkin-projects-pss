@@ -9,6 +9,7 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssSellOrderR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderEntity;
@@ -19,7 +20,7 @@ import com.lichkin.springframework.services.LKApiBusStartProcessService;
 public class S extends LKApiBusStartProcessService<I, SysPssSellStockOrderEntity> {
 
 	@Override
-	protected void initFormData(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity, Map<String, Object> datas) {
+	protected void initFormData(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity, Map<String, Object> datas) {
 		// 订单统一参数
 		datas.put("orderNo", entity.getOrderNo());
 		datas.put("billDate", entity.getBillDate());
@@ -30,7 +31,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssSellStockOrderEntity
 
 
 	@Override
-	protected String getProcessCode(I sin, String locale, String compId, String loginId, SysPssSellStockOrderEntity entity) {
+	protected String getProcessCode(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity) {
 		return entity.getOrderType() ? PssStatics.PSS_SELL_STOCK_IN_ORDER : PssStatics.PSS_SELL_STOCK_OUT_ORDER;
 	}
 

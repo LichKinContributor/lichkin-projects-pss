@@ -13,6 +13,7 @@ import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStockCheckOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
@@ -36,7 +37,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssStockCheckOrderEntit
 
 
 	@Override
-	protected void initFormData(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity, Map<String, Object> datas) {
+	protected void initFormData(I sin, ApiKeyValues<I> params, SysPssStockCheckOrderEntity entity, Map<String, Object> datas) {
 		if (!entity.getBillDate().equals(LKDateTimeUtils.now(LKDateTimeTypeEnum.DATE_ONLY))) {
 			throw new LKRuntimeException(ErrorCodes.PSS_ONLY_THE_CHECK_ORDER_OF_THE_DAY_CAN_BE_SUBMITTED);
 		}
@@ -46,12 +47,12 @@ public class S extends LKApiBusStartProcessService<I, SysPssStockCheckOrderEntit
 		datas.put("billDate", entity.getBillDate());
 		datas.put("remarks", entity.getRemarks());
 		// 关联表参数转换
-		setOrderDatas(datas, entity.getId(), compId);
+		setOrderDatas(datas, entity.getId(), params.getCompId(false));
 	}
 
 
 	@Override
-	protected String getProcessCode(I sin, String locale, String compId, String loginId, SysPssStockCheckOrderEntity entity) {
+	protected String getProcessCode(I sin, ApiKeyValues<I> params, SysPssStockCheckOrderEntity entity) {
 		return PssStatics.PSS_STOCK_CHECK_ORDER;
 	}
 

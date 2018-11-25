@@ -17,6 +17,7 @@ import com.lichkin.framework.db.beans.SysPssOtherStockOrderProductR;
 import com.lichkin.framework.db.beans.SysPssOtherStockOrderR;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssStockR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
@@ -31,7 +32,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		// sql.select(SysPssOtherStockOrderProductR.id);
 		sql.select(SysPssOtherStockOrderProductR.quantity);
@@ -75,7 +76,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssOtherStockOrderProduct
 
 
 	@Override
-	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
 		// 只是查看 不需要计算可出库数量
 		if (sin.getIsView().equals(Boolean.TRUE)) {
 			return list;

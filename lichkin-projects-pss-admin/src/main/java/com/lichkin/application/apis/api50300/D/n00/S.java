@@ -8,6 +8,7 @@ import com.lichkin.framework.db.beans.SysPssOtherStockOrderR;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusDeleteService;
 
@@ -25,13 +26,13 @@ public class S extends LKApiBusDeleteService<I, SysPssOtherStockOrderEntity> {
 
 
 	@Override
-	protected boolean realDelete(I sin, String locale, String compId, String loginId) {
+	protected boolean realDelete(I sin, ApiKeyValues<I> params) {
 		return true;
 	}
 
 
 	@Override
-	protected void beforeRealDelete(I sin, String locale, String compId, String loginId, SysPssOtherStockOrderEntity entity, String id) {
+	protected void beforeRealDelete(I sin, ApiKeyValues<I> params, SysPssOtherStockOrderEntity entity, String id) {
 		ApprovalStatusEnum approvalStatus = entity.getApprovalStatus();
 		switch (approvalStatus) {
 			case PENDING:
