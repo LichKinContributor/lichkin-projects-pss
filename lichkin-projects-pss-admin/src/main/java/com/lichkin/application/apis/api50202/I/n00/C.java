@@ -29,7 +29,7 @@ public class C extends LKApiBusInsertController<I, SysPssSellStockOrderEntity> {
 
 
 	@Override
-	protected String getSubOperBusType(I cin) {
+	protected String getSubOperBusType(I cin, ApiKeyValues<I> params) {
 		return StringUtils.isBlank(cin.getCompId()) ? "" : "Comp";
 	}
 

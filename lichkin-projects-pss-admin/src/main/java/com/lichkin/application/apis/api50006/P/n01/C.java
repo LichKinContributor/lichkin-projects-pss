@@ -17,6 +17,7 @@ import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKBeanUtils;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiY0Controller;
 
 @RestController("SysPssStockP01Controller")
@@ -30,9 +31,9 @@ public class C extends LKApiY0Controller<I, Page<PssStorageDetailOut>> {
 
 	@Deprecated
 	@Override
-	protected Page<PssStorageDetailOut> doInvoke(I cin) throws LKException {
+	protected Page<PssStorageDetailOut> doInvoke(I cin, ApiKeyValues<I> params) throws LKException {
 		PssStorageDetailIn in = LKBeanUtils.newInstance(cin, PssStorageDetailIn.class);
-		in.setCompId(cin.getDatas().getCompId());
+		in.setCompId(params.getCompId(false));
 
 		List<PssStorageDetailOut> list = pssStockReportMapper.findStorageDetail(in);
 		Long total = pssStockReportMapper.findStorageDetailTotalCount(in);

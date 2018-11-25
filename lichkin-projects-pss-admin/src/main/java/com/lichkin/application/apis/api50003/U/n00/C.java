@@ -28,7 +28,7 @@ public class C extends LKApiBusUpdateController<I, SysPssProductEntity> {
 
 
 	@Override
-	protected String getSubOperBusType(I cin) {
+	protected String getSubOperBusType(I cin, ApiKeyValues<I> params) {
 		return "";
 	}
 

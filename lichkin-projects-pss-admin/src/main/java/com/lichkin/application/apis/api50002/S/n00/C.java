@@ -33,7 +33,7 @@ public class C extends LKApiYYController<I, List<LKTreeBean>, List<SysPssProduct
 
 
 	@Override
-	protected List<LKTreeBean> afterInvokeService(I cin, I sin, List<SysPssProductCategoryEntity> sout) throws LKException {
+	protected List<LKTreeBean> afterInvokeService(I cin, ApiKeyValues<I> params, List<SysPssProductCategoryEntity> sout) throws LKException {
 		return LKTreeUtils.toTree(sout, "id", "categoryName", "categoryCode", "parentCode");
 	}
 
