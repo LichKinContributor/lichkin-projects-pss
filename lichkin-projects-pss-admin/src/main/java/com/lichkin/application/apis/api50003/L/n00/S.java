@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductCategoryR;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
@@ -41,10 +42,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssProductEntity> {
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssProductR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssProductR.usingStatus, sin.getUsingStatus());
+//		addConditionId(sql, SysPssProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssProductR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssProductR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String productCategory = sin.getProductCategory();

@@ -49,8 +49,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStockEntity> {
 		sql.select(SysPssProductR.barcode);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssStockR.compId);
+//		addConditionId(sql, SysPssStockR.id, params.getId());
+//		addConditionLocale(sql, SysPssStockR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStockR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssStockR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String storageName = sin.getStorageName();

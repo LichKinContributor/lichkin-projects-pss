@@ -44,14 +44,14 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderEntity> {
 		LKDictUtils4Pss.inventoryStatus(sql, SysPssPurchaseOrderR.inventoryStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssPurchaseOrderR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssPurchaseOrderR.usingStatus, null, LKUsingStatusEnum.USING);
-		// 审核状态
+//		addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssPurchaseOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+		// 筛选条件（业务项）
 		sql.eq(SysPssPurchaseOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 
-		// 入库状态
 		InventoryStatusEnum inventoryStatus = sin.getInventoryStatus();
 		if (inventoryStatus != null) {
 			sql.eq(SysPssPurchaseOrderR.inventoryStatus, inventoryStatus);
@@ -59,7 +59,6 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderEntity> {
 			sql.neq(SysPssPurchaseOrderR.inventoryStatus, InventoryStatusEnum.ALL);
 		}
 
-		// 筛选条件（业务项）
 		String orderNo = sin.getOrderNo();
 		if (StringUtils.isNotBlank(orderNo)) {
 			sql.like(SysPssPurchaseOrderR.orderNo, LikeType.ALL, orderNo);

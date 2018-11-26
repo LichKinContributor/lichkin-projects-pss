@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssProductCategoryBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
@@ -40,7 +39,7 @@ public class S extends LKApiBusInsertService<I, SysPssProductCategoryEntity> {
 
 	@Override
 	protected List<SysPssProductCategoryEntity> findExist(I sin, ApiKeyValues<I> params) {
-		return busService.findExist(null, params, sin.getParentCode(), sin.getCategoryName());
+		return busService.findExist(params, sin.getParentCode(), sin.getCategoryName());
 	}
 
 
@@ -58,8 +57,6 @@ public class S extends LKApiBusInsertService<I, SysPssProductCategoryEntity> {
 
 	@Override
 	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysPssProductCategoryEntity entity, SysPssProductCategoryEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
-		entity.setCompId(exist.getCompId());
 		if (!exist.getParentCode().equals(entity.getParentCode())) {
 			throw new LKRuntimeException(ErrorCodes.SysPssProductCategory_parent_code_can_not_modify_when_restore).withParam("#parentCode", exist.getParentCode());
 		}
@@ -69,8 +66,7 @@ public class S extends LKApiBusInsertService<I, SysPssProductCategoryEntity> {
 
 	@Override
 	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssProductCategoryEntity entity) {
-		entity.setCompId(params.getCompId(true));
-		entity.setCategoryCode(busService.analysisCategoryCode(params.getCompId(false), sin.getParentCode()));
+		entity.setCategoryCode(busService.analysisCategoryCode(params.getCompId(), sin.getParentCode()));
 	}
 
 }

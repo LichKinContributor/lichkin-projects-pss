@@ -1,16 +1,17 @@
 package com.lichkin.application.apis.api50200.P.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestPageBean;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.framework.defines.entities.I_CompId;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.InventoryStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class I extends LKRequestPageBean {
+public class I extends LKRequestPageBean implements I_CompId {
 
 	private LKUsingStatusEnum usingStatus;
 

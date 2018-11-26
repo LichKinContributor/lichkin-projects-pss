@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.beans.SysPssStoreR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
@@ -42,10 +43,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStoreEntity> {
 		LKDictUtils.usingStatus(sql, SysPssStoreR.usingStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssStoreR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssStoreR.usingStatus, sin.getUsingStatus());
+//		addConditionId(sql, SysPssStoreR.id, params.getId());
+//		addConditionLocale(sql, SysPssStoreR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStoreR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssStoreR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String storeCode = sin.getStoreCode();

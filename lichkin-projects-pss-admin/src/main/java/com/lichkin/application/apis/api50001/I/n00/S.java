@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssSupplierBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
@@ -37,7 +36,7 @@ public class S extends LKApiBusInsertService<I, SysPssSupplierEntity> {
 
 	@Override
 	protected List<SysPssSupplierEntity> findExist(I sin, ApiKeyValues<I> params) {
-		return busService.findExist(null, params, sin.getSupplierCode(), sin.getSupplierName());
+		return busService.findExist(params, sin.getSupplierCode(), sin.getSupplierName());
 	}
 
 
@@ -50,19 +49,6 @@ public class S extends LKApiBusInsertService<I, SysPssSupplierEntity> {
 	@Override
 	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssSupplier_EXIST;
-	}
-
-
-	@Override
-	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysPssSupplierEntity entity, SysPssSupplierEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
-		entity.setCompId(exist.getCompId());
-	}
-
-
-	@Override
-	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssSupplierEntity entity) {
-		entity.setCompId(params.getCompId(true));
 	}
 
 }

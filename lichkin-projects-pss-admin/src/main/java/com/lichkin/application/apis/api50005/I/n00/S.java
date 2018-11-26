@@ -36,7 +36,7 @@ public class S extends LKApiBusInsertService<I, SysPssStoreCashierEntity> {
 
 	@Override
 	protected List<SysPssStoreCashierEntity> findExist(I sin, ApiKeyValues<I> params) {
-		return busService.findExist(null, params, sin.getCashier());
+		return busService.findExist(params, sin.getCashier());
 	}
 
 
@@ -49,12 +49,6 @@ public class S extends LKApiBusInsertService<I, SysPssStoreCashierEntity> {
 	@Override
 	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssStoreCashier_EXIST;
-	}
-
-
-	@Override
-	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssStoreCashierEntity entity) {
-		entity.setCompId(params.getCompId(true));
 	}
 
 }

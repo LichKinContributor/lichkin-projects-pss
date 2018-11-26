@@ -18,14 +18,13 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysPssProductBusService extends LKDBService {
 
-	public List<SysPssProductEntity> findExist(String id, ApiKeyValues<?> params, String productCode, String productName, String barcode) {
+	public List<SysPssProductEntity> findExist(ApiKeyValues<?> params, String productCode, String productName, String barcode) {
 		QuerySQL sql = new QuerySQL(false, SysPssProductEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssProductR.id, id);
-		}
-
-		params.addConditionCompId(true, sql, SysPssProductR.compId);
+		addConditionId(sql, SysPssProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssProductR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssProductR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(barcode)) {
 			if (StringUtils.isBlank(productCode)) {

@@ -16,14 +16,13 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysPssStorageBusService extends LKDBService {
 
-	public List<SysPssStorageEntity> findExist(String id, ApiKeyValues<?> params, String storageCode, String storageName) {
+	public List<SysPssStorageEntity> findExist(ApiKeyValues<?> params, String storageCode, String storageName) {
 		QuerySQL sql = new QuerySQL(false, SysPssStorageEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssStorageR.id, id);
-		}
-
-		params.addConditionCompId(true, sql, SysPssStorageR.compId);
+		addConditionId(sql, SysPssStorageR.id, params.getId());
+//		addConditionLocale(sql, SysPssStorageR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStorageR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssStorageR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(storageCode)) {
 			sql.eq(SysPssStorageR.storageName, storageName);

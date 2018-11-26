@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.SysPssOtherStockOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
@@ -37,17 +38,17 @@ public class S extends LKApiBusGetPageService<I, O, SysPssOtherStockOrderEntity>
 		// 字典表
 		int i = 0;
 		if (orderType) {
-			LKDictUtils4Pss.storageTypeIn(sql, params.getCompId(false), SysPssOtherStockOrderR.storageType, i++);
+			LKDictUtils4Pss.storageTypeIn(sql, params.getCompId(), SysPssOtherStockOrderR.storageType, i++);
 		} else {
-			LKDictUtils4Pss.storageTypeOut(sql, params.getCompId(false), SysPssOtherStockOrderR.storageType, i++);
+			LKDictUtils4Pss.storageTypeOut(sql, params.getCompId(), SysPssOtherStockOrderR.storageType, i++);
 		}
 		LKDictUtils4Activiti.approvalStatus(sql, SysPssOtherStockOrderR.approvalStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssOtherStockOrderR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssOtherStockOrderR.usingStatus, sin.getUsingStatus());
+//		addConditionId(sql, SysPssOtherStockOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssOtherStockOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssOtherStockOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssOtherStockOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (orderType != null) {
 			sql.eq(SysPssOtherStockOrderR.orderType, orderType);

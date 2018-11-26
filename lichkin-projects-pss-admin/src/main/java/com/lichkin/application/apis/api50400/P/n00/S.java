@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.SysPssAllotOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
@@ -41,10 +42,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssAllotOrderEntity> {
 		LKDictUtils4Activiti.approvalStatus(sql, SysPssAllotOrderR.approvalStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssAllotOrderR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssAllotOrderR.usingStatus, sin.getUsingStatus());
+//		addConditionId(sql, SysPssAllotOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssAllotOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssAllotOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssAllotOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		ApprovalStatusEnum approvalStatus = sin.getApprovalStatus();

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssProductBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.LKPriceUtils;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
@@ -38,7 +37,7 @@ public class S extends LKApiBusInsertService<I, SysPssProductEntity> {
 
 	@Override
 	protected List<SysPssProductEntity> findExist(I sin, ApiKeyValues<I> params) {
-		return busService.findExist(null, params, sin.getProductCode(), sin.getProductName(), sin.getBarcode());
+		return busService.findExist(params, sin.getProductCode(), sin.getProductName(), sin.getBarcode());
 	}
 
 
@@ -56,15 +55,7 @@ public class S extends LKApiBusInsertService<I, SysPssProductEntity> {
 
 	@Override
 	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysPssProductEntity entity, SysPssProductEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
-		entity.setCompId(exist.getCompId());
 		entity.setProductCategory(exist.getProductCategory());
-	}
-
-
-	@Override
-	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssProductEntity entity) {
-		entity.setCompId(params.getCompId(true));
 	}
 
 

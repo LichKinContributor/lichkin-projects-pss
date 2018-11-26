@@ -38,10 +38,15 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		int i = 0;
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
-		// 筛选条件（必填项）过滤已经全部入库的产品
-		sql.lt_(SysPssPurchaseOrderProductR.inventoryQuantity, SysPssPurchaseOrderProductR.quantity);
+		// 筛选条件（必填项）
+//		addConditionId(sql, SysPssPurchaseOrderProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssPurchaseOrderProductR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysPssPurchaseOrderProductR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
+		sql.lt_(SysPssPurchaseOrderProductR.inventoryQuantity, SysPssPurchaseOrderProductR.quantity);
+
 		String orderId = sin.getOrderId();
 		if (StringUtils.isNotBlank(orderId)) {
 			sql.eq(SysPssPurchaseOrderProductR.orderId, orderId);

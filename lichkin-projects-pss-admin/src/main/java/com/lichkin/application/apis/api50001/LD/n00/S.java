@@ -25,7 +25,7 @@ public class S extends LKApiBusGetDroplistService<I> {
 		sql.select(SysPssSupplierR.supplierName, "text");
 
 		sql.eq(SysPssSupplierR.usingStatus, LKUsingStatusEnum.USING);
-		sql.eq(SysPssSupplierR.compId, params.getCompId(false));
+		sql.eq(SysPssSupplierR.compId, params.getCompId());
 
 		sql.addOrders(new Order(SysPssSupplierR.supplierName));
 

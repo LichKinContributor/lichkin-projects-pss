@@ -2,7 +2,6 @@ package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.QuerySQL;
@@ -14,14 +13,13 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysPssStoreCashierBusService extends LKDBService {
 
-	public List<SysPssStoreCashierEntity> findExist(String id, ApiKeyValues<?> params, String cashier) {
+	public List<SysPssStoreCashierEntity> findExist(ApiKeyValues<?> params, String cashier) {
 		QuerySQL sql = new QuerySQL(false, SysPssStoreCashierEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssStoreCashierR.id, id);
-		}
-
-		params.addConditionCompId(true, sql, SysPssStoreCashierR.compId);
+		addConditionId(sql, SysPssStoreCashierR.id, params.getId());
+//		addConditionLocale(sql, SysPssStoreCashierR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStoreCashierR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssStoreCashierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		sql.eq(SysPssStoreCashierR.cashier, cashier);
 

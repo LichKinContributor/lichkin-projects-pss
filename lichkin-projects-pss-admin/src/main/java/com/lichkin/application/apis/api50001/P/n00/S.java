@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
@@ -42,10 +43,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssSupplierEntity> {
 		LKDictUtils4Pss.supplierType(sql, SysPssSupplierR.supplierType, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssSupplierR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssSupplierR.usingStatus, sin.getUsingStatus());
+//		addConditionId(sql, SysPssSupplierR.id, params.getId());
+//		addConditionLocale(sql, SysPssSupplierR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssSupplierR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String supplierCode = sin.getSupplierCode();

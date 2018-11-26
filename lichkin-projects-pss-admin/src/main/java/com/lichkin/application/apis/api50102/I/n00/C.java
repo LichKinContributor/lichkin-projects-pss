@@ -1,6 +1,5 @@
 package com.lichkin.application.apis.api50102.I.n00;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,12 +24,6 @@ public class C extends LKApiBusInsertController<I, SysPssPurchaseStockOrderEntit
 	@Override
 	protected LKApiBusInsertWithoutCheckerService<I, SysPssPurchaseStockOrderEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
-	}
-
-
-	@Override
-	protected String getSubOperBusType(I cin, ApiKeyValues<I> params) {
-		return StringUtils.isBlank(cin.getCompId()) ? "" : "Comp";
 	}
 
 }

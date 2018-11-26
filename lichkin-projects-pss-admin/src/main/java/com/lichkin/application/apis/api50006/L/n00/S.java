@@ -12,6 +12,7 @@ import com.lichkin.application.mappers.impl.in.PssStockOutQtyIn;
 import com.lichkin.application.mappers.impl.out.PssStockOutQtyOut;
 import com.lichkin.application.utils.LKDictUtils4Pss;
 import com.lichkin.framework.db.beans.Condition;
+import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssStockR;
@@ -46,22 +47,26 @@ public class S extends LKApiBusGetListService<I, O, SysPssStockEntity> {
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssStockR.compId);
-		// 仓库ID
+//		addConditionId(sql, SysPssStockR.id, params.getId());
+//		addConditionLocale(sql, SysPssStockR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStockR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssStockR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+		// 筛选条件（业务项）
 		sql.eq(SysPssStockR.storageId, sin.getStorageId());
 
-		// 条形码
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
 			sql.eq(SysPssProductR.barcode, barcode);
 		}
 
-		// 产品ID
 		String productId = sin.getProductId();
 		if (StringUtils.isNotBlank(productId)) {
 			sql.eq(SysPssProductR.id, productId);
 		}
+
+		// 排序条件
+		sql.addOrders(new Order(SysPssProductR.id, false));
 	}
 
 

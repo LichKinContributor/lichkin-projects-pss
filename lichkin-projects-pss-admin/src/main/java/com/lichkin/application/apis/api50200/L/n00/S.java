@@ -40,22 +40,20 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderEntity> {
 		LKDictUtils4Pss.inventoryOutStatus(sql, SysPssSellOrderR.inventoryStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssSellOrderR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssSellOrderR.usingStatus, LKUsingStatusEnum.USING);
-		// 审核状态
+//		addConditionId(sql, SysPssSellOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssSellOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssSellOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssSellOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+		// 筛选条件（业务项）
 		sql.eq(SysPssSellOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 
-		// 出库状态
 		InventoryStatusEnum inventoryStatus = sin.getInventoryStatus();
 		if (inventoryStatus != null) {
 			sql.eq(SysPssSellOrderR.inventoryStatus, inventoryStatus);
 		} else {
 			sql.neq(SysPssSellOrderR.inventoryStatus, InventoryStatusEnum.ALL);
 		}
-
-		// 筛选条件（业务项）
 
 		String orderNo = sin.getOrderNo();
 		if (StringUtils.isNotBlank(orderNo)) {

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssStorageBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
@@ -37,7 +36,7 @@ public class S extends LKApiBusInsertService<I, SysPssStorageEntity> {
 
 	@Override
 	protected List<SysPssStorageEntity> findExist(I sin, ApiKeyValues<I> params) {
-		return busService.findExist(null, params, sin.getStorageCode(), sin.getStorageName());
+		return busService.findExist(params, sin.getStorageCode(), sin.getStorageName());
 	}
 
 
@@ -50,19 +49,6 @@ public class S extends LKApiBusInsertService<I, SysPssStorageEntity> {
 	@Override
 	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssStorage_EXIST;
-	}
-
-
-	@Override
-	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysPssStorageEntity entity, SysPssStorageEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
-		entity.setCompId(exist.getCompId());
-	}
-
-
-	@Override
-	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssStorageEntity entity) {
-		entity.setCompId(params.getCompId(true));
 	}
 
 }

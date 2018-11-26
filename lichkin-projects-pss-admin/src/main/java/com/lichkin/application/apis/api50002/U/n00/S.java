@@ -45,7 +45,7 @@ public class S extends LKApiBusUpdateService<I, SysPssProductCategoryEntity> {
 
 	@Override
 	protected List<SysPssProductCategoryEntity> findExist(I sin, ApiKeyValues<I> params, SysPssProductCategoryEntity entity, String id) {
-		return busService.findExist(id, params, entity.getParentCode(), sin.getCategoryName());
+		return busService.findExist(params, entity.getParentCode(), sin.getCategoryName());
 	}
 
 

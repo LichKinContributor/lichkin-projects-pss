@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lichkin.application.apis.api50100.SI;
 import com.lichkin.framework.beans.impl.LKRequestBean;
+import com.lichkin.framework.defines.entities.I_CompId;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
 
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class I extends LKRequestBean implements SI {
+public class I extends LKRequestBean implements SI, I_CompId {
 
 	private String compId;
 

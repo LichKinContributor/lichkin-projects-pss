@@ -26,10 +26,4 @@ public class C extends LKApiBusInsertController<I, SysPssStoreCashierEntity> {
 		return service;
 	}
 
-
-	@Override
-	protected String getSubOperBusType(I cin, ApiKeyValues<I> params) {
-		return null;
-	}
-
 }

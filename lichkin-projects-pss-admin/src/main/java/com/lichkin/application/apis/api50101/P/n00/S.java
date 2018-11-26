@@ -56,10 +56,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseOrderProductEn
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		params.addConditionCompId(false, sql, SysPssPurchaseOrderR.compId);
-		// 在用状态
-		params.addConditionUsingStatus(sql, SysPssPurchaseOrderR.usingStatus, LKUsingStatusEnum.USING);
+//		addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssPurchaseOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 		// 审核状态
 		sql.eq(SysPssPurchaseOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 

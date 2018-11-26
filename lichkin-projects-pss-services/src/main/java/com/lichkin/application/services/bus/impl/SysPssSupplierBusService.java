@@ -16,14 +16,13 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysPssSupplierBusService extends LKDBService {
 
-	public List<SysPssSupplierEntity> findExist(String id, ApiKeyValues<?> params, String supplierCode, String supplierName) {
+	public List<SysPssSupplierEntity> findExist(ApiKeyValues<?> params, String supplierCode, String supplierName) {
 		QuerySQL sql = new QuerySQL(false, SysPssSupplierEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssSupplierR.id, id);
-		}
-
-		params.addConditionCompId(true, sql, SysPssSupplierR.compId);
+		addConditionId(sql, SysPssSupplierR.id, params.getId());
+//		addConditionLocale(sql, SysPssSupplierR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssSupplierR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(supplierCode)) {
 			sql.eq(SysPssSupplierR.supplierName, supplierName);

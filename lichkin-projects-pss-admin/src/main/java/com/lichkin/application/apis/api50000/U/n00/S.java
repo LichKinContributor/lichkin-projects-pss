@@ -50,7 +50,7 @@ public class S extends LKApiBusUpdateService<I, SysPssStorageEntity> {
 
 	@Override
 	protected List<SysPssStorageEntity> findExist(I sin, ApiKeyValues<I> params, SysPssStorageEntity entity, String id) {
-		return busService.findExist(id, params, sin.getStorageCode(), sin.getStorageName());
+		return busService.findExist(params, sin.getStorageCode(), sin.getStorageName());
 	}
 
 

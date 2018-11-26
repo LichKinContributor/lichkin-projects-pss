@@ -25,7 +25,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssOtherStockOrderEntit
 		datas.put("billDate", entity.getBillDate());
 		datas.put("remarks", entity.getRemarks());
 		// 关联表参数转换
-		setOrderDatas(datas, entity, params.getCompId(false));
+		setOrderDatas(datas, entity, params.getCompId());
 	}
 
 

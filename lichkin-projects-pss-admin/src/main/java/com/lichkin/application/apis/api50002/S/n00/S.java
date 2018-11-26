@@ -10,6 +10,7 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductCategoryR;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.LKCodeUtils;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
@@ -20,13 +21,25 @@ public class S extends LKApiBusGetListService<I, SysPssProductCategoryEntity, Sy
 
 	@Override
 	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
-		params.addConditionCompId(true, sql, SysPssProductCategoryR.compId);
-		params.addConditionUsingStatus(sql, SysPssProductCategoryR.usingStatus, sin.getUsingStatus());
+		// 主表
 
+		// 关联表
+
+		// 字典表
+//		int i = 0;
+
+		// 筛选条件（必填项）
+//		addConditionId(sql, SysPssProductCategoryR.id, params.getId());
+//		addConditionLocale(sql, SysPssProductCategoryR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssProductCategoryR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+		// 筛选条件（业务项）
 		if (StringUtils.isNotBlank(sin.getCategoryName())) {
 			sql.like(SysPssProductCategoryR.categoryName, LikeType.ALL, sin.getCategoryName());
 		}
 
+		// 排序条件
 		sql.addOrders(new Order(SysPssProductCategoryR.categoryCode));
 	}
 
@@ -42,8 +55,23 @@ public class S extends LKApiBusGetListService<I, SysPssProductCategoryEntity, Sy
 			codeList.addAll(LKCodeUtils.parentsCode(codeList, false));
 
 			QuerySQL sql = new QuerySQL(false, SysPssProductCategoryEntity.class, true);
+			// 主表
 
+			// 关联表
+
+			// 字典表
+//			int i = 0;
+
+			// 筛选条件（必填项）
+//			addConditionId(sql, SysPssProductCategoryR.id, params.getId());
+//			addConditionLocale(sql, SysPssProductCategoryR.locale, params.getLocale());
+			addConditionCompId(true, sql, SysPssProductCategoryR.compId, params.getCompId(), params.getBusCompId());
+			addConditionUsingStatus(params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+			// 筛选条件（业务项）
 			sql.in(SysPssProductCategoryR.categoryCode, codeList);
+
+			// 排序条件
 			sql.addOrders(new Order(SysPssProductCategoryR.categoryCode));
 
 			return dao.getList(sql, SysPssProductCategoryEntity.class);

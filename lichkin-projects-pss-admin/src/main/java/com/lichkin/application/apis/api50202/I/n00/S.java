@@ -36,7 +36,6 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssSellStockOrd
 
 	@Override
 	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity) {
-		entity.setCompId(params.getCompId(true));
 		entity.setOrderNo(busService.analysisOrderNo());
 	}
 

@@ -43,7 +43,12 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellStockOrderProductE
 		// 字典表
 		int i = 0;
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
+
 		// 筛选条件（必填项）
+//		addConditionId(sql, SysPssSellStockOrderProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssSellStockOrderProductR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysPssSellStockOrderProductR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(params.getCompId(), sql, SysPssSellStockOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String orderId = sin.getOrderId();

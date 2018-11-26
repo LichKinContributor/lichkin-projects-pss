@@ -26,7 +26,7 @@ public class S extends LKApiBusGetDroplistService<I> {
 		sql.select(SysPssStorageR.storageName, "text");
 
 		sql.eq(SysPssStorageR.usingStatus, LKUsingStatusEnum.USING);
-		sql.eq(SysPssStorageR.compId, params.getCompId(false));
+		sql.eq(SysPssStorageR.compId, params.getCompId());
 
 		String excludeIds = sin.getExcludeIds();
 		if (StringUtils.isNotBlank(excludeIds)) {
