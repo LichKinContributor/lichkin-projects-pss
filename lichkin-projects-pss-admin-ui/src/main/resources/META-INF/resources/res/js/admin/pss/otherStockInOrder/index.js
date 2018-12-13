@@ -9,6 +9,7 @@ var otherStockInOrderFormPlugins = [
       plugin : 'datepicker',
       options : {
         name : 'billDate',
+        minDate : '1900-01-01',
         validator : true,
         value : today()
       }
@@ -310,12 +311,14 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'datepicker',
         options : {
-          name : 'startDate'
+          name : 'startDate',
+          minDate : '1900-01-01',
         }
       }, {
         plugin : 'datepicker',
         options : {
-          name : 'endDate'
+          name : 'endDate',
+          minDate : '1900-01-01',
         }
       }, {
         plugin : 'droplist',

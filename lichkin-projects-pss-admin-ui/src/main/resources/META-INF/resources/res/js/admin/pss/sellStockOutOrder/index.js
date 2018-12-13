@@ -9,6 +9,7 @@ var sellStockOutOrderFormPlugins = [
       plugin : 'datepicker',
       options : {
         name : 'billDate',
+        minDate : '1900-01-01',
         validator : true,
         value : today()
       }
@@ -152,6 +153,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   ],
   tools : [
     {
+      sortIdx : -1,
       singleCheck : null,
       icon : 'add',
       text : 'sellStockOutOrder.grid.addFromSellOrder',
@@ -316,13 +318,15 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                           plugin : 'datepicker',
                           options : {
                             key : 'startDate',
-                            name : 'startDate'
+                            name : 'startDate',
+                            minDate : '1900-01-01',
                           }
                         }, {
                           plugin : 'datepicker',
                           options : {
                             key : 'endDate',
-                            name : 'endDate'
+                            name : 'endDate',
+                            minDate : '1900-01-01',
                           }
                         }, {
                           plugin : 'textbox',
@@ -465,12 +469,14 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         plugin : 'datepicker',
         options : {
-          name : 'startDate'
+          name : 'startDate',
+          minDate : '1900-01-01',
         }
       }, {
         plugin : 'datepicker',
         options : {
-          name : 'endDate'
+          name : 'endDate',
+          minDate : '1900-01-01',
         }
       }, {
         plugin : 'droplist',

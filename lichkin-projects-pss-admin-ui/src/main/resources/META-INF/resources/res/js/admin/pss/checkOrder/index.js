@@ -304,6 +304,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }
   ],
   toolsAdd : {
+    sortIdx : 1,
     saveUrl : '/SysPssStockCheckOrder/I',
     form : {
       plugins : checkOrderFormPlugins
@@ -321,6 +322,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsEdit : {
+    sortIdx : 2,
     saveUrl : '/SysPssStockCheckOrder/U',
     form : {
       url : '/SysPssStockCheckOrder/O',
@@ -362,6 +364,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsView : {
+    sortIdx : 6,
     form : {
       url : '/SysPssStockCheckOrder/O',
       plugins : checkOrderFormPlugins
@@ -387,6 +390,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsRemove : {
+    sortIdx : 3,
     saveUrl : '/SysPssStockCheckOrder/D',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
@@ -399,6 +403,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsSubmit : {
+    sortIdx : 5,
     processCode : 'PSS_STOCK_CHECK_ORDER',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
@@ -415,6 +420,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsUS : {
+    sortIdx : 4,
     icon : 'save',
     text : 'hold',
     saveUrl : '/SysPssStockCheckOrder/US',
