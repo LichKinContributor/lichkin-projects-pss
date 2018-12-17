@@ -9,20 +9,20 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
 public class SysPssStorageBusService extends LKDBService {
 
-	public List<SysPssStorageEntity> findExist(String id, String compId, String busCompId, String storageCode, String storageName) {
+	public List<SysPssStorageEntity> findExist(ApiKeyValues<?> params, String storageCode, String storageName) {
 		QuerySQL sql = new QuerySQL(false, SysPssStorageEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssStorageR.id, id);
-		}
-
-		addConditionCompId(true, sql, SysPssStorageR.compId, compId, busCompId);
+		addConditionId(sql, SysPssStorageR.id, params.getId());
+//		addConditionLocale(sql, SysPssStorageR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStorageR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssStorageR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(storageCode)) {
 			sql.eq(SysPssStorageR.storageName, storageName);

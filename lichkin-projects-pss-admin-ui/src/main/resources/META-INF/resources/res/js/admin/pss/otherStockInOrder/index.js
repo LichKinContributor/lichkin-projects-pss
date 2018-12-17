@@ -10,7 +10,8 @@ var otherStockInOrderFormPlugins = [
       options : {
         name : 'billDate',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'droplist',
@@ -71,7 +72,7 @@ var otherStockInOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssOtherStockOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         columns : [
             {
               text : 'productCode',

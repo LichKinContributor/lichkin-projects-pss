@@ -10,6 +10,7 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssOtherStockOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusStartProcessService;
@@ -18,18 +19,18 @@ import com.lichkin.springframework.services.LKApiBusStartProcessService;
 public class S extends LKApiBusStartProcessService<I, SysPssOtherStockOrderEntity> {
 
 	@Override
-	protected void initFormData(I sin, String locale, String compId, String loginId, SysPssOtherStockOrderEntity entity, Map<String, Object> datas) {
+	protected void initFormData(I sin, ApiKeyValues<I> params, SysPssOtherStockOrderEntity entity, Map<String, Object> datas) {
 		// 订单统一参数
 		datas.put("orderNo", entity.getOrderNo());
 		datas.put("billDate", entity.getBillDate());
 		datas.put("remarks", entity.getRemarks());
 		// 关联表参数转换
-		setOrderDatas(datas, entity, compId);
+		setOrderDatas(datas, entity, params.getCompId());
 	}
 
 
 	@Override
-	protected String getProcessCode(I sin, String locale, String compId, String loginId, SysPssOtherStockOrderEntity entity) {
+	protected String getProcessCode(I sin, ApiKeyValues<I> params, SysPssOtherStockOrderEntity entity) {
 		return entity.getOrderType() ? PssStatics.PSS_OTHER_STOCK_IN_ORDER : PssStatics.PSS_OTHER_STOCK_OUT_ORDER;
 	}
 

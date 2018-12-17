@@ -9,20 +9,20 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssSupplierR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssSupplierEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
 public class SysPssSupplierBusService extends LKDBService {
 
-	public List<SysPssSupplierEntity> findExist(String id, String compId, String busCompId, String supplierCode, String supplierName) {
+	public List<SysPssSupplierEntity> findExist(ApiKeyValues<?> params, String supplierCode, String supplierName) {
 		QuerySQL sql = new QuerySQL(false, SysPssSupplierEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssSupplierR.id, id);
-		}
-
-		addConditionCompId(true, sql, SysPssSupplierR.compId, compId, busCompId);
+		addConditionId(sql, SysPssSupplierR.id, params.getId());
+//		addConditionLocale(sql, SysPssSupplierR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssSupplierR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(supplierCode)) {
 			sql.eq(SysPssSupplierR.supplierName, supplierName);

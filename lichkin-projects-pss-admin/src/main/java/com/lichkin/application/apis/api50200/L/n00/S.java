@@ -13,6 +13,7 @@ import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.InventoryStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -21,7 +22,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysPssSellOrderEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssSellOrderR.id);
 		sql.select(SysPssSellOrderR.insertTime);
@@ -39,22 +40,20 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderEntity> {
 		LKDictUtils4Pss.inventoryOutStatus(sql, SysPssSellOrderR.inventoryStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		addConditionCompId(false, sql, SysPssSellOrderR.compId, compId, sin.getCompId());
-		// 在用状态
-		addConditionUsingStatus(sql, SysPssSellOrderR.usingStatus, compId, LKUsingStatusEnum.USING);
-		// 审核状态
+//		addConditionId(sql, SysPssSellOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssSellOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssSellOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssSellOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+		// 筛选条件（业务项）
 		sql.eq(SysPssSellOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 
-		// 出库状态
 		InventoryStatusEnum inventoryStatus = sin.getInventoryStatus();
 		if (inventoryStatus != null) {
 			sql.eq(SysPssSellOrderR.inventoryStatus, inventoryStatus);
 		} else {
 			sql.neq(SysPssSellOrderR.inventoryStatus, InventoryStatusEnum.ALL);
 		}
-
-		// 筛选条件（业务项）
 
 		String orderNo = sin.getOrderNo();
 		if (StringUtils.isNotBlank(orderNo)) {

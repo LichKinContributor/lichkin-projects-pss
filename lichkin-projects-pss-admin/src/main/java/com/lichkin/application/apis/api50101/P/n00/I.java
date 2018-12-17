@@ -9,17 +9,11 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestPageBean {
 
-	private String compId;
-
 	private String orderNo;
 
 	private String supplierName;
 
 	private String purchaserName;
-
-	private String startDate;
-
-	private String endDate;
 
 	private String productCode;
 

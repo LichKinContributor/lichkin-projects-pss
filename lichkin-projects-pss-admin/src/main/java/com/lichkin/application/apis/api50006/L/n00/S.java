@@ -12,10 +12,12 @@ import com.lichkin.application.mappers.impl.in.PssStockOutQtyIn;
 import com.lichkin.application.mappers.impl.out.PssStockOutQtyOut;
 import com.lichkin.application.utils.LKDictUtils4Pss;
 import com.lichkin.framework.db.beans.Condition;
+import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssStockR;
 import com.lichkin.framework.defines.enums.impl.PssOrderTypeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssStockEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -28,7 +30,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssStockEntity> {
 
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		// sql.select(SysPssStockR.id);
 		sql.select(SysPssStockR.quantity, "stockQuantity");
@@ -45,27 +47,31 @@ public class S extends LKApiBusGetListService<I, O, SysPssStockEntity> {
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		addConditionCompId(false, sql, SysPssStockR.compId, compId, null);
-		// 仓库ID
+//		addConditionId(sql, SysPssStockR.id, params.getId());
+//		addConditionLocale(sql, SysPssStockR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssStockR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssStockR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+
+		// 筛选条件（业务项）
 		sql.eq(SysPssStockR.storageId, sin.getStorageId());
 
-		// 条形码
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
 			sql.eq(SysPssProductR.barcode, barcode);
 		}
 
-		// 产品ID
 		String productId = sin.getProductId();
 		if (StringUtils.isNotBlank(productId)) {
 			sql.eq(SysPssProductR.id, productId);
 		}
+
+		// 排序条件
+		sql.addOrders(new Order(SysPssProductR.id, false));
 	}
 
 
 	@Override
-	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
 		// 盘点单显示实际库存量
 		if (PssOrderTypeEnum.PSS_CHECK.equals(sin.getOrderType())) {
 			return list;

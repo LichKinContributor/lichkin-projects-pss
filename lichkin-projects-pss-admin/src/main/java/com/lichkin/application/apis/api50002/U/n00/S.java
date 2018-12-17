@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssProductCategoryBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysPssProductCategoryEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysPssProductCategoryEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysPssProductCategoryEntity entity, String id) {
 		if (!entity.getCategoryName().equals(sin.getCategoryName())) {
 			return true;
 		}
@@ -43,13 +44,13 @@ public class S extends LKApiBusUpdateService<I, SysPssProductCategoryEntity> {
 
 
 	@Override
-	protected List<SysPssProductCategoryEntity> findExist(I sin, String locale, String compId, String loginId, SysPssProductCategoryEntity entity, String id) {
-		return busService.findExist(id, compId, null, entity.getParentCode(), sin.getCategoryName());
+	protected List<SysPssProductCategoryEntity> findExist(I sin, ApiKeyValues<I> params, SysPssProductCategoryEntity entity, String id) {
+		return busService.findExist(params, entity.getParentCode(), sin.getCategoryName());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssProductCategory_EXIST;
 	}
 

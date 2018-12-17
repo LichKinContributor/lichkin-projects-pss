@@ -14,6 +14,7 @@ import com.lichkin.framework.db.beans.SysPssSellOrderR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderEntity;
@@ -24,7 +25,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysPssSellOrderProductEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssSellOrderProductR.id);
 		sql.select(SysPssSellOrderProductR.quantity);
@@ -50,10 +51,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssSellOrderProductEntity
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		addConditionCompId(false, sql, SysPssSellOrderR.compId, compId, sin.getCompId());
-		// 在用状态
-		addConditionUsingStatus(sql, SysPssSellOrderR.usingStatus, compId, LKUsingStatusEnum.USING);
+//		addConditionId(sql, SysPssSellOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssSellOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssSellOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssSellOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 		// 审核状态
 		sql.eq(SysPssSellOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 

@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestPageBean {
 
-	private String compId;
-
 	/** 收银员姓名 */
 	private String cashierName;
 

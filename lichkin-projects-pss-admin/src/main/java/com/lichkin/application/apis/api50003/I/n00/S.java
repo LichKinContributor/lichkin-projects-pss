@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssProductBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.LKPriceUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
@@ -36,39 +36,31 @@ public class S extends LKApiBusInsertService<I, SysPssProductEntity> {
 
 
 	@Override
-	protected List<SysPssProductEntity> findExist(I sin, String locale, String compId, String loginId) {
-		return busService.findExist(null, compId, sin.getCompId(), sin.getProductCode(), sin.getProductName(), sin.getBarcode());
+	protected List<SysPssProductEntity> findExist(I sin, ApiKeyValues<I> params) {
+		return busService.findExist(params, sin.getProductCode(), sin.getProductName(), sin.getBarcode());
 	}
 
 
 	@Override
-	protected boolean forceCheck(I sin, String locale, String compId, String loginId) {
+	protected boolean forceCheck(I sin, ApiKeyValues<I> params) {
 		return false;
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssProduct_EXIST;
 	}
 
 
 	@Override
-	protected void beforeRestore(I sin, String locale, String compId, String loginId, SysPssProductEntity entity, SysPssProductEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
-		entity.setCompId(exist.getCompId());
+	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysPssProductEntity entity, SysPssProductEntity exist) {
 		entity.setProductCategory(exist.getProductCategory());
 	}
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysPssProductEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
-	}
-
-
-	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssProductEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssProductEntity entity) {
 		entity.setPurchasePrice(LKPriceUtils.analysisPrice(sin.getPurchasePrice()));
 		entity.setReferencePrice(LKPriceUtils.analysisPrice(sin.getReferencePrice()));
 		entity.setRetailPrice(LKPriceUtils.analysisPrice(sin.getRetailPrice()));

@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssSellOrderProductR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -19,7 +20,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssSellOrderProductR.id, "sellOrderProductId");
 		sql.select(SysPssSellOrderProductR.quantity, "salesQuantity");
@@ -38,9 +39,14 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		sql.lt_(SysPssSellOrderProductR.inventoryQuantity, SysPssSellOrderProductR.quantity);
+//		addConditionId(sql, SysPssSellOrderProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssSellOrderProductR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysPssSellOrderProductR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
+		sql.lt_(SysPssSellOrderProductR.inventoryQuantity, SysPssSellOrderProductR.quantity);
+
 		String orderId = sin.getOrderId();
 		if (StringUtils.isNotBlank(orderId)) {
 			sql.eq(SysPssSellOrderProductR.orderId, orderId);
@@ -60,7 +66,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 
 
 	@Override
-	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
 		for (O o : list) {
 			o.setCanStockOutQty(o.getSalesQuantity() - o.getInventoryQuantity());
 		}

@@ -26,7 +26,6 @@
     <module>lichkin-projects-pss-services</module>
 
     <!-- 平台间通用模块（子项目不依赖） -->
-    <module>lichkin-projects-pss-apis-generator</module>
     <module>lichkin-projects-pss-apis-common</module>
 
     <!-- 管理平台模块（子项目需依赖starter） -->

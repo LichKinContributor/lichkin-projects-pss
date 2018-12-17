@@ -10,7 +10,8 @@ var sellStockOutOrderFormPlugins = [
       options : {
         name : 'billDate',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'droplist',
@@ -45,7 +46,7 @@ var sellStockOutOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssSellStockOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         columns : [
             {
               text : 'productCode',
@@ -279,7 +280,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                     rows : 15,
                     pageable : false,
                     url : '/SysPssSellOrder/L',
-                    $appendTo : $('body'),
+                    $appendTo : $body,
                     columns : [
                         {
                           text : 'orderNo',

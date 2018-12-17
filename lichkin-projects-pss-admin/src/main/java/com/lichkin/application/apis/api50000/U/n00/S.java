@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssStorageBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysPssStorageEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysPssStorageEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysPssStorageEntity entity, String id) {
 		String storageCodeSaved = entity.getStorageCode();
 		String storageCodeIn = sin.getStorageCode();
 		if (((storageCodeSaved == null) && (storageCodeIn != null)) || ((storageCodeSaved != null) && ((storageCodeIn == null) || !storageCodeSaved.equals(storageCodeIn)))) {
@@ -48,13 +49,13 @@ public class S extends LKApiBusUpdateService<I, SysPssStorageEntity> {
 
 
 	@Override
-	protected List<SysPssStorageEntity> findExist(I sin, String locale, String compId, String loginId, SysPssStorageEntity entity, String id) {
-		return busService.findExist(id, compId, null, sin.getStorageCode(), sin.getStorageName());
+	protected List<SysPssStorageEntity> findExist(I sin, ApiKeyValues<I> params, SysPssStorageEntity entity, String id) {
+		return busService.findExist(params, sin.getStorageCode(), sin.getStorageName());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssStorage_EXIST;
 	}
 

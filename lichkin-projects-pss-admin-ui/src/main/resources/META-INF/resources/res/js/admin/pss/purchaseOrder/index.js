@@ -4,7 +4,8 @@ var purchaseOrderFormPlugins = [
       options : {
         name : 'billDate',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'droplist',
@@ -63,7 +64,7 @@ var purchaseOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssPurchaseOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         columns : [
             {
               text : 'productCode',

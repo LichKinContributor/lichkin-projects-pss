@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetOneService;
 
@@ -16,7 +17,7 @@ public class S extends LKApiBusGetOneService<I, O, SysPssProductEntity> {
 
 
 	@Override
-	protected void setOtherValues(SysPssProductEntity entity, String id, I sin, String locale, String compId, String loginId, O out) {
+	protected void setOtherValues(SysPssProductEntity entity, String id, I sin, ApiKeyValues<I> params, O out) {
 		if (StringUtils.isNotBlank(out.getImageUrl1())) {
 			out.setImageUrl1(filesServerRootUrl + out.getImageUrl1());
 		}

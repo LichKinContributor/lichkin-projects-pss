@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean {
 
-	private String compId;
-
 	private String orderNo;
 
 	private InventoryStatusEnum inventoryStatus;
@@ -21,11 +19,5 @@ public class I extends LKRequestBean {
 
 	/** 采购人姓名 */
 	private String purchaserName;
-
-	/** 开始日期 */
-	private String startDate;
-
-	/** 结束日期 */
-	private String endDate;
 
 }

@@ -9,6 +9,7 @@ import com.lichkin.application.services.bus.impl.SysPssStockBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
 
@@ -41,14 +42,13 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssAllotOrderEn
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity) {
 		entity.setOrderNo(busService.analysisOrderNo());
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity) {
 		if (entity.getOutStorageId().equals(entity.getInStorageId())) {
 			throw new LKRuntimeException(ErrorCodes.PSS_OUT_STORAGE_CAN_NOT_IS_IN_STORAGE);
 		}
@@ -63,7 +63,7 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssAllotOrderEn
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysPssAllotOrderEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity, String id) {
 		busService.addPssAllotOrderProduct(id, sin.getProductList());
 	}
 

@@ -15,8 +15,6 @@ public class O {
 
 //	private String insertTime;
 
-//	private String compId;
-
 	private ApprovalStatusEnum approvalStatus;
 
 	private String approvalTime;

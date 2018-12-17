@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.defines.beans.impl.LKDroplistBean;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
@@ -18,14 +19,14 @@ import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 public class S extends LKApiBusGetDroplistService<I> {
 
 	@Override
-	public List<LKDroplistBean> handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public List<LKDroplistBean> handle(I sin, ApiKeyValues<I> params) throws LKException {
 		QuerySQL sql = new QuerySQL(SysPssStorageEntity.class);
 
 		sql.select(SysPssStorageR.id, "value");
 		sql.select(SysPssStorageR.storageName, "text");
 
 		sql.eq(SysPssStorageR.usingStatus, LKUsingStatusEnum.USING);
-		sql.eq(SysPssStorageR.compId, compId);
+		sql.eq(SysPssStorageR.compId, params.getCompId());
 
 		String excludeIds = sin.getExcludeIds();
 		if (StringUtils.isNotBlank(excludeIds)) {

@@ -6,7 +6,7 @@ var checkOrderFormPlugins = [
         validator : true,
         value : today(),
         readonly : true,
-        commitable : true
+        commitable : true,
       }
     }, {
       plugin : 'droplist',
@@ -73,7 +73,7 @@ var checkOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssStockCheckOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         onLinkaged : function($plugin, linkage) {
           $plugin.LKClearDatas(false, true);
         },

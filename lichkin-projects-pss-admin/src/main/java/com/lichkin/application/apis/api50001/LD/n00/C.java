@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusGetDroplistController;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
@@ -20,7 +21,7 @@ public class C extends LKApiBusGetDroplistController<I> {
 
 
 	@Override
-	protected LKApiBusGetDroplistService<I> getService(I cin) {
+	protected LKApiBusGetDroplistService<I> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 

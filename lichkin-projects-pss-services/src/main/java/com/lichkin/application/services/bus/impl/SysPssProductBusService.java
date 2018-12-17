@@ -11,20 +11,20 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.utils.LKUrlUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
 public class SysPssProductBusService extends LKDBService {
 
-	public List<SysPssProductEntity> findExist(String id, String compId, String busCompId, String productCode, String productName, String barcode) {
+	public List<SysPssProductEntity> findExist(ApiKeyValues<?> params, String productCode, String productName, String barcode) {
 		QuerySQL sql = new QuerySQL(false, SysPssProductEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssProductR.id, id);
-		}
-
-		addConditionCompId(true, sql, SysPssProductR.compId, compId, busCompId);
+		addConditionId(sql, SysPssProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssProductR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssProductR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(barcode)) {
 			if (StringUtils.isBlank(productCode)) {

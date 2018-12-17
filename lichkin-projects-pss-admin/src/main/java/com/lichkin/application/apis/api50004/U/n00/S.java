@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssStoreBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssStoreEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysPssStoreEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysPssStoreEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysPssStoreEntity entity, String id) {
 		String storeCodeSaved = entity.getStoreCode();
 		String storeCodeIn = sin.getStoreCode();
 		if (((storeCodeSaved == null) && (storeCodeIn != null)) || ((storeCodeSaved != null) && ((storeCodeIn == null) || !storeCodeSaved.equals(storeCodeIn)))) {
@@ -48,13 +49,13 @@ public class S extends LKApiBusUpdateService<I, SysPssStoreEntity> {
 
 
 	@Override
-	protected List<SysPssStoreEntity> findExist(I sin, String locale, String compId, String loginId, SysPssStoreEntity entity, String id) {
-		return busService.findExist(id, compId, null, sin.getStoreCode(), sin.getStoreName());
+	protected List<SysPssStoreEntity> findExist(I sin, ApiKeyValues<I> params, SysPssStoreEntity entity, String id) {
+		return busService.findExist(params, sin.getStoreCode(), sin.getStoreName());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysPssStore_EXIST;
 	}
 

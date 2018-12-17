@@ -13,8 +13,6 @@ public class O {
 
 //	private String insertTime;
 
-//	private String compId;
-
 	private String storeCode;
 
 	private String storeName;

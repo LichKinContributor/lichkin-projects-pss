@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusGetOneController;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
 import com.lichkin.springframework.services.LKApiBusGetOneService;
@@ -21,7 +22,7 @@ public class C extends LKApiBusGetOneController<I, O, SysPssPurchaseStockOrderEn
 
 
 	@Override
-	protected LKApiBusGetOneService<I, O, SysPssPurchaseStockOrderEntity> getService(I cin) {
+	protected LKApiBusGetOneService<I, O, SysPssPurchaseStockOrderEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 

@@ -12,6 +12,8 @@ import com.lichkin.framework.db.beans.SysPssOtherStockOrderR;
 import com.lichkin.framework.db.beans.SysPssStorageR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssOtherStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssStorageEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -20,7 +22,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysPssOtherStockOrderEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysPssOtherStockOrderR.id);
 		sql.select(SysPssOtherStockOrderR.insertTime);
@@ -36,17 +38,17 @@ public class S extends LKApiBusGetPageService<I, O, SysPssOtherStockOrderEntity>
 		// 字典表
 		int i = 0;
 		if (orderType) {
-			LKDictUtils4Pss.storageTypeIn(sql, compId, SysPssOtherStockOrderR.storageType, i++);
+			LKDictUtils4Pss.storageTypeIn(sql, params.getCompId(), SysPssOtherStockOrderR.storageType, i++);
 		} else {
-			LKDictUtils4Pss.storageTypeOut(sql, compId, SysPssOtherStockOrderR.storageType, i++);
+			LKDictUtils4Pss.storageTypeOut(sql, params.getCompId(), SysPssOtherStockOrderR.storageType, i++);
 		}
 		LKDictUtils4Activiti.approvalStatus(sql, SysPssOtherStockOrderR.approvalStatus, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		addConditionCompId(false, sql, SysPssOtherStockOrderR.compId, compId, sin.getCompId());
-		// 在用状态
-		addConditionUsingStatus(sql, SysPssOtherStockOrderR.usingStatus, compId, sin.getUsingStatus());
+//		addConditionId(sql, SysPssOtherStockOrderR.id, params.getId());
+//		addConditionLocale(sql, SysPssOtherStockOrderR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssOtherStockOrderR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssOtherStockOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (orderType != null) {
 			sql.eq(SysPssOtherStockOrderR.orderType, orderType);

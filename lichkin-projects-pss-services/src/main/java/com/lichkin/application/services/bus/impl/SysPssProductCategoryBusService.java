@@ -2,13 +2,13 @@ package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductCategoryR;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductCategoryEntity;
 import com.lichkin.springframework.services.LKCodeService;
 import com.lichkin.springframework.services.LKDBService;
@@ -32,14 +32,13 @@ public class SysPssProductCategoryBusService extends LKDBService {
 	}
 
 
-	public List<SysPssProductCategoryEntity> findExist(String id, String compId, String busCompId, String parentCode, String categoryName) {
+	public List<SysPssProductCategoryEntity> findExist(ApiKeyValues<?> params, String parentCode, String categoryName) {
 		QuerySQL sql = new QuerySQL(false, SysPssProductCategoryEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysPssProductCategoryR.id, id);
-		}
-
-		addConditionCompId(true, sql, SysPssProductCategoryR.compId, compId, busCompId);
+		addConditionId(sql, SysPssProductCategoryR.id, params.getId());
+//		addConditionLocale(sql, SysPssProductCategoryR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysPssProductCategoryR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		sql.eq(SysPssProductCategoryR.parentCode, parentCode);
 		sql.eq(SysPssProductCategoryR.categoryName, categoryName);

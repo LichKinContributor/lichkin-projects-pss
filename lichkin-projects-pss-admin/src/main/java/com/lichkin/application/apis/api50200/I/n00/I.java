@@ -13,8 +13,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean implements SI {
 
-	private String compId;
-
 	private String billDate;
 
 	private String remarks;

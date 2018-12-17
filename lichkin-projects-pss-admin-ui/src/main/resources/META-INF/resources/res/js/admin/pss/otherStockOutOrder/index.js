@@ -10,7 +10,8 @@ var otherStockOutOrderFormPlugins = [
       options : {
         name : 'billDate',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'droplist',
@@ -96,7 +97,7 @@ var otherStockOutOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssOtherStockOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         onLinkaged : function($plugin, linkage) {
           $plugin.LKClearDatas(false, true);
         },

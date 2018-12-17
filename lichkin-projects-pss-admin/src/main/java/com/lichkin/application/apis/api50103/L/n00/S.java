@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
 import com.lichkin.framework.db.beans.SysPssPurchaseStockOrderProductR;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderProductEntity;
@@ -21,7 +22,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysPssPurchaseStockOrderProductEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		// sql.select(SysPssPurchaseStockOrderProductR.id);
 		sql.select(SysPssPurchaseStockOrderProductR.quantity);
@@ -44,6 +45,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseStockOrderProd
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
+//		addConditionId(sql, SysPssPurchaseStockOrderProductR.id, params.getId());
+//		addConditionLocale(sql, SysPssPurchaseStockOrderProductR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysPssPurchaseStockOrderProductR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysPssPurchaseStockOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String orderId = sin.getOrderId();
@@ -57,7 +62,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseStockOrderProd
 
 
 	@Override
-	protected List<O> afterQuery(I sin, String locale, String compId, String loginId, List<O> list) {
+	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
 		for (O o : list) {
 			if (sin.getIsView().equals(Boolean.TRUE)) {
 				o.setCanStockInQty(o.getPurchaseQty());
