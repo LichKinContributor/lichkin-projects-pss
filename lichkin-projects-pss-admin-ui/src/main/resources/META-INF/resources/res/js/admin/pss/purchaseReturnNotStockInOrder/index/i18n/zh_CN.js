@@ -1,5 +1,5 @@
 $.LKExtendI18N({
-  'purchaseNotOutStockReturnOrder' : {
+  'purchaseReturnNotStockInOrder' : {
     'title' : '采购未入库退货单',
 
     'grid' : {

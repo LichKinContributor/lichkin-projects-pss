@@ -16,8 +16,8 @@ import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderEntity;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
@@ -112,13 +112,13 @@ public class SysPssPurchaseOrderBusService extends LKDBService {
 	 * @param returnOrder 退货订单
 	 * @param orderProductList 产品信息
 	 */
-	public void changePurchaseOrderProductReturnedQuantity(SysPssPurchaseReturnOrderEntity returnOrder, List<SysPssPurchaseReturnOrderProductEntity> orderProductList) {
+	public void changePurchaseOrderProductReturnedQuantity(SysPssPurchaseReturnNotStockInOrderEntity returnOrder, List<SysPssPurchaseReturnNotStockInOrderProductEntity> orderProductList) {
 		// 查询采购单中的所有产品
 		QuerySQL sql = new QuerySQL(SysPssPurchaseOrderProductEntity.class);
 		sql.eq(SysPssPurchaseOrderProductR.orderId, returnOrder.getOrderId());
 		List<SysPssPurchaseOrderProductEntity> listPurchaseOrderProd = dao.getList(sql, SysPssPurchaseOrderProductEntity.class);
 
-		for (SysPssPurchaseReturnOrderProductEntity returnProd : orderProductList) {
+		for (SysPssPurchaseReturnNotStockInOrderProductEntity returnProd : orderProductList) {
 			for (SysPssPurchaseOrderProductEntity purchaseProduct : listPurchaseOrderProd) {
 				if (returnProd.getPurchaseOrderProductId().equals(purchaseProduct.getId())) {
 					purchaseProduct.setReturnedQuantity(purchaseProduct.getReturnedQuantity() + returnProd.getQuantity());

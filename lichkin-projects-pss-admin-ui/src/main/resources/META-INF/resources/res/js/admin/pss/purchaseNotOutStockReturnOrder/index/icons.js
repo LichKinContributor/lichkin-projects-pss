@@ -1,3 +1,0 @@
-$.LKExtendICON({
-  'purchaseNotOutStockReturnOrder' : 'arrow-right',
-});

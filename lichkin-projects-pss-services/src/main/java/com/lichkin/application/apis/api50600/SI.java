@@ -2,16 +2,16 @@ package com.lichkin.application.apis.api50600;
 
 import java.util.List;
 
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderProductEntity;
 
 public interface SI {
 
 	String getProductList();
 
 
-	void setListProduct(List<SysPssPurchaseReturnOrderProductEntity> listProduct);
+	void setListProduct(List<SysPssPurchaseReturnNotStockInOrderProductEntity> listProduct);
 
 
-	List<SysPssPurchaseReturnOrderProductEntity> getListProduct();
+	List<SysPssPurchaseReturnNotStockInOrderProductEntity> getListProduct();
 
 }

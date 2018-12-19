@@ -151,12 +151,11 @@
           p.PURCHASE_ORDER_PRODUCT_ID,
           sum( p.QUANTITY ) as QUANTITY
         from
-          t_sys_pss_purchase_return_order_product p
-        inner join t_sys_pss_purchase_return_order o on
+          t_sys_pss_purchase_return_not_stock_in_order_product p
+        inner join t_sys_pss_purchase_return_not_stock_in_order o on
           o.id = p.ORDER_ID
         where
-          o.ORDER_TYPE = false
-          and o.APPROVAL_STATUS != 'REJECT'
+          o.APPROVAL_STATUS != 'REJECT'
           and o.USING_STATUS != 'DEPRECATED'
           and p.PRODUCT_ID in (${productIds})
           and o.ORDER_ID <![CDATA[ = ]]> '${purchaseOrderId}'

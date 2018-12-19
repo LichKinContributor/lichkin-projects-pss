@@ -21,8 +21,6 @@ public class O {
 
 	private String remarks;
 
-	private Boolean orderType;
-
 	private String orderId;
 
 	private String supplierId;

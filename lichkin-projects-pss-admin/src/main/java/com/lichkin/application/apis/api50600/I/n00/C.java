@@ -9,20 +9,20 @@ import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusInsertController;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
 
-@RestController("SysPssPurchaseReturnOrderI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssPurchaseReturnOrder/I")
+@RestController("SysPssPurchaseReturnNotStockInOrderI00Controller")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysPssPurchaseReturnNotStockInOrder/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
-public class C extends LKApiBusInsertController<I, SysPssPurchaseReturnOrderEntity> {
+public class C extends LKApiBusInsertController<I, SysPssPurchaseReturnNotStockInOrderEntity> {
 
 	@Autowired
 	private S service;
 
 
 	@Override
-	protected LKApiBusInsertWithoutCheckerService<I, SysPssPurchaseReturnOrderEntity> getService(I cin, ApiKeyValues<I> params) {
+	protected LKApiBusInsertWithoutCheckerService<I, SysPssPurchaseReturnNotStockInOrderEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 

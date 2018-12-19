@@ -1,11 +1,5 @@
-var purchaseNotOutStockReturnOrderFormPlugins = [
+var purchaseReturnNotStockInOrderFormPlugins = [
     {
-      plugin : 'hidden',
-      options : {
-        name : 'orderType',
-        value : false
-      }
-    }, {
       plugin : 'datepicker',
       options : {
         name : 'billDate',
@@ -41,7 +35,7 @@ var purchaseNotOutStockReturnOrderFormPlugins = [
     }, {
       plugin : 'datagrid',
       options : {
-        i18nKey : 'purchaseNotOutStockReturnOrder.product-grid',
+        i18nKey : 'purchaseReturnNotStockInOrder.product-grid',
         key : 'title',
         name : 'productList',
         validator : 'datas',
@@ -52,7 +46,7 @@ var purchaseNotOutStockReturnOrderFormPlugins = [
         showSearchButton : false,
         pageable : false,
         withoutFieldKey : true,
-        url : '/SysPssPurchaseReturnOrderProduct/L',
+        url : '/SysPssPurchaseReturnNotStockInOrderProduct/L',
         lazy : true,
         $appendTo : $('body'),
         columns : [
@@ -95,7 +89,7 @@ var purchaseNotOutStockReturnOrderFormPlugins = [
                       var unitPrice = $plugin.LKGetSameNodePlugin('unitPrice').LKGetValue();
                       var quantity = currentValue;
                       $plugin.LKGetSameNodePlugin('subTotalPrice').LKSetValues((quantity * parseFloat(unitPrice)).toFixed(2));
-                      purchaseNotOutStockReturnOrderCalcTotal($plugin.parents('.lichkin-datagrid:first'));
+                      purchaseReturnNotStockInOrderCalcTotal($plugin.parents('.lichkin-datagrid:first'));
                     }
                   }
                 }
@@ -113,7 +107,7 @@ var purchaseNotOutStockReturnOrderFormPlugins = [
                       var quantity = $plugin.LKGetSameNodePlugin('quantity').LKGetValue();
                       var unitPrice = currentValue;
                       $plugin.LKGetSameNodePlugin('subTotalPrice').LKSetValues((quantity * parseFloat(unitPrice)).toFixed(2));
-                      purchaseNotOutStockReturnOrderCalcTotal($plugin.parents('.lichkin-datagrid:first'));
+                      purchaseReturnNotStockInOrderCalcTotal($plugin.parents('.lichkin-datagrid:first'));
                     }
                   }
                 }
@@ -136,7 +130,7 @@ var purchaseNotOutStockReturnOrderFormPlugins = [
         ],
         toolsRemoveData : {
           afterRemove : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
-            purchaseNotOutStockReturnOrderCalcTotal($datagrid);
+            purchaseReturnNotStockInOrderCalcTotal($datagrid);
           },
         },
       }
@@ -161,12 +155,12 @@ var purchaseNotOutStockReturnOrderFormPlugins = [
 
 LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   title : 'title',
-  icon : 'purchaseNotOutStockReturnOrder',
+  icon : 'purchaseReturnNotStockInOrder',
 } : {}), {
-  i18nKey : 'purchaseNotOutStockReturnOrder',
+  i18nKey : 'purchaseReturnNotStockInOrder',
   $appendTo : true,
   cols : 4,
-  url : '/SysPssPurchaseReturnOrder/P',
+  url : '/SysPssPurchaseReturnNotStockInOrder/P',
   columns : [
       {
         text : 'orderNo',
@@ -222,7 +216,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       sortIdx : -1,
       singleCheck : null,
       icon : 'add',
-      text : 'purchaseNotOutStockReturnOrder.grid.addFromPurchaseOrder',
+      text : 'purchaseReturnNotStockInOrder.grid.addFromPurchaseOrder',
       click : function($button, $plugin, $selecteds, selectedDatas, value, i18nKey) {
         LK.UI.openDialog($.extend({}, {
           size : {
@@ -271,7 +265,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                             formData.productList = productList;
                             if ($form.LKValidate() && productList != '[]') {
                               LK.ajax({
-                                url : '/SysPssPurchaseReturnOrder/I',
+                                url : '/SysPssPurchaseReturnNotStockInOrder/I',
                                 data : formData,
                                 showSuccess : true,
                                 success : function() {
@@ -298,7 +292,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                     ],
                     onAfterCreate : function($dialog, $contentBar) {
                       var formOptions = $.extend(true, {}, {
-                        plugins : purchaseNotOutStockReturnOrderFormPlugins
+                        plugins : purchaseReturnNotStockInOrderFormPlugins
                       }, {
                         $appendTo : $contentBar
                       });
@@ -319,9 +313,9 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                           if (responseDatas && responseDatas.length != 0) {
                             var $productList = $form.find('[name=productList]').parents('.lichkin-plugin').first();
                             $productList.LKInvokeAddDatas(responseDatas);
-                            purchaseNotOutStockReturnOrderCalcTotal($productList);
+                            purchaseReturnNotStockInOrderCalcTotal($productList);
                           } else {
-                            LK.alert('purchaseNotOutStockReturnOrder.grid.no stored products on current purchase order');
+                            LK.alert('purchaseReturnNotStockInOrder.grid.no stored products on current purchase order');
                           }
                         }
                       });
@@ -344,7 +338,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                 {
                   plugin : 'datagrid',
                   options : {
-                    i18nKey : 'purchaseNotOutStockReturnOrder.purchaseOrder-grid',
+                    i18nKey : 'purchaseReturnNotStockInOrder.purchaseOrder-grid',
                     validator : true,
                     key : 'title',
                     name : 'purchaseOrderList',
@@ -444,10 +438,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   ],
   toolsEdit : {
-    saveUrl : '/SysPssPurchaseReturnOrder/U',
+    saveUrl : '/SysPssPurchaseReturnNotStockInOrder/U',
     form : {
-      url : '/SysPssPurchaseReturnOrder/O',
-      plugins : purchaseNotOutStockReturnOrderFormPlugins
+      url : '/SysPssPurchaseReturnNotStockInOrder/O',
+      plugins : purchaseReturnNotStockInOrderFormPlugins
     },
     dialog : {
       size : {
@@ -476,16 +470,15 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       LK.UI.formUtils.changeOptions(formOptions.plugins, 'productList', false, {
         lazy : false,
         param : {
-          orderId : value,
-          orderType : false
+          orderId : value
         }
       });
     }
   },
   toolsView : {
     form : {
-      url : '/SysPssPurchaseReturnOrder/O',
-      plugins : purchaseNotOutStockReturnOrderFormPlugins
+      url : '/SysPssPurchaseReturnNotStockInOrder/O',
+      plugins : purchaseReturnNotStockInOrderFormPlugins
     },
     dialog : {
       size : {
@@ -506,7 +499,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsRemove : {
-    saveUrl : '/SysPssPurchaseReturnOrder/D',
+    saveUrl : '/SysPssPurchaseReturnNotStockInOrder/D',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
         if (selectedDatas[i].approvalStatusDictCode != 'PENDING') {
@@ -518,7 +511,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsSubmit : {
-    processCode : 'PSS_PURCHASE_NOT_OUT_STOCK_RETURN_ORDER',
+    processCode : 'PSS_PURCHASE_RETURN_NOT_STOCK_IN_ORDER',
     beforeClick : function($button, $datagrid, $selecteds, selectedDatas, value, i18nKey) {
       for (var i = 0; i < selectedDatas.length; i++) {
         if (selectedDatas[i].approvalStatusDictCode != 'PENDING') {
@@ -531,12 +524,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   },
   searchForm : [
       {
-        plugin : 'hidden',
-        options : {
-          name : 'orderType',
-          value : false
-        }
-      }, {
         plugin : 'textbox',
         options : {
           name : 'orderNo',
@@ -595,7 +582,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   ]
 }));
 
-var purchaseNotOutStockReturnOrderCalcTotal = function($productList) {
+var purchaseReturnNotStockInOrderCalcTotal = function($productList) {
   var orderAmount = 0;
   $productList.LKGetDataContainer().find('.lichkin-plugin').each(function() {
     if ($(this).LKis('subTotalPrice')) {

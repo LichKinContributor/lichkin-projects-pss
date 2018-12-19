@@ -18,17 +18,17 @@ import com.lichkin.application.mappers.impl.out.PurchaseOrderSavedStockInQtyOut;
 import com.lichkin.framework.db.beans.DeleteSQL;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
-import com.lichkin.framework.db.beans.SysPssPurchaseReturnOrderProductR;
+import com.lichkin.framework.db.beans.SysPssPurchaseReturnNotStockInOrderProductR;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
-public class SysPssPurchaseReturnOrderBusService extends LKDBService {
+public class SysPssPurchaseReturnNotStockInOrderBusService extends LKDBService {
 
 	@Autowired
 	private PssStockQtyMapper pssStockOutQtyMapper;
@@ -36,10 +36,10 @@ public class SysPssPurchaseReturnOrderBusService extends LKDBService {
 
 	public String analysisOrderAmount(SI sin) {
 		BigDecimal bdOrderAmount = new BigDecimal("0").setScale(2, RoundingMode.HALF_UP);
-		List<SysPssPurchaseReturnOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssPurchaseReturnOrderProductEntity.class);
+		List<SysPssPurchaseReturnNotStockInOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssPurchaseReturnNotStockInOrderProductEntity.class);
 		sin.setListProduct(listProduct);
 		for (int i = 0; i < listProduct.size(); i++) {
-			SysPssPurchaseReturnOrderProductEntity product = listProduct.get(i);
+			SysPssPurchaseReturnNotStockInOrderProductEntity product = listProduct.get(i);
 			product.setProductId(product.getId());
 			product.setId(null);
 			product.setSortId(i);
@@ -59,14 +59,14 @@ public class SysPssPurchaseReturnOrderBusService extends LKDBService {
 
 
 	public void clearPurchaseReturnOrderProduct(String id) {
-		DeleteSQL sql = new DeleteSQL(SysPssPurchaseReturnOrderProductEntity.class);
-		sql.eq(SysPssPurchaseReturnOrderProductR.orderId, id);
+		DeleteSQL sql = new DeleteSQL(SysPssPurchaseReturnNotStockInOrderProductEntity.class);
+		sql.eq(SysPssPurchaseReturnNotStockInOrderProductR.orderId, id);
 		dao.delete(sql);
 	}
 
 
-	public void addPurchaseReturnOrderProduct(String id, List<SysPssPurchaseReturnOrderProductEntity> listProduct) {
-		for (SysPssPurchaseReturnOrderProductEntity product : listProduct) {
+	public void addPurchaseReturnOrderProduct(String id, List<SysPssPurchaseReturnNotStockInOrderProductEntity> listProduct) {
+		for (SysPssPurchaseReturnNotStockInOrderProductEntity product : listProduct) {
 			product.setOrderId(id);
 		}
 		dao.persistList(listProduct);
@@ -90,7 +90,7 @@ public class SysPssPurchaseReturnOrderBusService extends LKDBService {
 
 		// 采购退货单填写的产品退货数量
 		List<SysPssProductEntity> listProd = LKJsonUtils.toList(productList, SysPssProductEntity.class);
-		List<SysPssPurchaseReturnOrderProductEntity> listPurchaseReturnProduct = LKJsonUtils.toList(productList, SysPssPurchaseReturnOrderProductEntity.class);
+		List<SysPssPurchaseReturnNotStockInOrderProductEntity> listPurchaseReturnProduct = LKJsonUtils.toList(productList, SysPssPurchaseReturnNotStockInOrderProductEntity.class);
 
 		StringBuffer prodIds = new StringBuffer();
 
@@ -101,10 +101,9 @@ public class SysPssPurchaseReturnOrderBusService extends LKDBService {
 			SysPssProductEntity prod = listProd.get(i);
 
 			// 设置产品名称
-			for (SysPssPurchaseReturnOrderProductEntity purchaseReturnOrderProd : listPurchaseReturnProduct) {
+			for (SysPssPurchaseReturnNotStockInOrderProductEntity purchaseReturnOrderProd : listPurchaseReturnProduct) {
 				if (purchaseReturnOrderProd.getId().equals(prod.getId())) {
 					prodInfoMap.put(purchaseReturnOrderProd.getPurchaseOrderProductId(), prod.getProductName());
-					break;
 				}
 			}
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.lichkin.application.apis.api50600.SI;
 import com.lichkin.framework.beans.impl.LKRequestIDBean;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderProductEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +19,6 @@ public class I extends LKRequestIDBean implements SI {
 	private String productList;
 
 	/** 产品列表 */
-	private List<SysPssPurchaseReturnOrderProductEntity> listProduct;
+	private List<SysPssPurchaseReturnNotStockInOrderProductEntity> listProduct;
 
 }

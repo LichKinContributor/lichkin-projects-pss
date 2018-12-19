@@ -5,7 +5,7 @@ import java.util.List;
 import com.lichkin.application.apis.api50600.SI;
 import com.lichkin.framework.beans.impl.LKRequestBean;
 import com.lichkin.framework.defines.entities.I_CompId;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderProductEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +13,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class I extends LKRequestBean implements SI, I_CompId {
-
-	private Boolean orderType;
 
 	private String orderId;
 
@@ -32,6 +30,6 @@ public class I extends LKRequestBean implements SI, I_CompId {
 	private String productList;
 
 	/** 产品列表 */
-	private List<SysPssPurchaseReturnOrderProductEntity> listProduct;
+	private List<SysPssPurchaseReturnNotStockInOrderProductEntity> listProduct;
 
 }

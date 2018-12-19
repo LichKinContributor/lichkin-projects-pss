@@ -20,8 +20,6 @@ public class I extends LKRequestPageBean implements I_CompId {
 
 	private String orderNo;
 
-	private Boolean orderType;
-
 	/** 采购订单号 */
 	private String purchaseOrderNo;
 

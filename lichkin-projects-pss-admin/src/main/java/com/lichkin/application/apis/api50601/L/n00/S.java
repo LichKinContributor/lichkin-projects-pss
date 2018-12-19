@@ -11,31 +11,31 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysPssProductR;
 import com.lichkin.framework.db.beans.SysPssPurchaseOrderProductR;
-import com.lichkin.framework.db.beans.SysPssPurchaseReturnOrderProductR;
+import com.lichkin.framework.db.beans.SysPssPurchaseReturnNotStockInOrderProductR;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysPssProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssPurchaseOrderProductEntity;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnNotStockInOrderProductEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
-@Service("SysPssPurchaseReturnOrderProductL00Service")
-public class S extends LKApiBusGetListService<I, O, SysPssPurchaseReturnOrderProductEntity> {
+@Service("SysPssPurchaseReturnNotStockInOrderProductL00Service")
+public class S extends LKApiBusGetListService<I, O, SysPssPurchaseReturnNotStockInOrderProductEntity> {
 
 	@Override
 	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
-		// sql.select(SysPssPurchaseReturnOrderProductR.id);
-		sql.select(SysPssPurchaseReturnOrderProductR.quantity);
+		// sql.select(SysPssPurchaseReturnNotStockInOrderProductR.id);
+		sql.select(SysPssPurchaseReturnNotStockInOrderProductR.quantity);
 
 		// 关联表
-		sql.innerJoin(SysPssPurchaseOrderProductEntity.class, new Condition(SysPssPurchaseReturnOrderProductR.purchaseOrderProductId, SysPssPurchaseOrderProductR.id));
+		sql.innerJoin(SysPssPurchaseOrderProductEntity.class, new Condition(SysPssPurchaseReturnNotStockInOrderProductR.purchaseOrderProductId, SysPssPurchaseOrderProductR.id));
 		sql.select(SysPssPurchaseOrderProductR.id, "purchaseOrderProductId");
 		sql.select(SysPssPurchaseOrderProductR.quantity, "purchaseQty");
 		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
 		sql.select(SysPssPurchaseOrderProductR.returnedQuantity);
 		sql.select(SysPssPurchaseOrderProductR.unitPrice);
 
-		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssPurchaseReturnOrderProductR.productId));
+		sql.innerJoin(SysPssProductEntity.class, new Condition(SysPssProductR.id, SysPssPurchaseReturnNotStockInOrderProductR.productId));
 		sql.select(SysPssProductR.id);
 		sql.select(SysPssProductR.productCode);
 		sql.select(SysPssProductR.productName);
@@ -46,19 +46,19 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseReturnOrderPro
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-		// addConditionId(sql, SysPssPurchaseReturnOrderProductR.id, params.getId());
-		// addConditionLocale(sql, SysPssPurchaseReturnOrderProductR.locale, params.getLocale());
-		// addConditionCompId(true, sql, SysPssPurchaseReturnOrderProductR.compId, params.getCompId(), params.getBusCompId());
-		// addConditionUsingStatus(true,params.getCompId(), sql, SysPssPurchaseReturnOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		// addConditionId(sql, SysPssPurchaseReturnNotStockInOrderProductR.id, params.getId());
+		// addConditionLocale(sql, SysPssPurchaseReturnNotStockInOrderProductR.locale, params.getLocale());
+		// addConditionCompId(true, sql, SysPssPurchaseReturnNotStockInOrderProductR.compId, params.getCompId(), params.getBusCompId());
+		// addConditionUsingStatus(true,params.getCompId(), sql, SysPssPurchaseReturnNotStockInOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String orderId = sin.getOrderId();
 		if (StringUtils.isNotBlank(orderId)) {
-			sql.eq(SysPssPurchaseReturnOrderProductR.orderId, orderId);
+			sql.eq(SysPssPurchaseReturnNotStockInOrderProductR.orderId, orderId);
 		}
 
 		// 排序条件
-		sql.addOrders(new Order(SysPssPurchaseReturnOrderProductR.sortId));
+		sql.addOrders(new Order(SysPssPurchaseReturnNotStockInOrderProductR.sortId));
 	}
 
 
