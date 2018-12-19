@@ -53,6 +53,7 @@ $.LKExtendI18N({
         'unitPrice' : '单价',
         'purchaseQty' : '采购数量',
         'inventoryQuantity' : '已入库数量',
+        'returnedQuantity' : '已退货数量',
         'quantity' : '数量',
         'product' : '选择产品',
       },

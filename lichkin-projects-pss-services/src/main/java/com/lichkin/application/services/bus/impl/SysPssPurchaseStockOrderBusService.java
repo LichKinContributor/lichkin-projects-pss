@@ -68,58 +68,58 @@ public class SysPssPurchaseStockOrderBusService extends LKDBService {
 		QuerySQL sql = new QuerySQL(SysPssPurchaseOrderProductEntity.class);
 		sql.eq(SysPssPurchaseOrderProductR.orderId, purchaseOrderId);
 		List<SysPssPurchaseOrderProductEntity> listPurchaseOrderProd = dao.getList(sql, SysPssPurchaseOrderProductEntity.class);
-		// 采购单产品数量（按照产品ID合并数量）
-		Map<String, Integer> purchaseProdQtyMap = listPurchaseOrderProd.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+		// 采购单产品数量
+		Map<String, Integer> purchaseProdQtyMap = listPurchaseOrderProd.stream().collect(Collectors.toMap(o -> o.getId(), o -> o.getQuantity()));
 
+		// 采购入库单填写的产品入库数量
 		List<SysPssProductEntity> listProd = LKJsonUtils.toList(productList, SysPssProductEntity.class);
+		List<SysPssPurchaseStockOrderProductEntity> listPurchaseStockProduct = LKJsonUtils.toList(productList, SysPssPurchaseStockOrderProductEntity.class);
 
 		StringBuffer prodIds = new StringBuffer();
 
+		// 采购单产品Id->产品名称
 		Map<String, String> prodInfoMap = new HashMap<>();
-		// 判断产品是否在采购单中
+
 		for (int i = 0; i < listProd.size(); i++) {
 			SysPssProductEntity prod = listProd.get(i);
 
-			prodInfoMap.put(prod.getId(), prod.getProductName());
+			// 设置产品名称
+			for (SysPssPurchaseStockOrderProductEntity purchaseStockOrderProd : listPurchaseStockProduct) {
+				if (purchaseStockOrderProd.getId().equals(prod.getId())) {
+					prodInfoMap.put(purchaseStockOrderProd.getPurchaseOrderProductId(), prod.getProductName());
+					break;
+				}
+			}
 
 			prodIds.append("'" + prod.getId() + "'");
 			if (i < (listProd.size() - 1)) {
 				prodIds.append(",");
 			}
 
-			// 产品不存在
-			if (purchaseProdQtyMap.get(prod.getId()) == null) {
-				errorMsg += prod.getProductName() + ";";
-			}
-		}
-		if (StringUtils.isNotBlank(errorMsg)) {
-			return errorMsg + "不在当前采购单中。";
 		}
 
-		// 采购单已填写的入库数量
+		// 采购单已填写的入库、退货数量
 		List<PurchaseOrderSavedStockInQtyOut> listPurchaseProdStockInQty = pssStockOutQtyMapper.findPurchaseOrderSavedStockInQty(new PurchaseOrderSavedStockInQtyIn(prodIds.toString(), purchaseOrderId, id));
-		Map<String, Integer> purchaseProdStockInQtyMap = listPurchaseProdStockInQty.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+		Map<String, Integer> purchaseProdStockInQtyMap = listPurchaseProdStockInQty.stream().collect(Collectors.groupingBy(o -> o.getPurchaseOrderProductId(), Collectors.summingInt(o -> o.getQuantity())));
 
-		// 采购入库单填写的产品入库数量
-		List<SysPssPurchaseStockOrderProductEntity> listPurchaseStockProduct = LKJsonUtils.toList(productList, SysPssPurchaseStockOrderProductEntity.class);
 		// 按照产品ID合并数量
-		Map<String, Integer> purchaseStockInProdQtyMap = listPurchaseStockProduct.stream().collect(Collectors.groupingBy(o -> o.getId(), Collectors.summingInt(o -> o.getQuantity())));
+		Map<String, Integer> purchaseStockInProdQtyMap = listPurchaseStockProduct.stream().collect(Collectors.groupingBy(o -> o.getPurchaseOrderProductId(), Collectors.summingInt(o -> o.getQuantity())));
 
 		// 判断产品入库数量是否超出采购数量
 		for (Map.Entry<String, Integer> entry : purchaseStockInProdQtyMap.entrySet()) {
-			String prodId = entry.getKey();
+			String purchaseOrderProductId = entry.getKey();
 			// 填写数量
 			Integer productQty = entry.getValue();
 			// 采购数量
-			Integer purchaseProdQty = purchaseProdQtyMap.get(prodId);
-			// 已填写的入库数量
-			Integer purchaseProdStockInQty = purchaseProdStockInQtyMap.get(prodId);
+			Integer purchaseProdQty = purchaseProdQtyMap.get(purchaseOrderProductId);
+			// 已填写的数量
+			Integer purchaseProdStockInQty = purchaseProdStockInQtyMap.get(purchaseOrderProductId);
 
 			if (purchaseProdStockInQty == null) {
 				purchaseProdStockInQty = 0;
 			}
 			if (productQty > (purchaseProdQty - purchaseProdStockInQty)) {
-				errorMsg += prodInfoMap.get(prodId) + ";";
+				errorMsg += prodInfoMap.get(purchaseOrderProductId) + ";";
 			}
 		}
 		if (StringUtils.isNotBlank(errorMsg)) {

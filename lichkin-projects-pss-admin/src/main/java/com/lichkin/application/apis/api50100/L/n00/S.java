@@ -35,6 +35,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderEntity> {
 
 		// 关联表
 		sql.innerJoin(SysPssSupplierEntity.class, new Condition(SysPssPurchaseOrderR.supplierId, SysPssSupplierR.id));
+		sql.select(SysPssSupplierR.id, "supplierId");
 		sql.select(SysPssSupplierR.supplierName);
 		sql.innerJoin(SysEmployeeEntity.class, new Condition(SysPssPurchaseOrderR.purchaserId, SysEmployeeR.id));
 		sql.select(SysEmployeeR.userName, "purchaserName");
@@ -44,10 +45,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderEntity> {
 		LKDictUtils4Pss.inventoryStatus(sql, SysPssPurchaseOrderR.inventoryStatus, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
-//		addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
+		// addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
+		// addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssPurchaseOrderR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		sql.eq(SysPssPurchaseOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);

@@ -45,7 +45,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssAllotOrderEntity> {
 //		addConditionId(sql, SysPssAllotOrderR.id, params.getId());
 //		addConditionLocale(sql, SysPssAllotOrderR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssAllotOrderR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssAllotOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true,params.getCompId(), sql, SysPssAllotOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		ApprovalStatusEnum approvalStatus = sin.getApprovalStatus();

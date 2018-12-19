@@ -46,7 +46,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStoreEntity> {
 //		addConditionId(sql, SysPssStoreR.id, params.getId());
 //		addConditionLocale(sql, SysPssStoreR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStoreR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssStoreR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStoreR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String storeCode = sin.getStoreCode();

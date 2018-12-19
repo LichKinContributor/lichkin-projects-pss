@@ -21,12 +21,6 @@ public class S extends LKApiBusDeleteService<I, SysPssPurchaseOrderEntity> {
 	}
 
 
-	@Override
-	protected boolean realDelete(I sin, ApiKeyValues<I> params) {
-		return true;
-	}
-
-
 	@Autowired
 	private SysPssPurchaseOrderBusService busService;
 

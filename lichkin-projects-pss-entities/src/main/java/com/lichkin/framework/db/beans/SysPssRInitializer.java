@@ -104,8 +104,9 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50101003", "SysPssPurchaseOrderProductEntity", "quantity");
 		LKDBResource.addColumn("50101004", "SysPssPurchaseOrderProductEntity", "sortId");
 		LKDBResource.addColumn("50101005", "SysPssPurchaseOrderProductEntity", "inventoryQuantity");
-		LKDBResource.addColumn("50101006", "SysPssPurchaseOrderProductEntity", "unitPrice");
-		LKDBResource.addColumn("50101007", "SysPssPurchaseOrderProductEntity", "subTotalPrice");
+		LKDBResource.addColumn("50101006", "SysPssPurchaseOrderProductEntity", "returnedQuantity");
+		LKDBResource.addColumn("50101007", "SysPssPurchaseOrderProductEntity", "unitPrice");
+		LKDBResource.addColumn("50101008", "SysPssPurchaseOrderProductEntity", "subTotalPrice");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssPurchaseStockOrderEntity", "T_SYS_PSS_PURCHASE_STOCK_ORDER", "SysPssPurchaseStockOrderEntity");
 		LKDBResource.addColumn("50102000", "SysPssPurchaseStockOrderEntity", "id");
 		LKDBResource.addColumn("50102001", "SysPssPurchaseStockOrderEntity", "usingStatus");
@@ -229,6 +230,32 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50501004", "SysPssStockCheckOrderProductEntity", "sortId");
 		LKDBResource.addColumn("50501005", "SysPssStockCheckOrderProductEntity", "stockQuantity");
 		LKDBResource.addColumn("50501006", "SysPssStockCheckOrderProductEntity", "differenceQuantity");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderEntity", "T_SYS_PSS_PURCHASE_RETURN_ORDER", "SysPssPurchaseReturnOrderEntity");
+		LKDBResource.addColumn("50600000", "SysPssPurchaseReturnOrderEntity", "id");
+		LKDBResource.addColumn("50600001", "SysPssPurchaseReturnOrderEntity", "usingStatus");
+		LKDBResource.addColumn("50600002", "SysPssPurchaseReturnOrderEntity", "insertTime");
+		LKDBResource.addColumn("50600003", "SysPssPurchaseReturnOrderEntity", "compId");
+		LKDBResource.addColumn("50600004", "SysPssPurchaseReturnOrderEntity", "approvalStatus");
+		LKDBResource.addColumn("50600005", "SysPssPurchaseReturnOrderEntity", "approvalTime");
+		LKDBResource.addColumn("50600006", "SysPssPurchaseReturnOrderEntity", "orderNo");
+		LKDBResource.addColumn("50600007", "SysPssPurchaseReturnOrderEntity", "billDate");
+		LKDBResource.addColumn("50600008", "SysPssPurchaseReturnOrderEntity", "remarks");
+		LKDBResource.addColumn("50600009", "SysPssPurchaseReturnOrderEntity", "supplierId");
+		LKDBResource.addColumn("50600010", "SysPssPurchaseReturnOrderEntity", "purchaserId");
+		LKDBResource.addColumn("50600011", "SysPssPurchaseReturnOrderEntity", "orderAmount");
+		LKDBResource.addColumn("50600012", "SysPssPurchaseReturnOrderEntity", "orderType");
+		LKDBResource.addColumn("50600013", "SysPssPurchaseReturnOrderEntity", "orderId");
+		LKDBResource.addColumn("50600014", "SysPssPurchaseReturnOrderEntity", "inventoryStatus");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssPurchaseReturnOrderProductEntity", "T_SYS_PSS_PURCHASE_RETURN_ORDER_PRODUCT", "SysPssPurchaseReturnOrderProductEntity");
+		LKDBResource.addColumn("50601000", "SysPssPurchaseReturnOrderProductEntity", "id");
+		LKDBResource.addColumn("50601001", "SysPssPurchaseReturnOrderProductEntity", "orderId");
+		LKDBResource.addColumn("50601002", "SysPssPurchaseReturnOrderProductEntity", "productId");
+		LKDBResource.addColumn("50601003", "SysPssPurchaseReturnOrderProductEntity", "quantity");
+		LKDBResource.addColumn("50601004", "SysPssPurchaseReturnOrderProductEntity", "sortId");
+		LKDBResource.addColumn("50601005", "SysPssPurchaseReturnOrderProductEntity", "purchaseOrderProductId");
+		LKDBResource.addColumn("50601006", "SysPssPurchaseReturnOrderProductEntity", "inventoryQuantity");
+		LKDBResource.addColumn("50601007", "SysPssPurchaseReturnOrderProductEntity", "unitPrice");
+		LKDBResource.addColumn("50601008", "SysPssPurchaseReturnOrderProductEntity", "subTotalPrice");
 	}
 
 }

@@ -22,7 +22,7 @@ public class SysPssSupplierBusService extends LKDBService {
 		addConditionId(sql, SysPssSupplierR.id, params.getId());
 //		addConditionLocale(sql, SysPssSupplierR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssSupplierR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(supplierCode)) {
 			sql.eq(SysPssSupplierR.supplierName, supplierName);

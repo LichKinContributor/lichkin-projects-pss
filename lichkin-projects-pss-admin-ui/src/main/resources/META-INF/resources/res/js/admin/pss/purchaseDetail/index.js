@@ -48,6 +48,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         name : 'inventoryQuantity',
         width : 80
       }, {
+        text : 'returnedQuantity',
+        name : 'returnedQuantity',
+        width : 80
+      }, {
         text : 'unitPrice',
         name : 'unitPrice',
         width : 80

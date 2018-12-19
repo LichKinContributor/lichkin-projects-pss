@@ -34,7 +34,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStoreCashierEntity> {
 //		addConditionId(sql, SysPssStoreCashierR.id, params.getId());
 //		addConditionLocale(sql, SysPssStoreCashierR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStoreCashierR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(params.getCompId(), sql, SysPssStoreCashierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStoreCashierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String cashierName = sin.getCashierName();

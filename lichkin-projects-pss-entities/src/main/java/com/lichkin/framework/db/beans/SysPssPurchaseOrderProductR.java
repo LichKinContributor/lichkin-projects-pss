@@ -18,8 +18,10 @@ public interface SysPssPurchaseOrderProductR {
 
 	public static final int inventoryQuantity = 0x50101005;
 
-	public static final int unitPrice = 0x50101006;
+	public static final int returnedQuantity = 0x50101006;
 
-	public static final int subTotalPrice = 0x50101007;
+	public static final int unitPrice = 0x50101007;
+
+	public static final int subTotalPrice = 0x50101008;
 
 }

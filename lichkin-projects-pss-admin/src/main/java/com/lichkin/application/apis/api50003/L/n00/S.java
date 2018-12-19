@@ -45,7 +45,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssProductEntity> {
 //		addConditionId(sql, SysPssProductR.id, params.getId());
 //		addConditionLocale(sql, SysPssProductR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssProductR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true,params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String productCategory = sin.getProductCategory();

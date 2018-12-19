@@ -42,7 +42,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 //		addConditionId(sql, SysPssSellOrderProductR.id, params.getId());
 //		addConditionLocale(sql, SysPssSellOrderProductR.locale, params.getLocale());
 //		addConditionCompId(true, sql, SysPssSellOrderProductR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		sql.lt_(SysPssSellOrderProductR.inventoryQuantity, SysPssSellOrderProductR.quantity);

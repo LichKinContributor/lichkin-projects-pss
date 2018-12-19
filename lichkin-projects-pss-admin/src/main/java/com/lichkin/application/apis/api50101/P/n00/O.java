@@ -11,6 +11,8 @@ public class O {
 
 	private int quantity;
 
+	private int returnedQuantity;
+
 	private int inventoryQuantity;
 
 	private String unitPrice;

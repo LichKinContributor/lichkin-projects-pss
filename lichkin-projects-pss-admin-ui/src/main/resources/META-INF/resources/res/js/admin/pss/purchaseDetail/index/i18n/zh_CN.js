@@ -16,6 +16,7 @@ $.LKExtendI18N({
         'unit' : '单位',
         'quantity' : '采购数量',
         'inventoryQuantity' : '入库数量',
+        'returnedQuantity' : '退货数量',
         'unitPrice' : '单价（元）',
         'subTotalPrice' : '总价（元）',
         'startDate' : '订单开始日期',

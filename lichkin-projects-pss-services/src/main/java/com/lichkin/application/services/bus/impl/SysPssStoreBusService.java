@@ -22,7 +22,7 @@ public class SysPssStoreBusService extends LKDBService {
 		addConditionId(sql, SysPssStoreR.id, params.getId());
 //		addConditionLocale(sql, SysPssStoreR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStoreR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(params.getCompId(), sql, SysPssStoreR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStoreR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(storeCode)) {
 			sql.eq(SysPssStoreR.storeName, storeName);

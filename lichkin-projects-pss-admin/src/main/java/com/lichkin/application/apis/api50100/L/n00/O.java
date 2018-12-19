@@ -23,6 +23,9 @@ public class O {
 
 	private String inventoryStatusDictCode;// for inventoryStatus
 
+	/** 供应商ID */
+	private String supplierId;
+
 	/** 供应商名称 */
 	private String supplierName;
 

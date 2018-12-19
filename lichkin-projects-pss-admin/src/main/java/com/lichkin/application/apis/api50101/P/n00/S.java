@@ -33,6 +33,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseOrderProductEn
 		sql.select(SysPssPurchaseOrderProductR.id);
 		sql.select(SysPssPurchaseOrderProductR.quantity);
 		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
+		sql.select(SysPssPurchaseOrderProductR.returnedQuantity);
 		sql.select(SysPssPurchaseOrderProductR.unitPrice);
 		sql.select(SysPssPurchaseOrderProductR.subTotalPrice);
 
@@ -56,10 +57,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseOrderProductEn
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
-//		addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
+		// addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
+		// addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssPurchaseOrderR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 		// 审核状态
 		sql.eq(SysPssPurchaseOrderR.approvalStatus, ApprovalStatusEnum.APPROVED);
 

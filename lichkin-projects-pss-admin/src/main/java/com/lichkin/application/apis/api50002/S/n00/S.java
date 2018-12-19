@@ -32,7 +32,7 @@ public class S extends LKApiBusGetListService<I, SysPssProductCategoryEntity, Sy
 //		addConditionId(sql, SysPssProductCategoryR.id, params.getId());
 //		addConditionLocale(sql, SysPssProductCategoryR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssProductCategoryR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true,params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		if (StringUtils.isNotBlank(sin.getCategoryName())) {
@@ -66,7 +66,7 @@ public class S extends LKApiBusGetListService<I, SysPssProductCategoryEntity, Sy
 //			addConditionId(sql, SysPssProductCategoryR.id, params.getId());
 //			addConditionLocale(sql, SysPssProductCategoryR.locale, params.getLocale());
 			addConditionCompId(true, sql, SysPssProductCategoryR.compId, params.getCompId(), params.getBusCompId());
-			addConditionUsingStatus(params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+			addConditionUsingStatus(true,params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 			// 筛选条件（业务项）
 			sql.in(SysPssProductCategoryR.categoryCode, codeList);

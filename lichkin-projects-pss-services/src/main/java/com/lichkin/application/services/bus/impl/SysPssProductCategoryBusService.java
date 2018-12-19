@@ -38,7 +38,7 @@ public class SysPssProductCategoryBusService extends LKDBService {
 		addConditionId(sql, SysPssProductCategoryR.id, params.getId());
 //		addConditionLocale(sql, SysPssProductCategoryR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssProductCategoryR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssProductCategoryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		sql.eq(SysPssProductCategoryR.parentCode, parentCode);
 		sql.eq(SysPssProductCategoryR.categoryName, categoryName);

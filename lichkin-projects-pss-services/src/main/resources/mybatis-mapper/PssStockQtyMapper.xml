@@ -111,57 +111,62 @@
     	PRODUCT_ID
   </select>
   
-  <resultMap id="PssPurchaseStockInQtyOutResultMap" type="com.lichkin.application.mappers.impl.out.PssPurchaseStockInQtyOut"> 
-    <result column="STORAGE_ID" property="storageId" jdbcType="VARCHAR" />
-    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
-    <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
-  </resultMap>
-   
-  <!-- 查询单个采购单实际已经入库的数量（订单审核通过） -->
-  <select id="findPurchaseStockInQty" parameterType="com.lichkin.application.mappers.impl.in.PssPurchaseStockInQtyIn" resultMap="PssPurchaseStockInQtyOutResultMap">
-    select
-      o.STORAGE_ID,
-      p.PRODUCT_ID,
-      sum( p.QUANTITY ) as QUANTITY
-    from
-      t_sys_pss_purchase_stock_order_product p
-    inner join t_sys_pss_purchase_stock_order o on
-      o.id = p.ORDER_ID
-    where
-      o.ORDER_TYPE = true
-      and o.APPROVAL_STATUS = 'APPROVED'
-      and o.USING_STATUS = 'USING'
-      and o.STORAGE_ID in (${storageIds})
-      and p.PRODUCT_ID in (${productIds})
-      and o.ORDER_ID <![CDATA[ = ]]> '${orderId}'
-    group by
-      o.STORAGE_ID,
-      p.PRODUCT_ID
-  </select>
-  
   <resultMap id="PurchaseOrderSavedStockInQtyOutResultMap" type="com.lichkin.application.mappers.impl.out.PurchaseOrderSavedStockInQtyOut"> 
-    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_ORDER_PRODUCT_ID" property="purchaseOrderProductId" jdbcType="VARCHAR" />
     <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
   </resultMap>
    
-  <!-- 查询单个采购入库单已经填写的入库数据（订单非驳回 非删除状态） -->
+  <!-- 查询单个采购入库单已经填写的入库、退货数据（订单非驳回 非删除状态） -->
   <select id="findPurchaseOrderSavedStockInQty" parameterType="com.lichkin.application.mappers.impl.in.PurchaseOrderSavedStockInQtyIn" resultMap="PurchaseOrderSavedStockInQtyOutResultMap">
-    select
-    	p.PRODUCT_ID,
-    	sum( p.QUANTITY ) as QUANTITY
-    from
-    	t_sys_pss_purchase_stock_order_product p
-    inner join t_sys_pss_purchase_stock_order o on
-    	o.id = p.ORDER_ID
-    where
-    	o.ORDER_TYPE = true
-    	and o.APPROVAL_STATUS != 'REJECT'
-    	and o.USING_STATUS != 'DEPRECATED'
-    	and p.PRODUCT_ID in (${productIds})
-    	and o.ORDER_ID <![CDATA[ = ]]> '${purchaseOrderId}'
-    	and o.id <![CDATA[ != ]]> '${orderId}'
-    group by
-    	p.PRODUCT_ID
+  select
+    PURCHASE_ORDER_PRODUCT_ID,
+    sum( QUANTITY ) as QUANTITY
+  from
+    (
+      select
+        *
+      from
+        (
+          /** 采购单已经填写的入库数量 */
+          select
+            p.PURCHASE_ORDER_PRODUCT_ID,
+            sum( p.QUANTITY ) as QUANTITY
+          from
+            t_sys_pss_purchase_stock_order_product p
+          inner join t_sys_pss_purchase_stock_order o on
+            o.id = p.ORDER_ID
+          where
+            o.ORDER_TYPE = true
+            and o.APPROVAL_STATUS != 'REJECT'
+            and o.USING_STATUS != 'DEPRECATED'
+            and p.PRODUCT_ID in (${productIds})
+            and o.ORDER_ID <![CDATA[ = ]]> '${purchaseOrderId}'
+            and o.id <![CDATA[ != ]]> '${orderId}'
+          group by
+            p.PURCHASE_ORDER_PRODUCT_ID
+        ) p
+    union all(
+        /** 采购单已经填写的退货数量 */
+        select
+          p.PURCHASE_ORDER_PRODUCT_ID,
+          sum( p.QUANTITY ) as QUANTITY
+        from
+          t_sys_pss_purchase_return_order_product p
+        inner join t_sys_pss_purchase_return_order o on
+          o.id = p.ORDER_ID
+        where
+          o.ORDER_TYPE = false
+          and o.APPROVAL_STATUS != 'REJECT'
+          and o.USING_STATUS != 'DEPRECATED'
+          and p.PRODUCT_ID in (${productIds})
+          and o.ORDER_ID <![CDATA[ = ]]> '${purchaseOrderId}'
+          and o.id <![CDATA[ != ]]> '${orderId}'
+        group by
+          p.PURCHASE_ORDER_PRODUCT_ID
+      )
+    ) t
+  group by
+    PURCHASE_ORDER_PRODUCT_ID
   </select>
   
     

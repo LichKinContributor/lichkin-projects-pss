@@ -26,12 +26,6 @@ public class S extends LKApiBusDeleteService<I, SysPssSellOrderEntity> {
 
 
 	@Override
-	protected boolean realDelete(I sin, ApiKeyValues<I> params) {
-		return true;
-	}
-
-
-	@Override
 	protected void beforeRealDelete(I sin, ApiKeyValues<I> params, SysPssSellOrderEntity entity, String id) {
 		ApprovalStatusEnum approvalStatus = entity.getApprovalStatus();
 		switch (approvalStatus) {

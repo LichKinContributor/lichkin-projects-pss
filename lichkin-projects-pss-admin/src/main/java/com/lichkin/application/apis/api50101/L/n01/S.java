@@ -25,6 +25,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		sql.select(SysPssPurchaseOrderProductR.id, "purchaseOrderProductId");
 		sql.select(SysPssPurchaseOrderProductR.quantity, "purchaseQty");
 		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
+		sql.select(SysPssPurchaseOrderProductR.returnedQuantity);
 		sql.select(SysPssPurchaseOrderProductR.unitPrice);
 
 		// 关联表
@@ -39,18 +40,16 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssPurchaseOrderProductR.id, params.getId());
-//		addConditionLocale(sql, SysPssPurchaseOrderProductR.locale, params.getLocale());
-//		addConditionCompId(true, sql, SysPssPurchaseOrderProductR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		// addConditionId(sql, SysPssPurchaseOrderProductR.id, params.getId());
+		// addConditionLocale(sql, SysPssPurchaseOrderProductR.locale, params.getLocale());
+		// addConditionCompId(true, sql, SysPssPurchaseOrderProductR.compId, params.getCompId(), params.getBusCompId());
+		// addConditionUsingStatus(true,params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		sql.eq(SysPssPurchaseOrderProductR.orderId, sin.getOrderId());
 
 		// 筛选条件（业务项）
 		sql.lt_(SysPssPurchaseOrderProductR.inventoryQuantity, SysPssPurchaseOrderProductR.quantity);
+		sql.lt_(SysPssPurchaseOrderProductR.returnedQuantity, SysPssPurchaseOrderProductR.quantity);
 
-		String orderId = sin.getOrderId();
-		if (StringUtils.isNotBlank(orderId)) {
-			sql.eq(SysPssPurchaseOrderProductR.orderId, orderId);
-		}
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
 			sql.eq(SysPssProductR.barcode, barcode);
@@ -67,8 +66,14 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 
 	@Override
 	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
-		for (O o : list) {
-			o.setCanStockInQty(o.getPurchaseQty() - o.getInventoryQuantity());
+		for (int i = list.size() - 1; i >= 0; i--) {
+			O o = list.get(i);
+			int leftQty = o.getPurchaseQty() - o.getInventoryQuantity() - o.getReturnedQuantity();
+			if (leftQty == 0) {
+				list.remove(i);
+				continue;
+			}
+			o.setCanStockInQty(leftQty);
 		}
 		return list;
 	}

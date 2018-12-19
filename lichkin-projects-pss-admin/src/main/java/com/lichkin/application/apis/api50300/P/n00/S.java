@@ -48,7 +48,7 @@ public class S extends LKApiBusGetPageService<I, O, SysPssOtherStockOrderEntity>
 //		addConditionId(sql, SysPssOtherStockOrderR.id, params.getId());
 //		addConditionLocale(sql, SysPssOtherStockOrderR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssOtherStockOrderR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(params.getCompId(), sql, SysPssOtherStockOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true,params.getCompId(), sql, SysPssOtherStockOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (orderType != null) {
 			sql.eq(SysPssOtherStockOrderR.orderType, orderType);

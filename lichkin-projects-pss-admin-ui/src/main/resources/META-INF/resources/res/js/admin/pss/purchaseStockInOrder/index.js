@@ -50,7 +50,7 @@ var purchaseStockInOrderFormPlugins = [
         columns : [
             {
               text : 'productCode',
-              width : 200,
+              width : 160,
               name : 'productCode'
             }, {
               text : 'productName',
@@ -72,6 +72,10 @@ var purchaseStockInOrderFormPlugins = [
               text : 'inventoryQuantity',
               width : 80,
               name : 'inventoryQuantity'
+            }, {
+              text : 'returnedQuantity',
+              width : 80,
+              name : 'returnedQuantity'
             }, {
               text : 'quantity',
               width : 70,
