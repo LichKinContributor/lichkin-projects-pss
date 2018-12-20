@@ -41,16 +41,17 @@ public class S extends LKApiBusGetListService<I, O, SysPssStockEntity> {
 		sql.select(SysPssProductR.productCode);
 		sql.select(SysPssProductR.productName);
 		sql.select(SysPssProductR.barcode);
+		sql.select(SysPssProductR.purchasePrice, "unitPrice");
 
 		// 字典表
 		int i = 0;
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssStockR.id, params.getId());
-//		addConditionLocale(sql, SysPssStockR.locale, params.getLocale());
+		// addConditionId(sql, SysPssStockR.id, params.getId());
+		// addConditionLocale(sql, SysPssStockR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStockR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStockR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		// addConditionUsingStatus(true,params.getCompId(), sql, SysPssStockR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		sql.eq(SysPssStockR.storageId, sin.getStorageId());

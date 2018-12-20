@@ -52,6 +52,11 @@ public class SysPssSellOrderProductEntity extends PssOrderProductEntity {
 	@Column(nullable = false)
 	private int inventoryQuantity;
 
+	/** 已退货数量 */
+	@FieldGenerator(resultColumn = true)
+	@Column(nullable = false)
+	private int returnedQuantity;
+
 	/** 单价 */
 	@FieldGenerator(resultColumn = true)
 	@Column(length = 10, nullable = false)

@@ -263,9 +263,11 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50700006", "SysPssPurchaseReturnStockInOrderEntity", "orderNo");
 		LKDBResource.addColumn("50700007", "SysPssPurchaseReturnStockInOrderEntity", "billDate");
 		LKDBResource.addColumn("50700008", "SysPssPurchaseReturnStockInOrderEntity", "remarks");
-		LKDBResource.addColumn("50700009", "SysPssPurchaseReturnStockInOrderEntity", "supplierId");
-		LKDBResource.addColumn("50700010", "SysPssPurchaseReturnStockInOrderEntity", "purchaserId");
-		LKDBResource.addColumn("50700011", "SysPssPurchaseReturnStockInOrderEntity", "orderAmount");
+		LKDBResource.addColumn("50700009", "SysPssPurchaseReturnStockInOrderEntity", "storageId");
+		LKDBResource.addColumn("50700010", "SysPssPurchaseReturnStockInOrderEntity", "orderType");
+		LKDBResource.addColumn("50700011", "SysPssPurchaseReturnStockInOrderEntity", "supplierId");
+		LKDBResource.addColumn("50700012", "SysPssPurchaseReturnStockInOrderEntity", "purchaserId");
+		LKDBResource.addColumn("50700013", "SysPssPurchaseReturnStockInOrderEntity", "orderAmount");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysPssPurchaseReturnStockInOrderProductEntity", "T_SYS_PSS_PURCHASE_RETURN_STOCK_IN_ORDER_PRODUCT", "SysPssPurchaseReturnStockInOrderProductEntity");
 		LKDBResource.addColumn("50701000", "SysPssPurchaseReturnStockInOrderProductEntity", "id");
 		LKDBResource.addColumn("50701001", "SysPssPurchaseReturnStockInOrderProductEntity", "orderId");
@@ -274,6 +276,8 @@ class SysPssRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("50701004", "SysPssPurchaseReturnStockInOrderProductEntity", "sortId");
 		LKDBResource.addColumn("50701005", "SysPssPurchaseReturnStockInOrderProductEntity", "unitPrice");
 		LKDBResource.addColumn("50701006", "SysPssPurchaseReturnStockInOrderProductEntity", "subTotalPrice");
+		LKDBResource.addColumn("50701007", "SysPssPurchaseReturnStockInOrderProductEntity", "stockQuantity");
+		LKDBResource.addColumn("50701008", "SysPssPurchaseReturnStockInOrderProductEntity", "canOutQuantity");
 	}
 
 }

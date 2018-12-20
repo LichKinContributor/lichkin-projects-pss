@@ -62,18 +62,17 @@
     				p.PRODUCT_ID
     		)
     union all(
-    		/** 采购出库 计算已出库的数量 */
+    		/** 采购退货出库 计算已出库的数量 */
     		select
     			o.STORAGE_ID,
     			p.PRODUCT_ID,
     			sum( p.QUANTITY ) as QUANTITY
     		from
-    			t_sys_pss_purchase_stock_order_product p
-    		inner join t_sys_pss_purchase_stock_order o on
+    			t_sys_pss_purchase_return_stock_in_order_product p
+    		inner join t_sys_pss_purchase_return_stock_in_order o on
     			o.id = p.ORDER_ID
     		where
-    			o.ORDER_TYPE = false
-                and o.APPROVAL_STATUS != 'APPROVED'
+                o.APPROVAL_STATUS != 'APPROVED'
     			and o.APPROVAL_STATUS != 'REJECT'
     			and o.USING_STATUS != 'DEPRECATED'
     			and o.STORAGE_ID in (${storageIds})

@@ -15,6 +15,9 @@ public interface PssStatics {
 	/** 采购未入库退货单（需修改采购单） */
 	public static final String PSS_PURCHASE_RETURN_NOT_STOCK_IN_ORDER = "PSS_PURCHASE_RETURN_NOT_STOCK_IN_ORDER";
 
+	/** 采购已入库退货单（需修改库存） */
+	public static final String PSS_PURCHASE_RETURN_STOCK_IN_ORDER = "PSS_PURCHASE_RETURN_STOCK_IN_ORDER";
+
 	/** 采购退货单（已入库退货）（需修改库存） */
 	public static final String PSS_PURCHASE_STOCK_OUT_ORDER = "PSS_PURCHASE_STOCK_OUT_ORDER";
 
