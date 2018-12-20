@@ -24,7 +24,7 @@ public class SysPssSellReturnStockOutOrderEntity extends PssStockOrderEntity {
 
 	/** 退货人ID（SysEmployeeEntity.id） */
 	@FieldGenerator(resultColumn = false, insertType = InsertType.COPY_COPY, updateable = false)
-	@Column(length = 64)
+	@Column(length = 64, nullable = false)
 	private String salesId;
 
 	/** 订单金额 */

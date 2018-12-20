@@ -1,22 +1,21 @@
 $.LKExtendI18N({
-  'purchaseReturnStockInOrder' : {
-    'title' : '采购已入库退货单',
+  'sellReturnStockOutOrder' : {
+    'title' : '销售已出库退货单',
 
     'grid' : {
-      'title' : '采购已入库退货单',
+      'title' : '销售已出库退货单',
 
       'columns' : {
         'orderNo' : '订单号',
         'billDate' : '订单日期',
-        'supplierName' : '供应商',
         'returnedName' : '退货人',
-        'storageName' : '出库仓库',
-        'orderAmount' : '订单金额(元)',
+        'storageName' : '入库仓库',
+        'orderAmount' : '订单金额',
         'approvalStatus' : '审批状态',
         'approvalTime' : '审批时间',
         'startDate' : '订单开始日期',
         'endDate' : '订单结束日期',
-        'scanCode' : '扫码',
+        'scanCode' : '条形码',
         'remarks' : '备注',
       },
 
@@ -28,12 +27,10 @@ $.LKExtendI18N({
 
       'confirm' : {
         'remove' : '数据删除后将不能恢复，确认删除么？',
-        'submit' : '数据提交后将不能修改并修改库存数量，确认提交么？',
+        'submit' : '数据提交后将不能修改并修改库存，确认提交么？',
       },
 
-      'please select the storage first' : '请先选择仓库。',
-      'the number of products currently available is zero' : '当前产品可退货的数量为0。',
-      'this product does not exist in the current storage' : '当前仓库不存在此产品。',
+      'product not exists' : '产品不存在，请先录入产品。',
       'only PENDING status can be edit' : '只有草稿状态才可编辑。',
       'only PENDING status can be remove' : '只有草稿状态才可删除。',
       'only PENDING status can be submit' : '只有草稿状态才可提交。',
@@ -47,11 +44,9 @@ $.LKExtendI18N({
         'productName' : '产品名称',
         'barcode' : '条形码',
         'unit' : '单位',
-        'stockQuantity' : '库存数量',
-        'canOutQuantity' : '可用库存数量',
         'quantity' : '数量',
-        'unitPrice' : '单价',
-        'subTotalPrice' : '小计',
+        'unitPrice' : '单价(元)',
+        'subTotalPrice' : '小计(元)',
         'product' : '选择产品',
       },
 

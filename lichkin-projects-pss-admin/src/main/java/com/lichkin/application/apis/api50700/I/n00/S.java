@@ -46,7 +46,7 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysPssPurchaseRetu
 
 	@Override
 	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysPssPurchaseReturnStockInOrderEntity entity) {
-		entity.setOrderType(false);// 出库单
+		entity.setOrderType(false);// 采购退货出库
 		entity.setOrderAmount(busService.analysisOrderAmount(sin));
 		String errorMsg = pssStockBusService.checkProductStockOut(entity.getStorageId(), sin.getProductList(), entity.getId());
 		if (StringUtils.isNotBlank(errorMsg)) {

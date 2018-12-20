@@ -6,24 +6,24 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.lichkin.application.apis.api50700.SI;
+import com.lichkin.application.apis.api50206.SI;
 import com.lichkin.framework.db.beans.DeleteSQL;
-import com.lichkin.framework.db.beans.SysPssPurchaseReturnStockInOrderProductR;
+import com.lichkin.framework.db.beans.SysPssSellReturnStockOutOrderProductR;
 import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
-import com.lichkin.springframework.entities.impl.SysPssPurchaseReturnStockInOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssSellReturnStockOutOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
-public class SysPssPurchaseReturnStockInOrderBusService extends LKDBService {
+public class SysPssSellReturnStockOutOrderBusService extends LKDBService {
 
 	public String analysisOrderAmount(SI sin) {
 		BigDecimal bdOrderAmount = new BigDecimal("0").setScale(2, RoundingMode.HALF_UP);
-		List<SysPssPurchaseReturnStockInOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssPurchaseReturnStockInOrderProductEntity.class);
+		List<SysPssSellReturnStockOutOrderProductEntity> listProduct = LKJsonUtils.toList(sin.getProductList(), SysPssSellReturnStockOutOrderProductEntity.class);
 		sin.setListProduct(listProduct);
 		for (int i = 0; i < listProduct.size(); i++) {
-			SysPssPurchaseReturnStockInOrderProductEntity product = listProduct.get(i);
+			SysPssSellReturnStockOutOrderProductEntity product = listProduct.get(i);
 			product.setProductId(product.getId());
 			product.setId(null);
 			product.setSortId(i);
@@ -42,15 +42,15 @@ public class SysPssPurchaseReturnStockInOrderBusService extends LKDBService {
 	}
 
 
-	public void clearPurchaseReturnOrderProduct(String id) {
-		DeleteSQL sql = new DeleteSQL(SysPssPurchaseReturnStockInOrderProductEntity.class);
-		sql.eq(SysPssPurchaseReturnStockInOrderProductR.orderId, id);
+	public void clearOrderProduct(String id) {
+		DeleteSQL sql = new DeleteSQL(SysPssSellReturnStockOutOrderProductEntity.class);
+		sql.eq(SysPssSellReturnStockOutOrderProductR.orderId, id);
 		dao.delete(sql);
 	}
 
 
-	public void addPurchaseReturnOrderProduct(String id, List<SysPssPurchaseReturnStockInOrderProductEntity> listProduct) {
-		for (SysPssPurchaseReturnStockInOrderProductEntity product : listProduct) {
+	public void addOrderProduct(String id, List<SysPssSellReturnStockOutOrderProductEntity> listProduct) {
+		for (SysPssSellReturnStockOutOrderProductEntity product : listProduct) {
 			product.setOrderId(id);
 		}
 		dao.persistList(listProduct);

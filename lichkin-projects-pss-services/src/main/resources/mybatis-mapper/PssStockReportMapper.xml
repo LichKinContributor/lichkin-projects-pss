@@ -82,7 +82,7 @@
     </if>
   </sql>
   
-  <!-- 采购出入库  -->
+  <!-- 采购入库  -->
   <sql id="purchaseStorageDetailCommonSql">
     <include refid="commonSelect"></include>
     from
