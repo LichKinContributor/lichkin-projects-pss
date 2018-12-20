@@ -137,6 +137,9 @@ var purchaseReturnStockInOrderFormPlugins = [
                       if (currentValue > rowData.canOutQuantity) {
                         currentValue = rowData.canOutQuantity;
                       }
+                      if (currentValue == 0) {
+                        currentValue = 1;
+                      }
                       var unitPrice = $plugin.LKGetSameNodePlugin('unitPrice').LKGetValue();
                       var quantity = currentValue;
                       $plugin.LKGetSameNodePlugin('subTotalPrice').LKSetValues((quantity * parseFloat(unitPrice)).toFixed(2));

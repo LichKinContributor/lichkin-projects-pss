@@ -16,6 +16,9 @@ public class O {
 	/** 已出库数量 */
 	private int inventoryQuantity;
 
+	/** 已退货数量 */
+	private int returnedQuantity;
+
 	/** 可出库数量 */
 	private int canStockOutQty;
 

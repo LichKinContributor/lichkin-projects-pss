@@ -72,17 +72,27 @@ public class SysPssSellStockOrderBusService extends LKDBService {
 		QuerySQL sql = new QuerySQL(SysPssSellOrderProductEntity.class);
 		sql.eq(SysPssSellOrderProductR.orderId, sellOrderId);
 		List<SysPssSellOrderProductEntity> listSellOrderProd = dao.getList(sql, SysPssSellOrderProductEntity.class);
-		// 销售单产品数量（按照产品ID合并数量）
-		Map<String, Integer> sellOrderProdQtyMap = listSellOrderProd.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+		// 销售单产品数量
+		Map<String, Integer> sellOrderProdQtyMap = listSellOrderProd.stream().collect(Collectors.toMap(o -> o.getId(), o -> o.getQuantity()));
 
+		// 当前销售出库单填写的产品
 		List<SysPssProductEntity> listProd = LKJsonUtils.toList(productList, SysPssProductEntity.class);
+		List<SysPssSellStockOrderProductEntity> listSellStockProduct = LKJsonUtils.toList(productList, SysPssSellStockOrderProductEntity.class);
 
 		StringBuffer prodIds = new StringBuffer();
 
+		// 销售单产品Id->产品名称
 		Map<String, String> prodInfoMap = new HashMap<>();
-		// 判断产品是否在销售单中
+
 		for (int i = 0; i < listProd.size(); i++) {
 			SysPssProductEntity prod = listProd.get(i);
+
+			// 设置产品名称
+			for (SysPssSellStockOrderProductEntity sellStockOrderProd : listSellStockProduct) {
+				if (sellStockOrderProd.getId().equals(prod.getId())) {
+					prodInfoMap.put(sellStockOrderProd.getSellOrderProductId(), prod.getProductName());
+				}
+			}
 
 			prodInfoMap.put(prod.getId(), prod.getProductName());
 
@@ -90,40 +100,30 @@ public class SysPssSellStockOrderBusService extends LKDBService {
 			if (i < (listProd.size() - 1)) {
 				prodIds.append(",");
 			}
-
-			// 产品不存在
-			if (sellOrderProdQtyMap.get(prod.getId()) == null) {
-				errorMsg += prod.getProductName() + ";";
-			}
-		}
-		if (StringUtils.isNotBlank(errorMsg)) {
-			return errorMsg + "不在当前销售单中。";
 		}
 
-		// 销售单已保存的出库数量
+		// 销售单已保存的出库、退货数量
 		List<SellOrderSavedStockOutQtyOut> listSellOrderSavedStockOutQty = pssStockOutQtyMapper.findSellOrderSavedStockOutQty(new SellOrderSavedStockOutQtyIn(prodIds.toString(), sellOrderId, id));
-		Map<String, Integer> sellOrderSavedStockOutQtyMap = listSellOrderSavedStockOutQty.stream().collect(Collectors.groupingBy(o -> o.getProductId(), Collectors.summingInt(o -> o.getQuantity())));
+		Map<String, Integer> sellOrderSavedStockOutQtyMap = listSellOrderSavedStockOutQty.stream().collect(Collectors.groupingBy(o -> o.getSellOrderProductId(), Collectors.summingInt(o -> o.getQuantity())));
 
-		// 当前销售出库单填写的产品出库数量
-		List<SysPssSellStockOrderProductEntity> listSellStockProduct = LKJsonUtils.toList(productList, SysPssSellStockOrderProductEntity.class);
 		// 按照产品ID合并数量
-		Map<String, Integer> sellStockOutProdQtyMap = listSellStockProduct.stream().collect(Collectors.groupingBy(o -> o.getId(), Collectors.summingInt(o -> o.getQuantity())));
+		Map<String, Integer> sellStockOutProdQtyMap = listSellStockProduct.stream().collect(Collectors.groupingBy(o -> o.getSellOrderProductId(), Collectors.summingInt(o -> o.getQuantity())));
 
 		// 判断产品出库数量是否超出销售单数量
 		for (Map.Entry<String, Integer> entry : sellStockOutProdQtyMap.entrySet()) {
-			String prodId = entry.getKey();
+			String sellOrderProductId = entry.getKey();
 			// 填写数量
 			Integer productQty = entry.getValue();
 			// 销售数量
-			Integer salesProdQty = sellOrderProdQtyMap.get(prodId);
-			// 已填写的入库数量
-			Integer savedProdStockOutQty = sellOrderSavedStockOutQtyMap.get(prodId);
+			Integer salesProdQty = sellOrderProdQtyMap.get(sellOrderProductId);
+			// 已填写的数量
+			Integer savedProdStockOutQty = sellOrderSavedStockOutQtyMap.get(sellOrderProductId);
 
 			if (savedProdStockOutQty == null) {
 				savedProdStockOutQty = 0;
 			}
 			if (productQty > (salesProdQty - savedProdStockOutQty)) {
-				errorMsg += prodInfoMap.get(prodId) + ";";
+				errorMsg += prodInfoMap.get(sellOrderProductId) + ";";
 			}
 		}
 		if (StringUtils.isNotBlank(errorMsg)) {

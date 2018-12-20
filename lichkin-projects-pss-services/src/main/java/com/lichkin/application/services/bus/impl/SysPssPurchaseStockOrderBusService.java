@@ -71,7 +71,7 @@ public class SysPssPurchaseStockOrderBusService extends LKDBService {
 		// 采购单产品数量
 		Map<String, Integer> purchaseProdQtyMap = listPurchaseOrderProd.stream().collect(Collectors.toMap(o -> o.getId(), o -> o.getQuantity()));
 
-		// 采购入库单填写的产品入库数量
+		// 采购入库单填写的产品
 		List<SysPssProductEntity> listProd = LKJsonUtils.toList(productList, SysPssProductEntity.class);
 		List<SysPssPurchaseStockOrderProductEntity> listPurchaseStockProduct = LKJsonUtils.toList(productList, SysPssPurchaseStockOrderProductEntity.class);
 
@@ -87,7 +87,6 @@ public class SysPssPurchaseStockOrderBusService extends LKDBService {
 			for (SysPssPurchaseStockOrderProductEntity purchaseStockOrderProd : listPurchaseStockProduct) {
 				if (purchaseStockOrderProd.getId().equals(prod.getId())) {
 					prodInfoMap.put(purchaseStockOrderProd.getPurchaseOrderProductId(), prod.getProductName());
-					break;
 				}
 			}
 

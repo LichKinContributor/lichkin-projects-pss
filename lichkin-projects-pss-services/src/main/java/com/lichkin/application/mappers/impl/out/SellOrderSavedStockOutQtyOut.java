@@ -8,7 +8,7 @@ import lombok.Setter;
 public class SellOrderSavedStockOutQtyOut {
 
 	/** 产品ID */
-	private String productId;
+	private String sellOrderProductId;
 
 	/** 产品数量 */
 	private int quantity;

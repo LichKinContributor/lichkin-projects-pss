@@ -16,6 +16,8 @@ import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellOrderProductEntity;
+import com.lichkin.springframework.entities.impl.SysPssSellReturnNotStockOutOrderEntity;
+import com.lichkin.springframework.entities.impl.SysPssSellReturnNotStockOutOrderProductEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderEntity;
 import com.lichkin.springframework.entities.impl.SysPssSellStockOrderProductEntity;
 import com.lichkin.springframework.services.LKDBService;
@@ -87,7 +89,8 @@ public class SysPssSellOrderBusService extends LKDBService {
 			// 判断销售单是否完全出库
 			boolean allOut = true;
 			for (SysPssSellOrderProductEntity pp : listSellOrderProd) {
-				if (pp.getQuantity() > pp.getInventoryQuantity()) {
+				int leftQty = pp.getQuantity() - pp.getInventoryQuantity() - pp.getReturnedQuantity();
+				if (leftQty > 0) {
 					allOut = false;
 					break;
 				}
@@ -98,6 +101,44 @@ public class SysPssSellOrderBusService extends LKDBService {
 			} else {// 部分出库
 				sellOrderEntity.setInventoryStatus(InventoryStatusEnum.PART);
 			}
+			dao.mergeOne(sellOrderEntity);
+		}
+	}
+
+
+	/**
+	 * 修改销售单退货产品数量
+	 * @param returnOrder 退货订单
+	 * @param orderProductList 产品信息
+	 */
+	public void changeSellOrderProductReturnedQuantity(SysPssSellReturnNotStockOutOrderEntity returnOrder, List<SysPssSellReturnNotStockOutOrderProductEntity> orderProductList) {
+		// 查询销售单中的所有产品
+		QuerySQL sql = new QuerySQL(SysPssSellOrderProductEntity.class);
+		sql.eq(SysPssSellOrderProductR.orderId, returnOrder.getOrderId());
+		List<SysPssSellOrderProductEntity> listSellOrderProd = dao.getList(sql, SysPssSellOrderProductEntity.class);
+
+		for (SysPssSellReturnNotStockOutOrderProductEntity returnProd : orderProductList) {
+			for (SysPssSellOrderProductEntity sellProduct : listSellOrderProd) {
+				if (returnProd.getSellOrderProductId().equals(sellProduct.getId())) {
+					sellProduct.setReturnedQuantity(sellProduct.getReturnedQuantity() + returnProd.getQuantity());
+					break;
+				}
+			}
+		}
+		dao.mergeList(listSellOrderProd);
+
+		// 判断销售单是否完全出库
+		boolean allOut = true;
+		for (SysPssSellOrderProductEntity pp : listSellOrderProd) {
+			int leftQty = pp.getQuantity() - pp.getInventoryQuantity() - pp.getReturnedQuantity();
+			if (leftQty > 0) {
+				allOut = false;
+				break;
+			}
+		}
+		if (allOut) {// 完全入库
+			SysPssSellOrderEntity sellOrderEntity = dao.findOneById(SysPssSellOrderEntity.class, returnOrder.getOrderId());
+			sellOrderEntity.setInventoryStatus(InventoryStatusEnum.ALL);
 			dao.mergeOne(sellOrderEntity);
 		}
 	}

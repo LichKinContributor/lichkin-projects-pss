@@ -145,7 +145,7 @@
             p.PURCHASE_ORDER_PRODUCT_ID
         ) p
     union all(
-        /** 采购单已经填写的退货数量 */
+        /** 采购退货单已经填写的退货数量 */
         select
           p.PURCHASE_ORDER_PRODUCT_ID,
           sum( p.QUANTITY ) as QUANTITY
@@ -169,27 +169,59 @@
   
     
   <resultMap id="SellOrderSavedStockOutQtyOutResultMap" type="com.lichkin.application.mappers.impl.out.SellOrderSavedStockOutQtyOut"> 
-    <result column="PRODUCT_ID" property="productId" jdbcType="VARCHAR" />
+    <result column="SELL_ORDER_PRODUCT_ID" property="sellOrderProductId" jdbcType="VARCHAR" />
     <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
   </resultMap>
    
   <!-- 查询单个销售单已填写的出库的数量（订单非驳回 非删除状态） -->
   <select id="findSellOrderSavedStockOutQty" parameterType="com.lichkin.application.mappers.impl.in.SellOrderSavedStockOutQtyIn" resultMap="SellOrderSavedStockOutQtyOutResultMap">
-    select
-      p.PRODUCT_ID,
-      sum( p.QUANTITY ) as QUANTITY
-    from
-    	t_sys_pss_sell_stock_order_product p
-    inner join t_sys_pss_sell_stock_order o on
-    	o.id = p.ORDER_ID
-    where
-      o.ORDER_TYPE = false
-      and o.APPROVAL_STATUS != 'REJECT'
-      and o.USING_STATUS != 'DEPRECATED'
-      and p.PRODUCT_ID in (${productIds})
-      and o.ORDER_ID <![CDATA[ = ]]> '${sellOrderId}'
-      and o.id <![CDATA[ != ]]> '${orderId}'
-    group by
-      p.PRODUCT_ID
+  select
+    SELL_ORDER_PRODUCT_ID,
+    sum( QUANTITY ) as QUANTITY
+  from
+    (
+      select
+        *
+      from
+        (
+          /** 销售单已经填写的出库数量 */
+          select
+            p.SELL_ORDER_PRODUCT_ID,
+            sum( p.QUANTITY ) as QUANTITY
+          from
+            t_sys_pss_sell_stock_order_product p
+          inner join t_sys_pss_sell_stock_order o on
+            o.id = p.ORDER_ID
+          where
+            o.ORDER_TYPE = false
+            and o.APPROVAL_STATUS != 'REJECT'
+            and o.USING_STATUS != 'DEPRECATED'
+            and p.PRODUCT_ID in (${productIds})
+            and o.ORDER_ID <![CDATA[ = ]]> '${sellOrderId}'
+            and o.id <![CDATA[ != ]]> '${orderId}'
+          group by
+            p.SELL_ORDER_PRODUCT_ID
+        ) p
+    union all(
+        /** 销退货单已经填写的退货数量 */
+        select
+          p.SELL_ORDER_PRODUCT_ID,
+          sum( p.QUANTITY ) as QUANTITY
+        from
+          t_sys_pss_sell_return_not_stock_out_order_product p
+        inner join t_sys_pss_sell_return_not_stock_out_order o on
+          o.id = p.ORDER_ID
+        where
+          o.APPROVAL_STATUS != 'REJECT'
+          and o.USING_STATUS != 'DEPRECATED'
+          and p.PRODUCT_ID in (${productIds})
+          and o.ORDER_ID <![CDATA[ = ]]> '${sellOrderId}'
+          and o.id <![CDATA[ != ]]> '${orderId}'
+        group by
+          p.SELL_ORDER_PRODUCT_ID
+      )
+    ) t
+  group by
+    SELL_ORDER_PRODUCT_ID
   </select>
 </mapper>

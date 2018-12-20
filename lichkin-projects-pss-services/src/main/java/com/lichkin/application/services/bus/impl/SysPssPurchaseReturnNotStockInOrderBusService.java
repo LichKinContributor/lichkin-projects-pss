@@ -76,7 +76,7 @@ public class SysPssPurchaseReturnNotStockInOrderBusService extends LKDBService {
 	/**
 	 * @param id 采购退货单ID
 	 * @param purchaseOrderId 采购单ID
-	 * @param productList 入库产品json列表
+	 * @param productList 退货产品json列表
 	 * @return
 	 */
 	public String checkProductQty(String id, String purchaseOrderId, String productList) {

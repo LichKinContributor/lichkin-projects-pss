@@ -34,7 +34,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssPurchaseStockOrderEn
 
 	@Override
 	protected String getProcessCode(I sin, ApiKeyValues<I> params, SysPssPurchaseStockOrderEntity entity) {
-		return entity.getOrderType() ? PssStatics.PSS_PURCHASE_STOCK_IN_ORDER : PssStatics.PSS_PURCHASE_STOCK_OUT_ORDER;
+		return PssStatics.PSS_PURCHASE_STOCK_IN_ORDER;
 	}
 
 

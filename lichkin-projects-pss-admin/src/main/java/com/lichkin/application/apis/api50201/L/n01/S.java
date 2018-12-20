@@ -25,6 +25,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 		sql.select(SysPssSellOrderProductR.id, "sellOrderProductId");
 		sql.select(SysPssSellOrderProductR.quantity, "salesQuantity");
 		sql.select(SysPssSellOrderProductR.inventoryQuantity);
+		sql.select(SysPssSellOrderProductR.returnedQuantity);
 		sql.select(SysPssSellOrderProductR.unitPrice);
 
 		// 关联表
@@ -39,13 +40,14 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssSellOrderProductR.id, params.getId());
-//		addConditionLocale(sql, SysPssSellOrderProductR.locale, params.getLocale());
-//		addConditionCompId(true, sql, SysPssSellOrderProductR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		// addConditionId(sql, SysPssSellOrderProductR.id, params.getId());
+		// addConditionLocale(sql, SysPssSellOrderProductR.locale, params.getLocale());
+		// addConditionCompId(true, sql, SysPssSellOrderProductR.compId, params.getCompId(), params.getBusCompId());
+		// addConditionUsingStatus(true,params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		sql.lt_(SysPssSellOrderProductR.inventoryQuantity, SysPssSellOrderProductR.quantity);
+		sql.lt_(SysPssSellOrderProductR.returnedQuantity, SysPssSellOrderProductR.quantity);
 
 		String orderId = sin.getOrderId();
 		if (StringUtils.isNotBlank(orderId)) {
@@ -67,10 +69,17 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 
 	@Override
 	protected List<O> afterQuery(I sin, ApiKeyValues<I> params, List<O> list) {
-		for (O o : list) {
-			o.setCanStockOutQty(o.getSalesQuantity() - o.getInventoryQuantity());
+		for (int i = list.size() - 1; i >= 0; i--) {
+			O o = list.get(i);
+			int leftQty = o.getSalesQuantity() - o.getInventoryQuantity() - o.getReturnedQuantity();
+			if (leftQty == 0) {
+				list.remove(i);
+				continue;
+			}
+			o.setCanStockOutQty(leftQty);
 		}
 		return list;
+
 	}
 
 }

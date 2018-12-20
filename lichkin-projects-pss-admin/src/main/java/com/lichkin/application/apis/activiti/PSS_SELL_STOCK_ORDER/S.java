@@ -32,7 +32,7 @@ public class S extends LKApiBusStartProcessService<I, SysPssSellStockOrderEntity
 
 	@Override
 	protected String getProcessCode(I sin, ApiKeyValues<I> params, SysPssSellStockOrderEntity entity) {
-		return entity.getOrderType() ? PssStatics.PSS_SELL_STOCK_IN_ORDER : PssStatics.PSS_SELL_STOCK_OUT_ORDER;
+		return PssStatics.PSS_SELL_STOCK_OUT_ORDER;
 	}
 
 

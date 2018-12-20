@@ -50,7 +50,7 @@ var sellStockOutOrderFormPlugins = [
         columns : [
             {
               text : 'productCode',
-              width : 200,
+              width : 160,
               name : 'productCode'
             }, {
               text : 'productName',
@@ -73,8 +73,12 @@ var sellStockOutOrderFormPlugins = [
               width : 80,
               name : 'inventoryQuantity'
             }, {
-              text : 'quantity',
+              text : 'returnedQuantity',
               width : 80,
+              name : 'returnedQuantity'
+            }, {
+              text : 'quantity',
+              width : 70,
               formatter : function(rowData) {
                 return {
                   plugin : 'numberspinner',
@@ -416,7 +420,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         lazy : false,
         param : {
           orderId : value,
-          orderType : false
+          orderType : false,
+          isView : true
         },
         tools : []
       });

@@ -1,3 +1,3 @@
 $.LKExtendICON({
-  'purchaseReturnStockInOrder' : 'caret-square-right',
+  'purchaseReturnStockInOrder' : 'arrow-left',
 });

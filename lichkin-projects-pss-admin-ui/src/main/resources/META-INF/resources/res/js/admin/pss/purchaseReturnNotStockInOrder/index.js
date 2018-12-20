@@ -89,6 +89,9 @@ var purchaseReturnNotStockInOrderFormPlugins = [
                       if (currentValue > rowData.canStockInQty) {
                         currentValue = rowData.canStockInQty;
                       }
+                      if (currentValue == 0) {
+                        currentValue = 1;
+                      }
                       var unitPrice = $plugin.LKGetSameNodePlugin('unitPrice').LKGetValue();
                       var quantity = currentValue;
                       $plugin.LKGetSameNodePlugin('subTotalPrice').LKSetValues((quantity * parseFloat(unitPrice)).toFixed(2));
