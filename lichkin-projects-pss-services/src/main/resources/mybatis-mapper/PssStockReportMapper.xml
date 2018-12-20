@@ -82,13 +82,21 @@
     </if>
   </sql>
   
-  <!-- 采购入库  -->
+  <!-- 采购出入库  -->
   <sql id="purchaseStorageDetailCommonSql">
     <include refid="commonSelect"></include>
     from
-      t_sys_pss_purchase_stock_order_product p
-    inner join t_sys_pss_purchase_stock_order o on
-      o.id = p.ORDER_ID
+    <choose>
+      <when test="orderType == true">
+        t_sys_pss_purchase_stock_order_product p
+      inner join t_sys_pss_purchase_stock_order o
+      </when>
+      <otherwise>
+        t_sys_pss_purchase_return_stock_in_order_product p
+      inner join t_sys_pss_purchase_return_stock_in_order o 
+      </otherwise>
+    </choose>
+    on o.id = p.ORDER_ID
     inner join t_sys_dictionary d1 on
       d1.DICT_CODE = 'PURCHASE'
     <include refid="commonTable"></include>
@@ -110,9 +118,17 @@
   <sql id="sellStorageDetailCommonSql">
     <include refid="commonSelect"></include>
     from
-      t_sys_pss_sell_stock_order_product p
-    inner join t_sys_pss_sell_stock_order o on
-      o.id = p.ORDER_ID
+    <choose>
+      <when test="orderType == true">
+        t_sys_pss_sell_return_stock_out_order_product p
+      inner join t_sys_pss_sell_return_stock_out_order o 
+      </when>
+      <otherwise>
+        t_sys_pss_sell_stock_order_product p
+      inner join t_sys_pss_sell_stock_order o 
+      </otherwise>
+    </choose>
+    on o.id = p.ORDER_ID
     inner join t_sys_dictionary d1 on
       d1.DICT_CODE = 'SELL'
     <include refid="commonTable"></include>

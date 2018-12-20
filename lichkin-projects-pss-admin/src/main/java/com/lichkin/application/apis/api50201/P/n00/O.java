@@ -13,6 +13,8 @@ public class O {
 
 	private int inventoryQuantity;
 
+	private int returnedQuantity;
+
 	private String unitPrice;
 
 	private String subTotalPrice;

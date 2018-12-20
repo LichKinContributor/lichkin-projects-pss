@@ -18,7 +18,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         text : 'storageType',
         name : 'storageType',
-        width : 120
+        width : 150
       }, {
         text : 'storageName',
         name : 'storageName',
