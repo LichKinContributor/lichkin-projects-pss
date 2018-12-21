@@ -9,7 +9,7 @@ $.LKExtendI18N({
         'orderNo' : '订单号',
         'billDate' : '订单日期',
         'supplierName' : '供应商',
-        'returnedName' : '退货人',
+        'returnedName' : '退货员',
         'orderAmount' : '订单金额(元)',
         'approvalStatus' : '审批状态',
         'approvalTime' : '审批时间',

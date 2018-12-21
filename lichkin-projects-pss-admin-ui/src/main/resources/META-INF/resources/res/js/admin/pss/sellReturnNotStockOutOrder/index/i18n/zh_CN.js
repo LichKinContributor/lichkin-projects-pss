@@ -7,7 +7,7 @@ $.LKExtendI18N({
 
       'columns' : {
         'orderNo' : '订单号',
-        'returnedName' : '退货人',
+        'returnedName' : '退货员',
         'billDate' : '订单日期',
         'orderAmount' : '订单金额',
         'approvalStatus' : '审批状态',

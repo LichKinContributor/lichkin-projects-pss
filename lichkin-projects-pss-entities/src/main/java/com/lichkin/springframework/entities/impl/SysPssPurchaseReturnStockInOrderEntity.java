@@ -27,7 +27,7 @@ public class SysPssPurchaseReturnStockInOrderEntity extends PssStockOrderEntity 
 	@Column(length = 64, nullable = false)
 	private String supplierId;
 
-	/** 退货人ID（SysEmployeeEntity.id） */
+	/** 退货员ID（SysEmployeeEntity.id） */
 	@FieldGenerator(resultColumn = false, insertType = InsertType.COPY_COPY, updateable = false)
 	@Column(length = 64)
 	private String purchaserId;

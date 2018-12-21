@@ -23,7 +23,7 @@ public class I extends LKRequestPageBean implements I_CompId {
 	/** 供应商名称 */
 	private String supplierName;
 
-	/** 退货人姓名 */
+	/** 退货员姓名 */
 	private String returnedName;
 
 	/** 仓库 */

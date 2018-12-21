@@ -28,7 +28,7 @@ public class O {
 	/** 订单金额 */
 	private String orderAmount;
 
-	/** 退货人姓名 */
+	/** 退货员姓名 */
 	private String returnedName;
 
 	/** 仓库 */

@@ -32,7 +32,7 @@ public class I extends LKRequestPageBean implements I_CompId {
 	/** 结束日期 */
 	private String endDate;
 
-	/** 退货人姓名 */
+	/** 退货员姓名 */
 	private String returnedName;
 
 }
