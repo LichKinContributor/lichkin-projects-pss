@@ -10,7 +10,7 @@ $.LKExtendI18N({
         'billDate' : '订单日期',
         'returnedName' : '退货员',
         'storageName' : '入库仓库',
-        'orderAmount' : '订单金额',
+        'orderAmount' : '订单金额(元)',
         'approvalStatus' : '审批状态',
         'approvalTime' : '审批时间',
         'startDate' : '订单开始日期',
@@ -27,7 +27,7 @@ $.LKExtendI18N({
 
       'confirm' : {
         'remove' : '数据删除后将不能恢复，确认删除么？',
-        'submit' : '数据提交后将不能修改并修改库存，确认提交么？',
+        'submit' : '数据提交后将不能修改，确认提交么？',
       },
 
       'product not exists' : '产品不存在，请先录入产品。',
@@ -44,9 +44,9 @@ $.LKExtendI18N({
         'productName' : '产品名称',
         'barcode' : '条形码',
         'unit' : '单位',
-        'quantity' : '数量',
-        'unitPrice' : '单价(元)',
-        'subTotalPrice' : '小计(元)',
+        'quantity' : '退货数量',
+        'unitPrice' : '单价',
+        'subTotalPrice' : '小计',
         'product' : '选择产品',
       },
 

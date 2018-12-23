@@ -69,7 +69,7 @@ $.LKExtendI18N({
         'billDate' : '订单日期',
         'inventoryStatus' : '出库状态',
         'salesName' : '销售员',
-        'orderAmount' : '订单金额',
+        'orderAmount' : '订单金额(元)',
         'startDate' : '订单开始日期',
         'endDate' : '订单结束日期',
       },

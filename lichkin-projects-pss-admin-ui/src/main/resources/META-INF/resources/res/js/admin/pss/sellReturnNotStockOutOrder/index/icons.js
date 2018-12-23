@@ -1,3 +1,3 @@
 $.LKExtendICON({
-  'sellReturnNotStockOutOrder' : 'arrow-alt-circle-left',
+  'sellReturnNotStockOutOrder' : 'arrow-alt-circle-right',
 });

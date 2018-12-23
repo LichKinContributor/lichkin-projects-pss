@@ -28,7 +28,7 @@ $.LKExtendI18N({
 
       'confirm' : {
         'remove' : '数据删除后将不能恢复，确认删除么？',
-        'submit' : '数据提交后将不能修改并修改库存数量，确认提交么？',
+        'submit' : '数据提交后将不能修改，确认提交么？',
       },
 
       'please select the storage first' : '请先选择仓库。',
@@ -49,7 +49,7 @@ $.LKExtendI18N({
         'unit' : '单位',
         'stockQuantity' : '库存数量',
         'canOutQuantity' : '可用库存数量',
-        'quantity' : '数量',
+        'quantity' : '退货数量',
         'unitPrice' : '单价',
         'subTotalPrice' : '小计',
         'product' : '选择产品',

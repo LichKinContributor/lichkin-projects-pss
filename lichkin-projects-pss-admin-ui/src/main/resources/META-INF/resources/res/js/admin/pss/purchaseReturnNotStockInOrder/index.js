@@ -182,13 +182,13 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         width : 150,
         name : 'supplierName'
       }, {
-        text : 'orderAmount',
-        width : 100,
-        name : 'orderAmount'
-      }, {
         text : 'returnedName',
         width : 100,
         name : 'returnedName'
+      }, {
+        text : 'orderAmount',
+        width : 100,
+        name : 'orderAmount'
       }, {
         text : 'approvalStatus',
         width : 100,

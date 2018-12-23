@@ -10,7 +10,7 @@ $.LKExtendI18N({
         'billDate' : '订单日期',
         'supplierName' : '供应商',
         'purchaserName' : '采购员',
-        'orderAmount' : '订单金额',
+        'orderAmount' : '订单金额(元)',
         'inventoryStatus' : '入库状态',
         'approvalStatus' : '审批状态',
         'approvalTime' : '审批时间',
