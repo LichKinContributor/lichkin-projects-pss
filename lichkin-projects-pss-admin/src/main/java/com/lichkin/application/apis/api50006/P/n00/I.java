@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestPageBean implements I_CompId {
 
-	private String compId;
-
 	/** 仓库名称 */
 	private String storageName;
 

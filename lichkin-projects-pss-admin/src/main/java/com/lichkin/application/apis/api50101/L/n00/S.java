@@ -20,7 +20,7 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 	@Override
 	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
-//		sql.select(SysPssPurchaseOrderProductR.id);
+		// sql.select(SysPssPurchaseOrderProductR.id);
 		sql.select(SysPssPurchaseOrderProductR.quantity);
 		sql.select(SysPssPurchaseOrderProductR.inventoryQuantity);
 		sql.select(SysPssPurchaseOrderProductR.unitPrice);
@@ -38,10 +38,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssPurchaseOrderProductR.id, params.getId());
-//		addConditionLocale(sql, SysPssPurchaseOrderProductR.locale, params.getLocale());
-//		addConditionCompId(true, sql, SysPssPurchaseOrderProductR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		// addConditionId(sql, SysPssPurchaseOrderProductR.id, params.getId());
+		// addConditionLocale(sql, SysPssPurchaseOrderProductR.locale, params.getLocale());
+		// addConditionCompId(true, sql, SysPssPurchaseOrderProductR.compId, params.getCompId(), params.getBusCompId());
+		// addConditionUsingStatus(true, params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String orderId = sin.getOrderId();

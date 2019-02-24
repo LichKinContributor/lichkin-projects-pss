@@ -5,7 +5,8 @@ var sellOrderFormPlugins = [
         name : 'billDate',
         minDate : '1900-01-01',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'selector_employee',
@@ -57,7 +58,7 @@ var sellOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssSellOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         columns : [
             {
               text : 'productCode',

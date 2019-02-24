@@ -13,10 +13,6 @@ public class I extends LKRequestPageBean {
 
 	private String orderNo;
 
-	private String startDate;
-
-	private String endDate;
-
 	private String productCode;
 
 	private String productName;

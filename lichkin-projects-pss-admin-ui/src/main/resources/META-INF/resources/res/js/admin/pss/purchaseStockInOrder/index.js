@@ -11,7 +11,8 @@ var purchaseStockInOrderFormPlugins = [
         name : 'billDate',
         minDate : '1900-01-01',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'droplist',
@@ -46,7 +47,7 @@ var purchaseStockInOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssPurchaseStockOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         columns : [
             {
               text : 'productCode',
@@ -289,7 +290,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                     rows : 12,
                     pageable : false,
                     url : '/SysPssPurchaseOrder/L',
-                    $appendTo : $('body'),
+                    $appendTo : $body,
                     columns : [
                         {
                           text : 'orderNo',

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lichkin.framework.beans.impl.LKRequestIDsBean;
 import com.lichkin.framework.defines.LKFrameworkStatics;
-import com.lichkin.framework.defines.exceptions.LKException;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.ApiKeyValues;
@@ -30,8 +30,8 @@ public class C extends LKApiBusUpdateUsingStatusController<LKRequestIDsBean, Sys
 
 
 	@Override
-	protected void beforeInvokeService(LKRequestIDsBean cin, ApiKeyValues<LKRequestIDsBean> params) throws LKException {
-		params.putObject("_usingStatus", cin.getUsingStatus());
+	protected LKUsingStatusEnum getUsingStatus() {
+		return LKUsingStatusEnum.USING;// 盘点结束
 	}
 
 }

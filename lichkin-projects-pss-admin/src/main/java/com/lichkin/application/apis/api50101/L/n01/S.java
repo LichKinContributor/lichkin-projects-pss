@@ -43,13 +43,17 @@ public class S extends LKApiBusGetListService<I, O, SysPssPurchaseOrderProductEn
 		// addConditionId(sql, SysPssPurchaseOrderProductR.id, params.getId());
 		// addConditionLocale(sql, SysPssPurchaseOrderProductR.locale, params.getLocale());
 		// addConditionCompId(true, sql, SysPssPurchaseOrderProductR.compId, params.getCompId(), params.getBusCompId());
-		// addConditionUsingStatus(true,params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		// addConditionUsingStatus(true, params.getCompId(), sql, SysPssPurchaseOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 		sql.eq(SysPssPurchaseOrderProductR.orderId, sin.getOrderId());
 
 		// 筛选条件（业务项）
 		sql.lt_(SysPssPurchaseOrderProductR.inventoryQuantity, SysPssPurchaseOrderProductR.quantity);
 		sql.lt_(SysPssPurchaseOrderProductR.returnedQuantity, SysPssPurchaseOrderProductR.quantity);
 
+		String orderId = sin.getOrderId();
+		if (StringUtils.isNotBlank(orderId)) {
+			sql.eq(SysPssPurchaseOrderProductR.orderId, orderId);
+		}
 		String barcode = sin.getBarcode();
 		if (StringUtils.isNotBlank(barcode)) {
 			sql.eq(SysPssProductR.barcode, barcode);

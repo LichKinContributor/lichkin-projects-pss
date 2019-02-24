@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysPssAllotOrderBusService;
+import com.lichkin.framework.beans.impl.LKRequestIDsBean;
 import com.lichkin.framework.db.beans.SysPssAllotOrderR;
 import com.lichkin.framework.defines.enums.impl.ApprovalStatusEnum;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
@@ -13,7 +14,7 @@ import com.lichkin.springframework.entities.impl.SysPssAllotOrderEntity;
 import com.lichkin.springframework.services.LKApiBusDeleteService;
 
 @Service("SysPssAllotOrderD00Service")
-public class S extends LKApiBusDeleteService<I, SysPssAllotOrderEntity> {
+public class S extends LKApiBusDeleteService<LKRequestIDsBean, SysPssAllotOrderEntity> {
 
 	@Autowired
 	private SysPssAllotOrderBusService busService;
@@ -26,7 +27,7 @@ public class S extends LKApiBusDeleteService<I, SysPssAllotOrderEntity> {
 
 
 	@Override
-	protected void beforeRealDelete(I sin, ApiKeyValues<I> params, SysPssAllotOrderEntity entity, String id) {
+	protected void beforeRealDelete(LKRequestIDsBean sin, ApiKeyValues<LKRequestIDsBean> params, SysPssAllotOrderEntity entity, String id) {
 		ApprovalStatusEnum approvalStatus = entity.getApprovalStatus();
 		switch (approvalStatus) {
 			case PENDING:

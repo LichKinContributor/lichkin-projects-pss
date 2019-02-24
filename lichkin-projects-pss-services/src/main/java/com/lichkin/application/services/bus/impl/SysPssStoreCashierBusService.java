@@ -17,9 +17,9 @@ public class SysPssStoreCashierBusService extends LKDBService {
 		QuerySQL sql = new QuerySQL(false, SysPssStoreCashierEntity.class);
 
 		addConditionId(sql, SysPssStoreCashierR.id, params.getId());
-//		addConditionLocale(sql, SysPssStoreCashierR.locale, params.getLocale());
+		// addConditionLocale(sql, SysPssStoreCashierR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStoreCashierR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStoreCashierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		// addConditionUsingStatus(true, params.getCompId(), sql, SysPssStoreCashierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		sql.eq(SysPssStoreCashierR.cashier, cashier);
 

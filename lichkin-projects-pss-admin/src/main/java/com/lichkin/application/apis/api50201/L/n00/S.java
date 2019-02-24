@@ -38,10 +38,10 @@ public class S extends LKApiBusGetListService<I, O, SysPssSellOrderProductEntity
 		LKDictUtils4Pss.pssProductUnit(sql, SysPssProductR.unit, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssSellOrderProductR.id, params.getId());
-//		addConditionLocale(sql, SysPssSellOrderProductR.locale, params.getLocale());
-//		addConditionCompId(true, sql, SysPssSellOrderProductR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		// addConditionId(sql, SysPssSellOrderProductR.id, params.getId());
+		// addConditionLocale(sql, SysPssSellOrderProductR.locale, params.getLocale());
+		// addConditionCompId(true, sql, SysPssSellOrderProductR.compId, params.getCompId(), params.getBusCompId());
+		// addConditionUsingStatus(true, params.getCompId(), sql, SysPssSellOrderProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String orderId = sin.getOrderId();

@@ -5,7 +5,8 @@ var allotOrderFormPlugins = [
         name : 'billDate',
         minDate : '1900-01-01',
         validator : true,
-        value : today()
+        value : today(),
+        minDate : lastMonthDay()
       }
     }, {
       plugin : 'droplist',
@@ -99,7 +100,7 @@ var allotOrderFormPlugins = [
         withoutFieldKey : true,
         url : '/SysPssAllotOrderProduct/L',
         lazy : true,
-        $appendTo : $('body'),
+        $appendTo : $body,
         onLinkaged : function($plugin, linkage) {
           $plugin.LKClearDatas(false, true);
         },

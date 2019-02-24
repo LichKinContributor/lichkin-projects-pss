@@ -22,9 +22,9 @@ public class SysPssProductBusService extends LKDBService {
 		QuerySQL sql = new QuerySQL(false, SysPssProductEntity.class);
 
 		addConditionId(sql, SysPssProductR.id, params.getId());
-//		addConditionLocale(sql, SysPssProductR.locale, params.getLocale());
+		// addConditionLocale(sql, SysPssProductR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssProductR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		// addConditionUsingStatus(true, params.getCompId(), sql, SysPssProductR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(barcode)) {
 			if (StringUtils.isBlank(productCode)) {

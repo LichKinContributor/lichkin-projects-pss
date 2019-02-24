@@ -38,7 +38,7 @@ public class S extends LKApiBusUpdateUsingStatusService<LKRequestIDsBean, SysPss
 
 
 	@Override
-	protected void beforeSaveMain(LKRequestIDsBean cin, ApiKeyValues<LKRequestIDsBean> params, SysPssStockCheckOrderEntity entity, String id) {
+	protected void beforeSaveMain(LKRequestIDsBean sin, ApiKeyValues<LKRequestIDsBean> params, SysPssStockCheckOrderEntity entity, String id) {
 		if (LKDateTimeUtils.toDateTime(entity.getInsertTime()).isBefore(DateTime.now().minusHours(12))) {
 			throw new LKRuntimeException(ErrorCodes.PSS_ONLY_THE_CHECK_ORDER_OF_THE_DAY_CAN_BE_COMPLETED);
 		}

@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean implements I_CompId {
 
-	private String compId;
-
 	private String orderNo;
 
 	private InventoryStatusEnum inventoryStatus;
@@ -22,11 +20,5 @@ public class I extends LKRequestBean implements I_CompId {
 
 	/** 采购人姓名 */
 	private String purchaserName;
-
-	/** 开始日期 */
-	private String startDate;
-
-	/** 结束日期 */
-	private String endDate;
 
 }

@@ -20,9 +20,9 @@ public class SysPssStorageBusService extends LKDBService {
 		QuerySQL sql = new QuerySQL(false, SysPssStorageEntity.class);
 
 		addConditionId(sql, SysPssStorageR.id, params.getId());
-//		addConditionLocale(sql, SysPssStorageR.locale, params.getLocale());
+		// addConditionLocale(sql, SysPssStorageR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStorageR.compId, params.getCompId(), params.getBusCompId());
-//		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStorageR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		// addConditionUsingStatus(true, params.getCompId(), sql, SysPssStorageR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (StringUtils.isBlank(storageCode)) {
 			sql.eq(SysPssStorageR.storageName, storageName);

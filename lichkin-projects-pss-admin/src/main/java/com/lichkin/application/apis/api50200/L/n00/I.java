@@ -11,19 +11,11 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean implements I_CompId {
 
-	private String compId;
-
 	private String orderNo;
 
 	private InventoryStatusEnum inventoryStatus;
 
 	/** 销售人姓名 */
 	private String salesName;
-
-	/** 开始日期 */
-	private String startDate;
-
-	/** 结束日期 */
-	private String endDate;
 
 }

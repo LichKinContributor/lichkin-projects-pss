@@ -48,10 +48,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssPurchaseOrderEntity> {
 		LKDictUtils4Pss.inventoryStatus(sql, SysPssPurchaseOrderR.inventoryStatus, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
-//		addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
+		// addConditionId(sql, SysPssPurchaseOrderR.id, params.getId());
+		// addConditionLocale(sql, SysPssPurchaseOrderR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssPurchaseOrderR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(true,params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssPurchaseOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		ApprovalStatusEnum approvalStatus = sin.getApprovalStatus();

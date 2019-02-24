@@ -43,10 +43,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssSupplierEntity> {
 		LKDictUtils4Pss.supplierType(sql, SysPssSupplierR.supplierType, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssSupplierR.id, params.getId());
-//		addConditionLocale(sql, SysPssSupplierR.locale, params.getLocale());
+		// addConditionId(sql, SysPssSupplierR.id, params.getId());
+		// addConditionLocale(sql, SysPssSupplierR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssSupplierR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(true,params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssSupplierR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String supplierCode = sin.getSupplierCode();

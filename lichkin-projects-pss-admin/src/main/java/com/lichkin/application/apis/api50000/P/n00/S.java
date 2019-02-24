@@ -39,10 +39,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssStorageEntity> {
 		LKDictUtils.usingStatus(sql, SysPssStorageR.usingStatus, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssStorageR.id, params.getId());
-//		addConditionLocale(sql, SysPssStorageR.locale, params.getLocale());
+		// addConditionId(sql, SysPssStorageR.id, params.getId());
+		// addConditionLocale(sql, SysPssStorageR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssStorageR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(true,params.getCompId(), sql, SysPssStorageR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssStorageR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String storageCode = sin.getStorageCode();

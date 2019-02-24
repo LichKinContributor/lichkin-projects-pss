@@ -45,10 +45,10 @@ public class S extends LKApiBusGetPageService<I, O, SysPssOtherStockOrderEntity>
 		LKDictUtils4Activiti.approvalStatus(sql, SysPssOtherStockOrderR.approvalStatus, i++);
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysPssOtherStockOrderR.id, params.getId());
-//		addConditionLocale(sql, SysPssOtherStockOrderR.locale, params.getLocale());
+		// addConditionId(sql, SysPssOtherStockOrderR.id, params.getId());
+		// addConditionLocale(sql, SysPssOtherStockOrderR.locale, params.getLocale());
 		addConditionCompId(true, sql, SysPssOtherStockOrderR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(true,params.getCompId(), sql, SysPssOtherStockOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
+		addConditionUsingStatus(true, params.getCompId(), sql, SysPssOtherStockOrderR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		if (orderType != null) {
 			sql.eq(SysPssOtherStockOrderR.orderType, orderType);
